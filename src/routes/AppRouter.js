@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LoginScreen} from '../screens';
+import {LoginScreen, RegisterScreen} from '../screens';
 import {Container, Content, H1, Spinner} from 'native-base';
 import {styles} from '../styles/MainStyles';
 const Stack = createStackNavigator();
@@ -28,8 +28,11 @@ const AppRouter = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode={false}>
+      <Stack.Navigator
+        headerMode={false}
+        screenOptions={{animationEnabled: false}}>
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

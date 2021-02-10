@@ -11,17 +11,30 @@ import {
   Text,
   Icon,
   Header,
+  Left,
+  Body,
 } from 'native-base';
 
-const LoginScreen = ({navigation}) => {
+const RegisterScreen = ({navigation}) => {
   return (
     <Container>
-      <Header transparent />
+      <Header transparent>
+        <Left>
+          <Button dark transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body />
+      </Header>
       <Content>
-        <H1>Login</H1>
+        <H1>Register</H1>
         <Form>
           <Item floatingLabel>
             <Label>Email</Label>
+            <Input />
+          </Item>
+          <Item floatingLabel>
+            <Label>Name</Label>
             <Input />
           </Item>
           <Item floatingLabel success>
@@ -29,17 +42,11 @@ const LoginScreen = ({navigation}) => {
             <Input secureTextEntry />
             <Icon name="checkmark-circle" />
           </Item>
-          <Text>Lupa Kata Sandi?</Text>
         </Form>
-        <Button block style={{margin: 16}}>
-          <Text>Login</Text>
-        </Button>
-        <Text>or</Text>
         <Button
           block
           style={{margin: 16}}
-          success
-          onPress={() => navigation.navigate('Register')}>
+          onPress={() => navigation.navigate('Login')}>
           <Text>Register</Text>
         </Button>
       </Content>
@@ -47,4 +54,4 @@ const LoginScreen = ({navigation}) => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;

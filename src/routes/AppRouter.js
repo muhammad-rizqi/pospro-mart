@@ -1,13 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LoginScreen, RegisterScreen} from '../screens';
+import {
+  ForgotScreen,
+  LoginScreen,
+  MemberDashboardScreen,
+  RegisterScreen,
+} from '../screens';
 import {Container, Content, H1, Spinner} from 'native-base';
 import {styles} from '../styles/MainStyles';
+import {useSelector} from 'react-redux';
 const Stack = createStackNavigator();
 
 const AppRouter = () => {
   const [splash, setSplash] = useState(true);
+  const {token} = useSelector((state) => state);
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,8 +38,20 @@ const AppRouter = () => {
       <Stack.Navigator
         headerMode={false}
         screenOptions={{animationEnabled: false}}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
+        {!token ? (
+          <>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Forgot" component={ForgotScreen} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name="MemberDashboard"
+              component={MemberDashboardScreen}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

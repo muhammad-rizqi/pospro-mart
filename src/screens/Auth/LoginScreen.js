@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Container,
   Content,
@@ -12,8 +12,18 @@ import {
   Icon,
   Header,
 } from 'native-base';
+import {useDispatch} from 'react-redux';
+import {changeToken} from '../../redux/action';
 
 const LoginScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+
+  const dispatch = useDispatch();
+
+  const onClickLogin = () => {
+    dispatch(changeToken(email));
+  };
+
   return (
     <Container>
       <Header transparent />
@@ -22,16 +32,18 @@ const LoginScreen = ({navigation}) => {
         <Form>
           <Item floatingLabel>
             <Label>Email</Label>
-            <Input />
+            <Input onChangeText={(e) => setEmail(e)} />
           </Item>
           <Item floatingLabel success>
             <Label>Password</Label>
             <Input secureTextEntry />
             <Icon name="checkmark-circle" />
           </Item>
-          <Text>Lupa Kata Sandi?</Text>
+          <Text onPress={() => navigation.navigate('Forgot')}>
+            Lupa Kata Sandi?
+          </Text>
         </Form>
-        <Button block style={{margin: 16}}>
+        <Button block style={{margin: 16}} onPress={onClickLogin}>
           <Text>Login</Text>
         </Button>
         <Text>or</Text>

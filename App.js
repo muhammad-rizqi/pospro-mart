@@ -1,7 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {Provider} from 'react-redux';
 import AppRouter from './src/routes/AppRouter';
-export default class TypographyExample extends Component {
-  render() {
-    return <AppRouter />;
-  }
-}
+import store from './src/redux/store';
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <AppRouter />
+    </Provider>
+  );
+};
+
+export default App;

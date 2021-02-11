@@ -13,7 +13,7 @@ import {
   Header,
 } from 'native-base';
 import {useDispatch} from 'react-redux';
-import {changeToken} from '../../redux/action';
+import {changeToken, setUser} from '../../redux/action';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -22,6 +22,7 @@ const LoginScreen = ({navigation}) => {
 
   const onClickLogin = () => {
     dispatch(changeToken(email));
+    dispatch(setUser({role: Number(email)}));
   };
 
   return (

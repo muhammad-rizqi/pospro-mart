@@ -11,7 +11,6 @@ const apiPublic = axios.create({
 
 const getReduxToken = () => {
   const {token} = store.getState();
-  console.log(store.getState());
   return token;
 };
 

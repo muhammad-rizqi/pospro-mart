@@ -27,23 +27,20 @@ const userReducer = (state = {}, action) => {
   }
 };
 
-const nasabahState = {
-  saldo: {loading: true, data: 0, error: false},
-  penyetoran: {loading: true, data: [], error: null},
-  penarikan: {loading: true, data: [], error: null},
-  penjemputan: {loading: true, data: [], error: null},
+const staffState = {
+  category: {loading: true, data: [], error: null},
+  item: {loading: true, data: [], error: null},
+  supplier: {loading: true, data: [], error: null},
 };
 
-const nasabahReducer = (state = nasabahState, action) => {
+const staffReducer = (state = staffState, action) => {
   switch (action.type) {
-    case 'SET_SALDO':
-      return {...state, saldo: action.data};
-    case 'SET_PENJEMPUTAN':
-      return {...state, penjemputan: action.data};
-    case 'SET_PENARIKAN':
-      return {...state, penarikan: action.data};
-    case 'SET_PENYETORAN':
-      return {...state, penyetoran: action.data};
+    case 'SET_CATEGORY':
+      return {...state, category: action.data};
+    case 'SET_ITEM':
+      return {...state, item: action.data};
+    case 'SET_SUPPLIER':
+      return {...state, supplier: action.data};
     default:
       return state;
   }
@@ -87,7 +84,7 @@ const penjualReducer = (state = penjualState, action) => {
 export default combineReducers({
   user: userReducer,
   token: tokenReducer,
-  nasabah: nasabahReducer,
+  staff: staffReducer,
   penyetor: penyetorReducer,
   penjual: penjualReducer,
 });

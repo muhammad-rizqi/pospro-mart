@@ -23,11 +23,11 @@ const StaffDashboardScreen = ({navigation}) => {
           <ListItem onPress={() => navigation.navigate('Category')}>
             <Text>Category</Text>
           </ListItem>
-          <ListItem>
-            <Text>Nathaniel Clyne</Text>
+          <ListItem onPress={() => navigation.navigate('Supplier')}>
+            <Text>Supplier</Text>
           </ListItem>
-          <ListItem>
-            <Text>Dejan Lovren</Text>
+          <ListItem onPress={() => navigation.navigate('Item')}>
+            <Text>Item</Text>
           </ListItem>
         </List>
         <Button>

@@ -6,11 +6,13 @@ import {
   CashierDashboardScreen,
   CategoryScreen,
   ForgotScreen,
+  ItemScreen,
   LoginScreen,
   ManagerDashboardScreen,
   MemberDashboardScreen,
   RegisterScreen,
   StaffDashboardScreen,
+  SupplierScreen,
 } from '../screens';
 import {Container, Content, H1, Spinner} from 'native-base';
 import {styles} from '../styles/MainStyles';
@@ -93,6 +95,8 @@ const AppRouter = () => {
                     component={StaffDashboardScreen}
                   />
                   <Stack.Screen name="Category" component={CategoryScreen} />
+                  <Stack.Screen name="Supplier" component={SupplierScreen} />
+                  <Stack.Screen name="Item" component={ItemScreen} />
                 </>
               )}
               {user.roles[0].id === 2 && (

@@ -58,3 +58,25 @@ export const getItemServices = async () => {
       store.dispatch(setItems(item));
     });
 };
+
+export const addItemServices = (
+  nama,
+  uid,
+  harga_beli,
+  harga_jual,
+  kategori_id,
+  merk,
+  stok,
+  diskon,
+) => {
+  return apiPrivate().post('/barang', {
+    nama,
+    uid,
+    harga_beli,
+    harga_jual,
+    kategori_id,
+    merk,
+    stok,
+    diskon,
+  });
+};

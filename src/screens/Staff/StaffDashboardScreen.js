@@ -1,8 +1,16 @@
 import React from 'react';
-import {Button, Container, Content, H1, Text} from 'native-base';
+import {
+  Button,
+  Container,
+  Content,
+  H1,
+  List,
+  ListItem,
+  Text,
+} from 'native-base';
 import {logout} from '../../services/AuthServices';
 
-const StaffDashboardScreen = () => {
+const StaffDashboardScreen = ({navigation}) => {
   const onClickLogout = () => {
     logout();
   };
@@ -11,6 +19,17 @@ const StaffDashboardScreen = () => {
     <Container>
       <Content>
         <H1>Halo Staff</H1>
+        <List>
+          <ListItem onPress={() => navigation.navigate('Category')}>
+            <Text>Category</Text>
+          </ListItem>
+          <ListItem>
+            <Text>Nathaniel Clyne</Text>
+          </ListItem>
+          <ListItem>
+            <Text>Dejan Lovren</Text>
+          </ListItem>
+        </List>
         <Button>
           <Text onPress={onClickLogout}>Logout</Text>
         </Button>

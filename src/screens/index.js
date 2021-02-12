@@ -4,6 +4,7 @@ import RegisterScreen from './Auth/RegisterScreen';
 import CashierDashboardScreen from './Cashier/CashierDashboardScreen';
 import ManagerDashboardScreen from './Manager/ManagerDashboardScreen';
 import MemberDashboardScreen from './Member/MemberDashboardScreen';
+import CategoryScreen from './Staff/CategoryScreen';
 import StaffDashboardScreen from './Staff/StaffDashboardScreen';
 
 export {
@@ -14,4 +15,5 @@ export {
   CashierDashboardScreen,
   ManagerDashboardScreen,
   StaffDashboardScreen,
+  CategoryScreen,
 };

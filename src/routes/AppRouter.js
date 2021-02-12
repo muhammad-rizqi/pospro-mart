@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   CashierDashboardScreen,
+  CategoryScreen,
   ForgotScreen,
   LoginScreen,
   ManagerDashboardScreen,
@@ -12,15 +14,33 @@ import {
 } from '../screens';
 import {Container, Content, H1, Spinner} from 'native-base';
 import {styles} from '../styles/MainStyles';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProfileServices} from '../services/UserServices';
+import {getToken} from '../services/token/Token';
+import {changeToken, setUser} from '../redux/action';
 const Stack = createStackNavigator();
 
 const AppRouter = () => {
   const [splash, setSplash] = useState(true);
   const {token, user} = useSelector((state) => state);
 
+  const dispatch = useDispatch();
+
+  const getStoredToken = async () => {
+    try {
+      const storedToken = await getToken();
+      if (storedToken) {
+        dispatch(changeToken(storedToken));
+        getProfileServices();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setTimeout(() => {
+      // getStoredToken();
       setSplash(false);
     }, 1000);
   }, []);
@@ -48,9 +68,9 @@ const AppRouter = () => {
             <Stack.Screen name="Forgot" component={ForgotScreen} />
           </>
         ) : (
-          user.role !== null && (
+          user !== null && (
             <>
-              {user.role === 0 && (
+              {user.roles[0].id === 5 && (
                 <>
                   <Stack.Screen
                     name="MemberDashboard"
@@ -58,7 +78,7 @@ const AppRouter = () => {
                   />
                 </>
               )}
-              {user.role === 1 && (
+              {user.roles[0].id === 3 && (
                 <>
                   <Stack.Screen
                     name="CashierDashboard"
@@ -66,15 +86,16 @@ const AppRouter = () => {
                   />
                 </>
               )}
-              {user.role === 2 && (
+              {user.roles[0].id === 4 && (
                 <>
                   <Stack.Screen
                     name="StaffDashboard"
                     component={StaffDashboardScreen}
                   />
+                  <Stack.Screen name="Category" component={CategoryScreen} />
                 </>
               )}
-              {user.role === 3 && (
+              {user.roles[0].id === 2 && (
                 <>
                   <Stack.Screen
                     name="ManagerDashboard"

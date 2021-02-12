@@ -19,7 +19,7 @@ import {styles} from '../styles/MainStyles';
 import {useDispatch, useSelector} from 'react-redux';
 import {getProfileServices} from '../services/UserServices';
 import {getToken} from '../services/token/Token';
-import {changeToken, setUser} from '../redux/action';
+import {changeToken} from '../redux/action';
 const Stack = createStackNavigator();
 
 const AppRouter = () => {
@@ -33,17 +33,19 @@ const AppRouter = () => {
       const storedToken = await getToken();
       if (storedToken) {
         dispatch(changeToken(storedToken));
-        getProfileServices();
+        getProfileServices(() => setSplash(false));
+      } else {
+        setSplash(false);
       }
     } catch (error) {
+      setSplash(false);
       console.log(error);
     }
   };
 
   useEffect(() => {
     setTimeout(() => {
-      // getStoredToken();
-      setSplash(false);
+      getStoredToken();
     }, 1000);
   }, []);
 

@@ -107,3 +107,15 @@ export const updateItemServices = (
 export const deleteItemServices = (id) => {
   return apiPrivate().delete('/barang/' + id);
 };
+
+export const addCategoryServices = (nama) => {
+  return apiPrivate().post('/kategori', {nama});
+};
+
+export const updateCategoryServices = (id, nama) => {
+  return apiPrivate().post('/kategori/' + id, {nama});
+};
+
+export const deleteCategoryServices = (id) => {
+  return apiPrivate().delete('/kategori/' + id);
+};

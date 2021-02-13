@@ -10,6 +10,7 @@ import {
   LoginScreen,
   ManagerDashboardScreen,
   MemberDashboardScreen,
+  NoConnection,
   RegisterScreen,
   StaffDashboardScreen,
   SupplierScreen,
@@ -25,6 +26,7 @@ const Stack = createStackNavigator();
 const AppRouter = () => {
   const [splash, setSplash] = useState(true);
   const {token, user} = useSelector((state) => state);
+  const [error, setError] = useState('');
 
   const dispatch = useDispatch();
 
@@ -33,13 +35,18 @@ const AppRouter = () => {
       const storedToken = await getToken();
       if (storedToken) {
         dispatch(changeToken(storedToken));
-        getProfileServices(() => setSplash(false));
+        getProfileServices(
+          () => setSplash(false),
+          (e) => setError(e.message),
+        );
       } else {
         setSplash(false);
+        setError('Gagal');
       }
-    } catch (error) {
+    } catch (err) {
+      setError(err.message);
       setSplash(false);
-      console.log(error);
+      console.log(err);
     }
   };
 
@@ -71,46 +78,46 @@ const AppRouter = () => {
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Forgot" component={ForgotScreen} />
           </>
+        ) : user.roles ? (
+          <>
+            {user.roles[0].id === 5 && (
+              <>
+                <Stack.Screen
+                  name="MemberDashboard"
+                  component={MemberDashboardScreen}
+                />
+              </>
+            )}
+            {user.roles[0].id === 3 && (
+              <>
+                <Stack.Screen
+                  name="CashierDashboard"
+                  component={CashierDashboardScreen}
+                />
+              </>
+            )}
+            {user.roles[0].id === 4 && (
+              <>
+                <Stack.Screen
+                  name="StaffDashboard"
+                  component={StaffDashboardScreen}
+                />
+                <Stack.Screen name="Category" component={CategoryScreen} />
+                <Stack.Screen name="Supplier" component={SupplierScreen} />
+                <Stack.Screen name="Item" component={ItemScreen} />
+              </>
+            )}
+            {user.roles[0].id === 2 && (
+              <>
+                <Stack.Screen
+                  name="ManagerDashboard"
+                  component={ManagerDashboardScreen}
+                />
+              </>
+            )}
+          </>
         ) : (
-          user !== null && (
-            <>
-              {user.roles[0].id === 5 && (
-                <>
-                  <Stack.Screen
-                    name="MemberDashboard"
-                    component={MemberDashboardScreen}
-                  />
-                </>
-              )}
-              {user.roles[0].id === 3 && (
-                <>
-                  <Stack.Screen
-                    name="CashierDashboard"
-                    component={CashierDashboardScreen}
-                  />
-                </>
-              )}
-              {user.roles[0].id === 4 && (
-                <>
-                  <Stack.Screen
-                    name="StaffDashboard"
-                    component={StaffDashboardScreen}
-                  />
-                  <Stack.Screen name="Category" component={CategoryScreen} />
-                  <Stack.Screen name="Supplier" component={SupplierScreen} />
-                  <Stack.Screen name="Item" component={ItemScreen} />
-                </>
-              )}
-              {user.roles[0].id === 2 && (
-                <>
-                  <Stack.Screen
-                    name="ManagerDashboard"
-                    component={ManagerDashboardScreen}
-                  />
-                </>
-              )}
-            </>
-          )
+          <Stack.Screen name="NoConnection" component={NoConnection} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

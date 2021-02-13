@@ -25,8 +25,6 @@ import {addItemServices} from '../../services/StaffServices';
 const ItemScreen = () => {
   const {item, category} = useSelector((state) => state.staff);
   const [modal, setModal] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
   const [nama, setNama] = useState('');
   const [uid, setUid] = useState('');
   const [harga_beli, setHarga_beli] = useState('');

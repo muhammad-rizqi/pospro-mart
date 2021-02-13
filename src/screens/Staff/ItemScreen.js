@@ -18,13 +18,18 @@ import {
   Text,
 } from 'native-base';
 import {useSelector} from 'react-redux';
-import {getItemServices} from '../../services/StaffServices';
+import {
+  deleteItemServices,
+  getItemServices,
+  updateItemServices,
+} from '../../services/StaffServices';
 import {Modal, ToastAndroid} from 'react-native';
 import {addItemServices} from '../../services/StaffServices';
 
 const ItemScreen = () => {
   const {item, category} = useSelector((state) => state.staff);
   const [modal, setModal] = useState(false);
+  const [itemId, setItemId] = useState(null);
   const [nama, setNama] = useState('');
   const [uid, setUid] = useState('');
   const [harga_beli, setHarga_beli] = useState('');
@@ -35,6 +40,32 @@ const ItemScreen = () => {
   const [diskon, setDiskon] = useState('');
 
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const resetField = () => {
+    setItemId(null);
+    setNama('');
+    setUid('');
+    setHarga_beli('');
+    setHarga_jual('');
+    setKategori_id('');
+    setMerk('');
+    setStok('');
+    setDiskon('');
+  };
+
+  const setUpdate = (itemSelected) => {
+    setModal(true);
+    setItemId(itemSelected.id);
+    setNama(itemSelected.nama);
+    setUid(itemSelected.uid);
+    setHarga_beli(itemSelected.harga_beli);
+    setHarga_jual(itemSelected.harga_jual);
+    setKategori_id(itemSelected.kategori_id);
+    setMerk(itemSelected.merk);
+    setStok(itemSelected.stok);
+    setDiskon(itemSelected.diskon);
+  };
 
   const onClickAdd = () => {
     setLoading(true);
@@ -51,6 +82,8 @@ const ItemScreen = () => {
       .then((res) => {
         if (res.data.code === 201) {
           ToastAndroid.show('Berhasil Menambah Barang', ToastAndroid.LONG);
+          setModal(false);
+          resetField();
         } else {
           ToastAndroid.show('Gagal Menambah Barang', ToastAndroid.LONG);
         }
@@ -58,9 +91,67 @@ const ItemScreen = () => {
       })
       .catch((err) => {
         ToastAndroid.show('Gagal Menambah Barang', ToastAndroid.LONG);
+        console.log(err.response);
+      })
+      .finally(() => {
+        getItemServices();
+        setLoading(false);
+      });
+  };
+
+  const onClickUpdate = () => {
+    setLoading(true);
+    console.log('Updating');
+    updateItemServices(
+      itemId,
+      nama,
+      uid,
+      harga_beli,
+      harga_jual,
+      kategori_id,
+      merk,
+      stok,
+      diskon,
+    )
+      .then((res) => {
+        if (res.data.code === 200) {
+          ToastAndroid.show('Berhasil Merubah Barang', ToastAndroid.LONG);
+          setModal(false);
+          resetField();
+        } else {
+          ToastAndroid.show('Gagal Merubah Barang', ToastAndroid.LONG);
+        }
+      })
+      .catch((err) => {
+        ToastAndroid.show('Gagal Merubah Barang', ToastAndroid.LONG);
         console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        getItemServices();
+        setLoading(false);
+      });
+  };
+
+  const onClickDelete = () => {
+    setDeleteLoading(true);
+    deleteItemServices(itemId)
+      .then((res) => {
+        if (res.data.code === 200) {
+          ToastAndroid.show('Berhasil Menghapus Barang', ToastAndroid.LONG);
+          setModal(false);
+          resetField();
+        } else {
+          ToastAndroid.show('Gagal Menghapus Barang', ToastAndroid.LONG);
+        }
+      })
+      .catch((err) => {
+        ToastAndroid.show('Gagal Menghapus Barang', ToastAndroid.LONG);
+        console.log(err);
+      })
+      .finally(() => {
+        getItemServices();
+        setDeleteLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -71,11 +162,21 @@ const ItemScreen = () => {
     <Container>
       <Modal visible={modal}>
         <Content>
-          <H1>Tambah Barang</H1>
-          <Icon name="close" onPress={() => setModal(!modal)} />
+          <H1>{itemId ? 'Update' : 'Tambah'} Barang</H1>
+          <Icon
+            name="close"
+            onPress={() => {
+              setModal(!modal);
+              resetField();
+            }}
+          />
           <Form>
             <Item rounded>
-              <Input placeholder="Barcode" value={uid} onChangeText={setUid} />
+              <Input
+                placeholder="Barcode"
+                value={`${uid}`}
+                onChangeText={setUid}
+              />
               <Icon active name="barcode" />
             </Item>
             <Item rounded>
@@ -96,31 +197,51 @@ const ItemScreen = () => {
             <Item rounded>
               <Input
                 placeholder="Harga Beli"
-                value={harga_beli}
+                value={`${harga_beli}`}
                 onChangeText={setHarga_beli}
               />
             </Item>
             <Item rounded>
               <Input
                 placeholder="Harga Jual"
-                value={harga_jual}
+                value={`${harga_jual}`}
                 onChangeText={setHarga_jual}
               />
             </Item>
             <Item rounded>
-              <Input placeholder="Stok" value={stok} onChangeText={setStok} />
+              <Input
+                placeholder="Stok"
+                value={`${stok}`}
+                onChangeText={setStok}
+              />
             </Item>
             <Item rounded>
               <Input
                 placeholder="Diskon"
-                value={diskon}
+                value={`${diskon}`}
                 onChangeText={setDiskon}
               />
             </Item>
-            <Button rounded block disabled={loading} onPress={onClickAdd}>
+            <Button
+              rounded
+              block
+              disabled={loading}
+              onPress={itemId ? onClickUpdate : onClickAdd}>
               {loading && <Spinner color="white" />}
-              <Text>Tambah Barang</Text>
+              <Text>{itemId ? 'Update' : 'Tambah'} Barang</Text>
             </Button>
+
+            {itemId && (
+              <Button
+                rounded
+                block
+                danger
+                disabled={deleteLoading}
+                onPress={onClickDelete}>
+                {deleteLoading && <Spinner color="white" />}
+                <Text>Hapus Barang</Text>
+              </Button>
+            )}
           </Form>
         </Content>
       </Modal>
@@ -137,7 +258,11 @@ const ItemScreen = () => {
         ) : (
           <List>
             {item.data.map((itemData) => (
-              <ListItem key={itemData.id}>
+              <ListItem
+                key={itemData.id}
+                onPress={() => {
+                  setUpdate(itemData);
+                }}>
                 <Body>
                   <Text>{itemData.nama}</Text>
                   <Text note numberOfLines={2}>

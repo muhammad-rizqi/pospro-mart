@@ -80,3 +80,30 @@ export const addItemServices = (
     diskon,
   });
 };
+
+export const updateItemServices = (
+  id,
+  nama,
+  uid,
+  harga_beli,
+  harga_jual,
+  kategori_id,
+  merk,
+  stok,
+  diskon,
+) => {
+  return apiPrivate().post('/barang/' + id, {
+    nama,
+    uid,
+    harga_beli,
+    harga_jual,
+    kategori_id,
+    merk,
+    stok,
+    diskon,
+  });
+};
+
+export const deleteItemServices = (id) => {
+  return apiPrivate().delete('/barang/' + id);
+};

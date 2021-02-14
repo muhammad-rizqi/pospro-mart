@@ -1,4 +1,9 @@
-import {setCategory, setItems, setSupplier} from '../redux/staffAction';
+import {
+  setCategory,
+  setItems,
+  setPurchase,
+  setSupplier,
+} from '../redux/staffAction';
 import store from '../redux/store';
 import {apiPrivate} from './ApiServices';
 
@@ -56,6 +61,25 @@ export const getItemServices = async () => {
     .finally(() => {
       item.loading = false;
       store.dispatch(setItems(item));
+    });
+};
+
+export const getPurchaseServices = async () => {
+  const purchase = {loading: true, data: [], error: null};
+  store.dispatch(setPurchase(purchase));
+  apiPrivate()
+    .get('/pembelian')
+    .then((result) => {
+      const {data} = result;
+      purchase.data = data.data;
+    })
+    .catch((err) => {
+      purchase.eror = err.message;
+      console.log(err);
+    })
+    .finally(() => {
+      purchase.loading = false;
+      store.dispatch(setPurchase(purchase));
     });
 };
 
@@ -138,4 +162,37 @@ export const updateSupplierServices = (id, nama, alamat, no_hp) => {
 
 export const deleteSupplierServices = (id) => {
   return apiPrivate().delete('/supplier/' + id);
+};
+
+export const addPurchaseServices = (
+  supplier_id,
+  barang_id,
+  jumlah,
+  total_biaya,
+) => {
+  return apiPrivate().post('/pembelian', {
+    supplier_id,
+    barang_id,
+    jumlah,
+    total_biaya,
+  });
+};
+
+export const updatePurchaseServices = (
+  id,
+  supplier_id,
+  barang_id,
+  jumlah,
+  total_biaya,
+) => {
+  return apiPrivate().post('/pembelian/' + id, {
+    supplier_id,
+    barang_id,
+    jumlah,
+    total_biaya,
+  });
+};
+
+export const deletePurchaseServices = (id) => {
+  return apiPrivate().delete('/pembelian/' + id);
 };

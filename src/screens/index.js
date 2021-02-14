@@ -7,6 +7,7 @@ import MemberDashboardScreen from './Member/MemberDashboardScreen';
 import NoConnection from './NoConnection';
 import CategoryScreen from './Staff/CategoryScreen';
 import ItemScreen from './Staff/ItemScreen';
+import Purchasecreen from './Staff/Purchasecreen';
 import StaffDashboardScreen from './Staff/StaffDashboardScreen';
 import SupplierScreen from './Staff/SupplierScreen';
 
@@ -22,4 +23,5 @@ export {
   ItemScreen,
   SupplierScreen,
   NoConnection,
+  Purchasecreen,
 };

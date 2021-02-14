@@ -11,6 +11,7 @@ import {
   ManagerDashboardScreen,
   MemberDashboardScreen,
   NoConnection,
+  Purchasecreen,
   RegisterScreen,
   StaffDashboardScreen,
   SupplierScreen,
@@ -105,6 +106,7 @@ const AppRouter = () => {
                 <Stack.Screen name="Category" component={CategoryScreen} />
                 <Stack.Screen name="Supplier" component={SupplierScreen} />
                 <Stack.Screen name="Item" component={ItemScreen} />
+                <Stack.Screen name="Purchase" component={Purchasecreen} />
               </>
             )}
             {user.roles[0].id === 2 && (

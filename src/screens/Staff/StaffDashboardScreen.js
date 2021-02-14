@@ -29,6 +29,9 @@ const StaffDashboardScreen = ({navigation}) => {
           <ListItem onPress={() => navigation.navigate('Item')}>
             <Text>Item</Text>
           </ListItem>
+          <ListItem onPress={() => navigation.navigate('Purchase')}>
+            <Text>Pembelian</Text>
+          </ListItem>
         </List>
         <Button>
           <Text onPress={onClickLogout}>Logout</Text>

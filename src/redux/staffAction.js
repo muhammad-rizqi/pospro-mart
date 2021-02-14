@@ -12,3 +12,8 @@ export const setSupplier = (data) => ({
   type: 'SET_SUPPLIER',
   data,
 });
+
+export const setPurchase = (data) => ({
+  type: 'SET_PURCHASE',
+  data,
+});

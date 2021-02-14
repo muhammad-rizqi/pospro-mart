@@ -31,6 +31,7 @@ const staffState = {
   category: {loading: true, data: [], error: null},
   item: {loading: true, data: [], error: null},
   supplier: {loading: true, data: [], error: null},
+  purchase: {loading: true, data: [], error: null},
 };
 
 const staffReducer = (state = staffState, action) => {
@@ -41,6 +42,8 @@ const staffReducer = (state = staffState, action) => {
       return {...state, item: action.data};
     case 'SET_SUPPLIER':
       return {...state, supplier: action.data};
+    case 'SET_PURCHASE':
+      return {...state, purchase: action.data};
     default:
       return state;
   }

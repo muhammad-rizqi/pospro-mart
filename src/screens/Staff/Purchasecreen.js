@@ -31,21 +31,21 @@ const Purchasecreen = () => {
   const {purchase, item, supplier} = useSelector((state) => state.staff);
   const [purchaseId, setpurchaseId] = useState(null);
 
-  const [supplierId, setSupplierId] = useState(null);
-  const [itemId, setitemId] = useState(null);
+  const [supplierId, setSupplierId] = useState('selectSupplier');
+  const [itemId, setitemId] = useState('selectItem');
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(1);
 
-  const [deleteLoading, detDeleteLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
 
   const setUpdate = (data) => {
     setpurchaseId(data.id);
-    setSupplierId();
-    setitemId();
-    setQuantity();
-    setPrice();
+    setSupplierId(data.supplier_id);
+    setitemId(data.barang_id);
+    setQuantity(data.jumlah);
+    setPrice(data.total_biaya);
   };
 
   const resetField = () => {
@@ -57,44 +57,62 @@ const Purchasecreen = () => {
   };
 
   const onClickAdd = () => {
-    setLoading(true);
-    addPurchaseServices(supplierId, itemId, quantity, price)
-      .then(() => {
-        ToastAndroid.show('Berhasil Menambah Supplier', ToastAndroid.LONG);
-        setModal(false);
-        resetField();
-      })
-      .catch((err) => {
-        ToastAndroid.show('Gagal Menambah Supplier', ToastAndroid.LONG);
-        console.log(err.response);
-      })
-      .finally(() => {
-        getSupplierServices();
-        setLoading(false);
-      });
+    if (
+      supplierId === 'selectSupplier' ||
+      itemId === 'selectItem' ||
+      price < 1 ||
+      quantity < 1
+    ) {
+      ToastAndroid.show('isi dengan benar', ToastAndroid.LONG);
+    } else {
+      setLoading(true);
+      addPurchaseServices(supplierId, itemId, quantity, price)
+        .then(() => {
+          ToastAndroid.show('Berhasil Menambah Supplier', ToastAndroid.LONG);
+          setModal(false);
+          resetField();
+        })
+        .catch((err) => {
+          ToastAndroid.show('Gagal Menambah Supplier', ToastAndroid.LONG);
+          console.log(err.response);
+        })
+        .finally(() => {
+          getPurchaseServices();
+          setLoading(false);
+        });
+    }
   };
 
   const onClickUpdate = () => {
-    setLoading(true);
-    updatePurchaseServices(purchaseId, supplierId, itemId, quantity, price)
-      .then(() => {
-        ToastAndroid.show('Berhasil Merubah Supplier', ToastAndroid.LONG);
-        setModal(false);
-        resetField();
-      })
-      .catch((err) => {
-        ToastAndroid.show('Gagal Merubah Supplier', ToastAndroid.LONG);
-        console.log(err.response);
-      })
-      .finally(() => {
-        getSupplierServices();
-        setLoading(false);
-      });
+    if (
+      supplierId === 'selectSupplier' ||
+      itemId === 'selectItem' ||
+      price < 1 ||
+      quantity < 1
+    ) {
+      ToastAndroid.show('isi dengan benar', ToastAndroid.LONG);
+    } else {
+      setLoading(true);
+      updatePurchaseServices(purchaseId, supplierId, itemId, quantity, price)
+        .then(() => {
+          ToastAndroid.show('Berhasil Merubah Supplier', ToastAndroid.LONG);
+          setModal(false);
+          resetField();
+        })
+        .catch((err) => {
+          ToastAndroid.show('Gagal Merubah Supplier', ToastAndroid.LONG);
+          console.log(err.response);
+        })
+        .finally(() => {
+          getPurchaseServices();
+          setLoading(false);
+        });
+    }
   };
 
   const onClickDelete = () => {
-    setLoading(true);
-    deletePurchaseServices(supplierId)
+    setDeleteLoading(true);
+    deletePurchaseServices(purchaseId)
       .then(() => {
         ToastAndroid.show('Berhasil Menghapus Supplier', ToastAndroid.LONG);
         setModal(false);
@@ -105,8 +123,8 @@ const Purchasecreen = () => {
         console.log(err.response);
       })
       .finally(() => {
-        getSupplierServices();
-        setLoading(false);
+        getPurchaseServices();
+        setDeleteLoading(false);
       });
   };
 
@@ -118,7 +136,7 @@ const Purchasecreen = () => {
     <Container>
       <Modal visible={modal}>
         <Content>
-          <H1>{purchaseId ? 'Update' : 'Tambah'} Kategori</H1>
+          <H1>{purchaseId ? 'Update' : 'Tambah'} Pembelian</H1>
           <Icon
             name="close"
             onPress={() => {
@@ -127,7 +145,12 @@ const Purchasecreen = () => {
             }}
           />
           <Form>
-            <Picker selectedValue={supplierId} onValueChange={setSupplierId}>
+            <Picker
+              selectedValue={supplierId}
+              onValueChange={(val) =>
+                val !== 'selectSupplier' && setSupplierId(val)
+              }>
+              <Picker.Item label="Pilih supplier" value="selectSupplier" />
               {supplier.data.map((supplierData) => (
                 <Picker.Item
                   label={supplierData.nama}
@@ -136,7 +159,10 @@ const Purchasecreen = () => {
                 />
               ))}
             </Picker>
-            <Picker selectedValue={itemId} onValueChange={setitemId}>
+            <Picker
+              selectedValue={itemId}
+              onValueChange={(val) => val !== 'selectItem' && setitemId(val)}>
+              <Picker.Item label="Pilih Pembelian barang" value="selectItem" />
               {item.data.map((itemData) => (
                 <Picker.Item
                   label={itemData.nama}
@@ -165,7 +191,7 @@ const Purchasecreen = () => {
               disabled={loading}
               onPress={purchaseId ? onClickUpdate : onClickAdd}>
               {loading && <Spinner color="white" />}
-              <Text>{purchaseId ? 'Update' : 'Tambah'} Kategori</Text>
+              <Text>{purchaseId ? 'Update' : 'Tambah'} Pembelian</Text>
             </Button>
             {purchaseId && (
               <Button
@@ -175,7 +201,7 @@ const Purchasecreen = () => {
                 disabled={deleteLoading}
                 onPress={onClickDelete}>
                 {deleteLoading && <Spinner color="white" />}
-                <Text>Hapus Kategori</Text>
+                <Text>Hapus Pembelian</Text>
               </Button>
             )}
           </Form>
@@ -195,7 +221,12 @@ const Purchasecreen = () => {
         ) : (
           <List>
             {purchase.data.map((data) => (
-              <ListItem key={data.id} onPress={() => {}}>
+              <ListItem
+                key={data.id}
+                onPress={() => {
+                  setUpdate(data);
+                  setModal(true);
+                }}>
                 <Body>
                   <Text>{data.barang.nama}</Text>
                   <Text note>{data.supplier.nama}</Text>

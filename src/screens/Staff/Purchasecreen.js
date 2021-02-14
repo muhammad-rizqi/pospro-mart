@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Body,
   Button,
   Container,
   Content,
@@ -195,7 +196,10 @@ const Purchasecreen = () => {
           <List>
             {purchase.data.map((data) => (
               <ListItem key={data.id} onPress={() => {}}>
-                <Text>{data.nama}</Text>
+                <Body>
+                  <Text>{data.barang.nama}</Text>
+                  <Text note>{data.supplier.nama}</Text>
+                </Body>
               </ListItem>
             ))}
           </List>

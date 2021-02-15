@@ -7,14 +7,19 @@ import {
   Fab,
   Form,
   H1,
+  Header,
   Icon,
   Input,
   Item,
+  Left,
   List,
   ListItem,
   Picker,
+  Right,
   Spinner,
   Text,
+  Title,
+  View,
 } from 'native-base';
 import {useSelector} from 'react-redux';
 import {
@@ -24,8 +29,9 @@ import {
   updatePurchaseServices,
 } from '../../services/StaffServices';
 import {Modal, ToastAndroid} from 'react-native';
+import {styles} from '../../styles/MainStyles';
 
-const Purchasecreen = () => {
+const Purchasecreen = ({navigation}) => {
   const {purchase, item, supplier} = useSelector((state) => state.staff);
   const [purchaseId, setpurchaseId] = useState(null);
 
@@ -132,60 +138,97 @@ const Purchasecreen = () => {
   console.log(purchase.data);
   return (
     <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Daftar Pembelian</Title>
+        </Body>
+        <Right />
+      </Header>
       <Modal visible={modal}>
-        <Content>
-          <H1>{purchaseId ? 'Update' : 'Tambah'} Pembelian</H1>
-          <Icon
-            name="close"
-            onPress={() => {
-              setModal(!modal);
-              resetField();
-            }}
-          />
+        <Content style={styles.padding16}>
+          <View style={styles.alignFlexEnd}>
+            <Icon
+              name="close"
+              onPress={() => {
+                setModal(!modal);
+                resetField();
+              }}
+            />
+          </View>
+          <H1 style={styles.marginV8}>
+            {purchaseId ? 'Update' : 'Tambah'} Pembelian
+          </H1>
           <Form>
-            <Picker
-              selectedValue={supplierId}
-              onValueChange={(val) =>
-                val !== 'selectSupplier' && setSupplierId(val)
-              }>
-              <Picker.Item label="Pilih supplier" value="selectSupplier" />
-              {supplier.data.map((supplierData) => (
-                <Picker.Item
-                  label={supplierData.nama}
-                  value={supplierData.id}
-                  key={supplierData.id}
+            <View style={styles.marginV8}>
+              <Text note>Supplier</Text>
+              <Item regular>
+                <Picker
+                  selectedValue={supplierId}
+                  onValueChange={(val) =>
+                    val !== 'selectSupplier' && setSupplierId(val)
+                  }>
+                  <Picker.Item label="Pilih supplier" value="selectSupplier" />
+                  {supplier.data.map((supplierData) => (
+                    <Picker.Item
+                      label={supplierData.nama}
+                      value={supplierData.id}
+                      key={supplierData.id}
+                    />
+                  ))}
+                </Picker>
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Barang</Text>
+              <Item regular>
+                <Picker
+                  selectedValue={itemId}
+                  onValueChange={(val) =>
+                    val !== 'selectItem' && setitemId(val)
+                  }>
+                  <Picker.Item
+                    label="Pilih Pembelian barang"
+                    value="selectItem"
+                  />
+                  {item.data.map((itemData) => (
+                    <Picker.Item
+                      label={itemData.nama}
+                      value={itemData.id}
+                      key={itemData.id}
+                    />
+                  ))}
+                </Picker>
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Jumlah Barang</Text>
+              <Item regular>
+                <Input
+                  placeholder="Jumlah Barang"
+                  value={`${quantity}`}
+                  onChangeText={setQuantity}
                 />
-              ))}
-            </Picker>
-            <Picker
-              selectedValue={itemId}
-              onValueChange={(val) => val !== 'selectItem' && setitemId(val)}>
-              <Picker.Item label="Pilih Pembelian barang" value="selectItem" />
-              {item.data.map((itemData) => (
-                <Picker.Item
-                  label={itemData.nama}
-                  value={itemData.id}
-                  key={itemData.id}
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Total Harga Barang</Text>
+              <Item regular>
+                <Input
+                  placeholder="Total Harga"
+                  value={`${price}`}
+                  onChangeText={setPrice}
                 />
-              ))}
-            </Picker>
-            <Item rounded>
-              <Input
-                placeholder="Jumlah Barang"
-                value={`${quantity}`}
-                onChangeText={setQuantity}
-              />
-            </Item>
-            <Item rounded>
-              <Input
-                placeholder="Total Harga"
-                value={`${price}`}
-                onChangeText={setPrice}
-              />
-            </Item>
+              </Item>
+            </View>
             <Button
               rounded
               block
+              style={styles.marginV8}
               disabled={loading}
               onPress={purchaseId ? onClickUpdate : onClickAdd}>
               {loading && <Spinner color="white" />}
@@ -195,6 +238,7 @@ const Purchasecreen = () => {
               <Button
                 rounded
                 block
+                style={styles.marginV8}
                 danger
                 disabled={deleteLoading}
                 onPress={onClickDelete}>
@@ -203,11 +247,11 @@ const Purchasecreen = () => {
               </Button>
             )}
           </Form>
+          <View style={styles.marginV16} />
         </Content>
       </Modal>
 
       <Content>
-        <H1>Hai ini screen Pembelian</H1>
         {purchase.loading ? (
           <Spinner />
         ) : purchase.data.length === 0 ? (
@@ -234,7 +278,10 @@ const Purchasecreen = () => {
           </List>
         )}
       </Content>
-      <Fab position="bottomRight" onPress={() => setModal(true)}>
+      <Fab
+        position="bottomRight"
+        style={styles.backgroundPrimary}
+        onPress={() => setModal(true)}>
         <Icon name="add" />
       </Fab>
     </Container>

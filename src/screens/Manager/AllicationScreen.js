@@ -6,13 +6,18 @@ import {
   Fab,
   Form,
   H1,
+  Header,
   Icon,
   Input,
   Item,
+  Left,
   List,
   ListItem,
+  Right,
   Spinner,
   Text,
+  Title,
+  View,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {Modal, ToastAndroid} from 'react-native';
@@ -23,8 +28,9 @@ import {
   updateAllocationServices,
   deleteAllocationServices,
 } from '../../services/ManagerServices';
+import {styles} from '../../styles/MainStyles';
 
-const AllicationScreen = () => {
+const AllicationScreen = ({navigation}) => {
   const {allocation} = useSelector((state) => state.manager);
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -112,35 +118,56 @@ const AllicationScreen = () => {
     getAllocationServices();
   }, []);
 
-  console.log(allocation);
   return (
     <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Daftar Penjualan</Title>
+        </Body>
+        <Right />
+      </Header>
       <Modal visible={modal}>
-        <Content>
-          <H1>{allocationId ? 'Update' : 'Tambah'} Pengeluaran</H1>
-          <Icon
-            name="close"
-            onPress={() => {
-              setModal(!modal);
-              resetField();
-            }}
-          />
+        <Content style={styles.padding16}>
+          <View style={styles.alignFlexEnd}>
+            <Icon
+              name="close"
+              onPress={() => {
+                setModal(!modal);
+                resetField();
+              }}
+            />
+          </View>
+          <H1 style={styles.marginV8}>
+            {allocationId ? 'Update' : 'Tambah'} Pengeluaran
+          </H1>
           <Form>
-            <Item rounded>
-              <Input
-                placeholder="Tipe Pengeluaran"
-                value={tipe}
-                onChangeText={setTipe}
-              />
-            </Item>
-            <Item rounded>
-              <Input
-                placeholder="Total Pengeluaran"
-                value={`${biaya}`}
-                onChangeText={setBiaya}
-              />
-            </Item>
+            <View style={styles.marginV8}>
+              <Text note>Nama Pengeluaran</Text>
+              <Item regular>
+                <Input
+                  placeholder="Tipe Pengeluaran"
+                  value={tipe}
+                  onChangeText={setTipe}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Total Pengeluaran</Text>
+              <Item regular>
+                <Input
+                  placeholder="Total Pengeluaran"
+                  value={`${biaya}`}
+                  onChangeText={setBiaya}
+                />
+              </Item>
+            </View>
             <Button
+              style={styles.marginV8}
               rounded
               block
               disabled={loading}
@@ -150,6 +177,7 @@ const AllicationScreen = () => {
             </Button>
             {allocationId && (
               <Button
+                style={styles.marginV8}
                 rounded
                 block
                 danger
@@ -163,7 +191,6 @@ const AllicationScreen = () => {
         </Content>
       </Modal>
       <Content>
-        <H1>Ini Screen Pengeluaran</H1>
         {allocation.loading ? (
           <Spinner />
         ) : allocation.data.length === 0 ? (
@@ -191,6 +218,7 @@ const AllicationScreen = () => {
         )}
       </Content>
       <Fab
+        style={styles.backgroundPrimary}
         position="bottomRight"
         onPress={() => {
           setModal(true);

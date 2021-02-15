@@ -41,14 +41,14 @@ const LoginScreen = ({navigation}) => {
       }
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      console.log(error.response);
     }
   };
 
   return (
     <Container>
       <Header transparent />
-      <Content style={styles.marginH16}>
+      <Content style={styles.padding16}>
         <H1 style={styles.marginV8}>Login</H1>
         <Form>
           <Item regular style={styles.marginV8}>

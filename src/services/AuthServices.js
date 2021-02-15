@@ -3,12 +3,12 @@ import store from '../redux/store';
 import {apiPublic} from './ApiServices';
 import {removeToken} from './token/Token';
 
-const logout = () => {
+export const logout = () => {
   removeToken();
   store.dispatch(clearToken());
 };
 
-const loginServices = (email, password, remember) => {
+export const loginServices = (email, password, remember) => {
   return apiPublic.post('/login', {
     email,
     password,
@@ -16,4 +16,18 @@ const loginServices = (email, password, remember) => {
   });
 };
 
-export {logout, loginServices};
+export const registerServices = (
+  nama,
+  email,
+  no_hp,
+  password,
+  password_confirmation,
+) => {
+  return apiPublic.post('/register', {
+    nama,
+    email,
+    no_hp,
+    password,
+    password_confirmation,
+  });
+};

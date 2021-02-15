@@ -9,7 +9,6 @@ import {
   Icon,
   Input,
   Item,
-  Label,
   List,
   ListItem,
   Spinner,

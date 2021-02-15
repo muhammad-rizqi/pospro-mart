@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Container,
   Content,
@@ -13,10 +13,50 @@ import {
   Left,
   Body,
   View,
+  Spinner,
 } from 'native-base';
 import {styles} from '../../styles/MainStyles';
+import {registerServices} from '../../services/AuthServices';
+import {ToastAndroid} from 'react-native';
 
 const RegisterScreen = ({navigation}) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const onClickRegister = () => {
+    if (
+      name === '' ||
+      email === '' ||
+      phone === '' ||
+      password === '' ||
+      confirmPassword === '' ||
+      password !== confirmPassword
+    ) {
+      ToastAndroid.show('Isi dengan benar', ToastAndroid.LONG);
+    } else {
+      setLoading(true);
+      registerServices(name, email, phone, password, confirmPassword)
+        .then((res) => {
+          console.log(res);
+          ToastAndroid.show(
+            'Behasil mendaftar silahkan login',
+            ToastAndroid.LONG,
+          );
+          setLoading(false);
+          navigation.navigate('Login');
+        })
+        .catch((err) => {
+          setLoading(false);
+          ToastAndroid.show('Gagal mendaftar', ToastAndroid.LONG);
+          console.log(err.response);
+        });
+    }
+  };
+
   return (
     <Container>
       <Header transparent>
@@ -33,7 +73,11 @@ const RegisterScreen = ({navigation}) => {
           <View style={styles.marginV8}>
             <Text note>Nama Lengkap</Text>
             <Item regular>
-              <Input placeholder="Masukkan Nama Lengkap" />
+              <Input
+                placeholder="Nama Lengkap"
+                value={name}
+                onChangeText={setName}
+              />
             </Item>
           </View>
           <View style={styles.marginV8}>
@@ -42,32 +86,51 @@ const RegisterScreen = ({navigation}) => {
               <Input
                 placeholder="user@email.com"
                 keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
               />
             </Item>
           </View>
           <View style={styles.marginV8}>
             <Text note>Nomor HP</Text>
             <Item regular>
-              <Input placeholder="62812345678" keyboardType="phone-pad" />
+              <Input
+                placeholder="62812345678"
+                keyboardType="phone-pad"
+                value={`${phone}`}
+                onChangeText={setPhone}
+              />
             </Item>
           </View>
           <View style={styles.marginV8}>
             <Text note>Kata Sandi</Text>
             <Item regular>
-              <Input placeholder="password" secureTextEntry />
+              <Input
+                placeholder="password"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+              />
             </Item>
           </View>
           <View style={styles.marginV8}>
             <Text note>Konfirmasi Kata Sandi</Text>
             <Item regular>
-              <Input placeholder="password" secureTextEntry />
+              <Input
+                placeholder="password"
+                secureTextEntry
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
             </Item>
           </View>
         </Form>
         <Button
           style={styles.marginV8}
           block
-          onPress={() => navigation.navigate('Login')}>
+          onPress={onClickRegister}
+          disabled={loading}>
+          {loading && <Spinner color="white" />}
           <Text>Mendaftar</Text>
         </Button>
         <View style={styles.marginV8} />

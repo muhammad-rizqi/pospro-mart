@@ -9,19 +9,21 @@ import {
   H1,
   Button,
   Text,
-  Icon,
   Header,
   ListItem,
   CheckBox,
   Body,
   View,
   Spinner,
+  Grid,
+  Col,
 } from 'native-base';
 import {useDispatch} from 'react-redux';
 import {changeToken, setUser} from '../../redux/action';
 import {loginServices} from '../../services/AuthServices';
 import {storeToken} from '../../services/token/Token';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {styles} from '../../styles/MainStyles';
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,56 +53,55 @@ const LoginScreen = ({navigation}) => {
   return (
     <Container>
       <Header transparent />
-      <Content>
-        <H1>Login</H1>
+      <Content style={styles.marginH16}>
+        <H1 style={styles.marginV8}>Login</H1>
         <Form>
-          <ListItem noBorder>
-            <Item rounded>
-              <Input
-                placeholder="Email"
-                onChangeText={(e) => setEmail(e)}
-                keyboardType="email-address"
-              />
-            </Item>
-          </ListItem>
-          <ListItem noBorder>
-            <Item rounded>
-              <Input
-                placeholder="Password"
-                onChangeText={(p) => setPassword(p)}
-                secureTextEntry
-              />
-            </Item>
-          </ListItem>
-          <ListItem noBorder>
+          <Item regular style={styles.marginV8}>
+            <Icon name="at" size={20} style={styles.marginH8} />
+            <Input
+              placeholder="Email"
+              onChangeText={(e) => setEmail(e)}
+              keyboardType="email-address"
+            />
+          </Item>
+          <Item regular style={styles.marginV8}>
+            <Icon name="lock" size={20} style={styles.marginH8} />
+            <Input
+              placeholder="Password"
+              onChangeText={(p) => setPassword(p)}
+              secureTextEntry
+            />
+          </Item>
+          <View style={[styles.flexRow, styles.marginV8]}>
             <CheckBox
               checked={remember}
               onPress={() => setRemember(!remember)}
+              style={styles.marginR16}
             />
-            <Body>
-              <Text>Ingat saya?</Text>
-            </Body>
-          </ListItem>
-          <Text onPress={() => navigation.navigate('Forgot')}>
-            Lupa Kata Sandi?
-          </Text>
+            <Text style={styles.centerFlex1}>Ingat saya?</Text>
+          </View>
         </Form>
         <Button
           block
-          style={{margin: 16}}
           disabled={loading}
-          onPress={onClickLogin}>
+          onPress={onClickLogin}
+          style={styles.marginV8}>
           {loading && <Spinner color="white" />}
           <Text>Login</Text>
         </Button>
-        <Text>or</Text>
+        <Text style={styles.tetxCenter}>or</Text>
         <Button
           block
-          style={{margin: 16}}
           success
-          onPress={() => navigation.navigate('Register')}>
+          onPress={() => navigation.navigate('Register')}
+          style={styles.marginV8}>
           <Text>Register</Text>
         </Button>
+        <Text
+          style={styles.tetxCenter}
+          onPress={() => navigation.navigate('Forgot')}>
+          Lupa Kata Sandi?
+        </Text>
       </Content>
     </Container>
   );

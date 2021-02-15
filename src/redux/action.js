@@ -18,24 +18,4 @@ const setUser = (user) => {
   };
 };
 
-const setShopId = (data) => {
-  return {
-    type: 'SET_ID',
-    data: data,
-  };
-};
-
-const setCartData = (data) => {
-  return {
-    type: 'SET_CART',
-    data: data,
-  };
-};
-
-const setChatBadge = (data) => {
-  return {
-    type: 'SET_CHAT_BADGE',
-    data: data,
-  };
-};
-export {changeToken, clearToken, setUser, setShopId, setCartData, setChatBadge};
+export {changeToken, clearToken, setUser};

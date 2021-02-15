@@ -1,8 +1,16 @@
 import React from 'react';
-import {Button, Container, Content, H1, Text} from 'native-base';
+import {
+  Button,
+  Container,
+  Content,
+  H1,
+  List,
+  ListItem,
+  Text,
+} from 'native-base';
 import {logout} from '../../services/AuthServices';
 
-const ManagerDashboardScreen = () => {
+const ManagerDashboardScreen = ({navigation}) => {
   const onClickLogout = () => {
     logout();
   };
@@ -11,6 +19,11 @@ const ManagerDashboardScreen = () => {
     <Container>
       <Content>
         <H1>Halo Manager</H1>
+        <List>
+          <ListItem onPress={() => navigation.navigate('Allocation')}>
+            <Text>Pengeluaran</Text>
+          </ListItem>
+        </List>
         <Button>
           <Text onPress={onClickLogout}>Logout</Text>
         </Button>

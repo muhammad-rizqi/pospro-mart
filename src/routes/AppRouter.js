@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
+  AllicationScreen,
   CashierDashboardScreen,
   CategoryScreen,
   ForgotScreen,
@@ -115,6 +116,7 @@ const AppRouter = () => {
                   name="ManagerDashboard"
                   component={ManagerDashboardScreen}
                 />
+                <Stack.Screen name="Allocation" component={AllicationScreen} />
               </>
             )}
           </>

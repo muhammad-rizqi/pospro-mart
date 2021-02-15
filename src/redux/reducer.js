@@ -49,36 +49,14 @@ const staffReducer = (state = staffState, action) => {
   }
 };
 
-const penyetorState = {
-  penyetoran: {loading: true, data: [], error: null},
-  penjemputan: {loading: true, data: [], error: null},
+const managerState = {
+  allocation: {loading: true, data: [], error: null},
 };
 
-const penyetorReducer = (state = penyetorState, action) => {
-  switch (action.type) {
-    case 'SET_DATA_PENJEMPUTAN':
-      return {...state, penjemputan: action.data};
-    case 'SET_DATA_PENYETORAN':
-      return {...state, penyetoran: action.data};
-    default:
-      return state;
-  }
-};
-
-const penjualState = {
-  saldo: {loading: true, data: 0, error: false},
-  penjualan: {loading: true, data: [], error: null},
-  stok: {loading: true, data: [], error: null},
-};
-
-const penjualReducer = (state = penjualState, action) => {
-  switch (action.type) {
-    case 'SET_PENJUAL_SALDO':
-      return {...state, saldo: action.data};
-    case 'SET_PENJUALAN':
-      return {...state, penjualan: action.data};
-    case 'SET_STOK':
-      return {...state, stok: action.data};
+const managerReducer = (state = managerState, {type, data}) => {
+  switch (type) {
+    case 'SET_ALLOCATION':
+      return {...state, allocation: data};
     default:
       return state;
   }
@@ -88,6 +66,5 @@ export default combineReducers({
   user: userReducer,
   token: tokenReducer,
   staff: staffReducer,
-  penyetor: penyetorReducer,
-  penjual: penjualReducer,
+  manager: managerReducer,
 });

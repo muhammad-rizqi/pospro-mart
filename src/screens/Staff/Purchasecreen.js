@@ -10,7 +10,6 @@ import {
   Icon,
   Input,
   Item,
-  Label,
   List,
   ListItem,
   Picker,
@@ -22,7 +21,6 @@ import {
   addPurchaseServices,
   deletePurchaseServices,
   getPurchaseServices,
-  getSupplierServices,
   updatePurchaseServices,
 } from '../../services/StaffServices';
 import {Modal, ToastAndroid} from 'react-native';

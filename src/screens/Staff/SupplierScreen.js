@@ -6,13 +6,18 @@ import {
   Fab,
   Form,
   H1,
+  Header,
   Icon,
   Input,
   Item,
+  Left,
   List,
   ListItem,
+  Right,
   Spinner,
   Text,
+  Title,
+  View,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {Modal, ToastAndroid} from 'react-native';
@@ -23,8 +28,9 @@ import {
   getSupplierServices,
   updateSupplierServices,
 } from '../../services/StaffServices';
+import {styles} from '../../styles/MainStyles';
 
-const SupplierScreen = () => {
+const SupplierScreen = ({navigation}) => {
   const {supplier} = useSelector((state) => state.staff);
   const [modal, setModal] = useState(false);
   const [supplierId, setSupplierId] = useState(null);
@@ -108,40 +114,65 @@ const SupplierScreen = () => {
 
   return (
     <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Supplier</Title>
+        </Body>
+        <Right />
+      </Header>
       <Modal visible={modal}>
-        <Content>
-          <H1>{supplierId ? 'Update' : 'Tambah'} Supplier</H1>
-          <Icon
-            name="close"
-            onPress={() => {
-              setModal(!modal);
-              resetField();
-            }}
-          />
+        <Content style={styles.padding16}>
+          <View style={styles.alignFlexEnd}>
+            <Icon
+              name="close"
+              onPress={() => {
+                setModal(!modal);
+                resetField();
+              }}
+            />
+          </View>
+          <H1 style={styles.marginV8}>
+            {supplierId ? 'Update' : 'Tambah'} Supplier
+          </H1>
           <Form>
-            <Item rounded>
-              <Input
-                placeholder="Nama Supplier"
-                value={nama}
-                onChangeText={setNama}
-              />
-            </Item>
-            <Item rounded>
-              <Input
-                placeholder="No Hp"
-                value={`${noHp}`}
-                onChangeText={setNoHp}
-              />
-            </Item>
-            <Item rounded>
-              <Input
-                multiline
-                placeholder="Alamat"
-                value={alamat}
-                onChangeText={setAlamat}
-              />
-            </Item>
+            <View style={styles.marginV8}>
+              <Text note>Nama Supplier</Text>
+              <Item regular>
+                <Input
+                  placeholder="Nama Supplier"
+                  value={nama}
+                  onChangeText={setNama}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Nomor Telepon</Text>
+              <Item regular>
+                <Input
+                  placeholder="No Telepon"
+                  value={`${noHp}`}
+                  onChangeText={setNoHp}
+                />
+              </Item>
+            </View>
+            <View>
+              <Text note>Alamat</Text>
+              <Item regular>
+                <Input
+                  multiline
+                  placeholder="Alamat"
+                  value={alamat}
+                  onChangeText={setAlamat}
+                />
+              </Item>
+            </View>
             <Button
+              style={styles.marginV8}
               rounded
               block
               disabled={loading}
@@ -154,6 +185,7 @@ const SupplierScreen = () => {
                 rounded
                 block
                 danger
+                style={styles.marginV8}
                 disabled={deleteLoading}
                 onPress={onClickDelete}>
                 {deleteLoading && <Spinner color="white" />}
@@ -164,7 +196,6 @@ const SupplierScreen = () => {
         </Content>
       </Modal>
       <Content>
-        <H1>Supplier Screen</H1>
         {supplier.loading ? (
           <Spinner />
         ) : supplier.data.length === 0 ? (
@@ -184,6 +215,7 @@ const SupplierScreen = () => {
                 }}>
                 <Body>
                   <Text>{suplierData.nama}</Text>
+                  <Text note>{suplierData.no_hp}</Text>
                   <Text note numberOfLines={2}>
                     {suplierData.alamat}
                   </Text>
@@ -193,7 +225,10 @@ const SupplierScreen = () => {
           </List>
         )}
       </Content>
-      <Fab position="bottomRight" onPress={() => setModal(true)}>
+      <Fab
+        position="bottomRight"
+        onPress={() => setModal(true)}
+        style={styles.backgroundPrimary}>
         <Icon name="add" />
       </Fab>
     </Container>

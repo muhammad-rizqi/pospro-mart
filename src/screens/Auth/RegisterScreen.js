@@ -5,7 +5,6 @@ import {
   Form,
   Item,
   Input,
-  Label,
   H1,
   Button,
   Text,
@@ -13,7 +12,9 @@ import {
   Header,
   Left,
   Body,
+  View,
 } from 'native-base';
+import {styles} from '../../styles/MainStyles';
 
 const RegisterScreen = ({navigation}) => {
   return (
@@ -26,29 +27,50 @@ const RegisterScreen = ({navigation}) => {
         </Left>
         <Body />
       </Header>
-      <Content>
-        <H1>Register</H1>
+      <Content style={styles.padding16}>
+        <H1>Mendaftar</H1>
         <Form>
-          <Item floatingLabel>
-            <Label>Email</Label>
-            <Input />
-          </Item>
-          <Item floatingLabel>
-            <Label>Name</Label>
-            <Input />
-          </Item>
-          <Item floatingLabel success>
-            <Label>Password</Label>
-            <Input secureTextEntry />
-            <Icon name="checkmark-circle" />
-          </Item>
+          <View style={styles.marginV8}>
+            <Text note>Nama Lengkap</Text>
+            <Item regular>
+              <Input placeholder="Masukkan Nama Lengkap" />
+            </Item>
+          </View>
+          <View style={styles.marginV8}>
+            <Text note>Email</Text>
+            <Item regular>
+              <Input
+                placeholder="user@email.com"
+                keyboardType="email-address"
+              />
+            </Item>
+          </View>
+          <View style={styles.marginV8}>
+            <Text note>Nomor HP</Text>
+            <Item regular>
+              <Input placeholder="62812345678" keyboardType="phone-pad" />
+            </Item>
+          </View>
+          <View style={styles.marginV8}>
+            <Text note>Kata Sandi</Text>
+            <Item regular>
+              <Input placeholder="password" secureTextEntry />
+            </Item>
+          </View>
+          <View style={styles.marginV8}>
+            <Text note>Konfirmasi Kata Sandi</Text>
+            <Item regular>
+              <Input placeholder="password" secureTextEntry />
+            </Item>
+          </View>
         </Form>
         <Button
+          style={styles.marginV8}
           block
-          style={{margin: 16}}
           onPress={() => navigation.navigate('Login')}>
-          <Text>Register</Text>
+          <Text>Mendaftar</Text>
         </Button>
+        <View style={styles.marginV8} />
       </Content>
     </Container>
   );

@@ -12,4 +12,5 @@ export const styles = StyleSheet.create({
   marginV8: {marginVertical: 8},
   marginH8: {marginHorizontal: 8},
   flexRow: {flexDirection: 'row'},
+  padding16: {padding: 16},
 });

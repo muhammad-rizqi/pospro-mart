@@ -5,18 +5,13 @@ import {
   Form,
   Item,
   Input,
-  Label,
   H1,
   Button,
   Text,
   Header,
-  ListItem,
   CheckBox,
-  Body,
   View,
   Spinner,
-  Grid,
-  Col,
 } from 'native-base';
 import {useDispatch} from 'react-redux';
 import {changeToken, setUser} from '../../redux/action';
@@ -78,7 +73,11 @@ const LoginScreen = ({navigation}) => {
               onPress={() => setRemember(!remember)}
               style={styles.marginR16}
             />
-            <Text style={styles.centerFlex1}>Ingat saya?</Text>
+            <Text
+              style={styles.centerFlex1}
+              onPress={() => setRemember(!remember)}>
+              Ingat saya?
+            </Text>
           </View>
         </Form>
         <Button

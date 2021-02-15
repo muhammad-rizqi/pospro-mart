@@ -5,7 +5,6 @@ import {
   Form,
   Item,
   Input,
-  Label,
   H1,
   Button,
   Text,
@@ -13,7 +12,9 @@ import {
   Header,
   Left,
   Body,
+  View,
 } from 'native-base';
+import {styles} from '../../styles/MainStyles';
 
 const ForgotScreen = ({navigation}) => {
   return (
@@ -26,17 +27,22 @@ const ForgotScreen = ({navigation}) => {
         </Left>
         <Body />
       </Header>
-      <Content>
+      <Content style={styles.padding16}>
         <H1>Lupa Kata Sandi</H1>
         <Form>
-          <Item floatingLabel>
-            <Label>Email</Label>
-            <Input />
-          </Item>
+          <View style={styles.marginV8}>
+            <Text note>Email</Text>
+            <Item regular>
+              <Input
+                placeholder="user@email.com"
+                keyboardType="email-address"
+              />
+            </Item>
+          </View>
         </Form>
         <Button
+          style={styles.marginV8}
           block
-          style={{margin: 16}}
           onPress={() => navigation.navigate('Login')}>
           <Text>Kirim Token</Text>
         </Button>

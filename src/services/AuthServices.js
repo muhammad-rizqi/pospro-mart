@@ -31,3 +31,23 @@ export const registerServices = (
     password_confirmation,
   });
 };
+
+export const forgorPasswordServices = (email) => {
+  return apiPublic.post('/password/email', {
+    email,
+  });
+};
+
+export const resetPasswordServices = (
+  email,
+  token,
+  password,
+  password_confirmation,
+) => {
+  return apiPublic.post('/password/reset', {
+    email,
+    token,
+    password,
+    password_confirmation,
+  });
+};

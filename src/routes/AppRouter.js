@@ -14,6 +14,7 @@ import {
   NoConnection,
   Purchasecreen,
   RegisterScreen,
+  ResetScreen,
   StaffDashboardScreen,
   SupplierScreen,
 } from '../screens';
@@ -79,6 +80,7 @@ const AppRouter = () => {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Forgot" component={ForgotScreen} />
+            <Stack.Screen name="Reset" component={ResetScreen} />
           </>
         ) : user.roles ? (
           <>

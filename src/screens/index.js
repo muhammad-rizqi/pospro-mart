@@ -1,6 +1,7 @@
 import ForgotScreen from './Auth/ForgotScreen';
 import LoginScreen from './Auth/LoginScreen';
 import RegisterScreen from './Auth/RegisterScreen';
+import ResetScreen from './Auth/ResetScreen';
 import CashierDashboardScreen from './Cashier/CashierDashboardScreen';
 import AllicationScreen from './Manager/AllicationScreen';
 import ManagerDashboardScreen from './Manager/ManagerDashboardScreen';
@@ -26,4 +27,5 @@ export {
   NoConnection,
   Purchasecreen,
   AllicationScreen,
+  ResetScreen,
 };

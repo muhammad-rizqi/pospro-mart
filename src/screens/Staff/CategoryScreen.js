@@ -1,4 +1,5 @@
 import {
+  Body,
   Button,
   Container,
   Content,
@@ -9,11 +10,14 @@ import {
   Icon,
   Input,
   Item,
-  Label,
+  Left,
   List,
   ListItem,
+  Right,
   Spinner,
   Text,
+  Title,
+  View,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {Modal, ToastAndroid} from 'react-native';
@@ -24,8 +28,9 @@ import {
   getCategoryServices,
   updateCategoryServices,
 } from '../../services/StaffServices';
+import {styles} from '../../styles/MainStyles';
 
-const CategoryScreen = () => {
+const CategoryScreen = ({navigation}) => {
   const {staff} = useSelector((state) => state);
   const [modal, setModal] = useState(false);
   const [catId, setCatId] = useState(null);
@@ -109,25 +114,46 @@ const CategoryScreen = () => {
 
   return (
     <Container>
-      <Header />
+      <Header>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Kategori</Title>
+        </Body>
+        <Right />
+      </Header>
       <Modal visible={modal}>
-        <Content>
-          <H1>{catId ? 'Update' : 'Tambah'} Kategori</H1>
-          <Icon
-            name="close"
-            onPress={() => {
-              setModal(!modal);
-              resetField();
-            }}
-          />
+        <Content style={styles.padding16}>
+          <View style={styles.alignFlexEnd}>
+            <Icon
+              name="close"
+              onPress={() => {
+                setModal(!modal);
+                resetField();
+              }}
+            />
+          </View>
+          <H1 style={styles.marginV8}>
+            {catId ? 'Update' : 'Tambah'} Kategori
+          </H1>
           <Form>
-            <Item rounded>
-              <Label>Nama Ketegori</Label>
-              <Input placeholder="Ayam" value={name} onChangeText={setName} />
-            </Item>
+            <View style={styles.marginV8}>
+              <Text note>Nama Ketegori</Text>
+              <Item regular>
+                <Input
+                  placeholder="Kategori"
+                  value={name}
+                  onChangeText={setName}
+                />
+              </Item>
+            </View>
             <Button
               rounded
               block
+              style={styles.marginV8}
               disabled={loading}
               onPress={catId ? onClickUpdate : onClickAdd}>
               {loading && <Spinner color="white" />}
@@ -138,6 +164,7 @@ const CategoryScreen = () => {
                 rounded
                 block
                 danger
+                style={styles.marginV8}
                 disabled={deleteLoading}
                 onPress={onClickDelete}>
                 {deleteLoading && <Spinner color="white" />}
@@ -148,7 +175,6 @@ const CategoryScreen = () => {
         </Content>
       </Modal>
       <Content>
-        <H1>Category Screen</H1>
         {staff.category.loading ? (
           <Spinner />
         ) : staff.category.data.length === 0 ? (
@@ -167,7 +193,10 @@ const CategoryScreen = () => {
           </List>
         )}
       </Content>
-      <Fab position="bottomRight" onPress={() => setModal(true)}>
+      <Fab
+        position="bottomRight"
+        onPress={() => setModal(true)}
+        style={styles.backgroundPrimary}>
         <Icon name="add" />
       </Fab>
     </Container>

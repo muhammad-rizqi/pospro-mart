@@ -6,6 +6,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  alignFlexEnd: {alignItems: 'flex-end'},
+  backgroundPrimary: {backgroundColor: '#5067FF'},
   tetxCenter: {textAlign: 'center'},
   marginR16: {marginRight: 16},
   marginH16: {marginHorizontal: 16},

@@ -7,15 +7,19 @@ import {
   Fab,
   Form,
   H1,
+  Header,
   Icon,
   Input,
   Item,
+  Left,
   List,
   ListItem,
   Picker,
   Right,
   Spinner,
   Text,
+  Title,
+  View,
 } from 'native-base';
 import {useSelector} from 'react-redux';
 import {
@@ -25,8 +29,9 @@ import {
 } from '../../services/StaffServices';
 import {Modal, ToastAndroid} from 'react-native';
 import {addItemServices} from '../../services/StaffServices';
+import {styles} from '../../styles/MainStyles';
 
-const ItemScreen = () => {
+const ItemScreen = ({navigation}) => {
   const {item, category} = useSelector((state) => state.staff);
   const [modal, setModal] = useState(false);
   const [itemId, setItemId] = useState(null);
@@ -160,71 +165,117 @@ const ItemScreen = () => {
 
   return (
     <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Daftar Barang</Title>
+        </Body>
+        <Right />
+      </Header>
       <Modal visible={modal}>
-        <Content>
-          <H1>{itemId ? 'Update' : 'Tambah'} Barang</H1>
-          <Icon
-            name="close"
-            onPress={() => {
-              setModal(!modal);
-              resetField();
-            }}
-          />
+        <Content style={styles.padding16}>
+          <View style={styles.alignFlexEnd}>
+            <Icon
+              name="close"
+              onPress={() => {
+                setModal(!modal);
+                resetField();
+              }}
+            />
+          </View>
+          <H1 style={styles.marginV8}>{itemId ? 'Update' : 'Tambah'} Barang</H1>
           <Form>
-            <Item rounded>
-              <Input
-                placeholder="Barcode"
-                value={`${uid}`}
-                onChangeText={setUid}
-              />
-              <Icon active name="barcode" />
-            </Item>
-            <Item rounded>
-              <Input
-                placeholder="Nama Barang"
-                value={nama}
-                onChangeText={setNama}
-              />
-            </Item>
-            <Item rounded>
-              <Input placeholder="Merek" value={merk} onChangeText={setMerk} />
-            </Item>
-            <Picker selectedValue={kategori_id} onValueChange={setKategori_id}>
-              {category.data.map((cat) => (
-                <Picker.Item label={cat.nama} value={cat.id} key={cat.id} />
-              ))}
-            </Picker>
-            <Item rounded>
-              <Input
-                placeholder="Harga Beli"
-                value={`${harga_beli}`}
-                onChangeText={setHarga_beli}
-              />
-            </Item>
-            <Item rounded>
-              <Input
-                placeholder="Harga Jual"
-                value={`${harga_jual}`}
-                onChangeText={setHarga_jual}
-              />
-            </Item>
-            <Item rounded>
-              <Input
-                placeholder="Stok"
-                value={`${stok}`}
-                onChangeText={setStok}
-              />
-            </Item>
-            <Item rounded>
-              <Input
-                placeholder="Diskon"
-                value={`${diskon}`}
-                onChangeText={setDiskon}
-              />
-            </Item>
+            <View style={styles.marginV8}>
+              <Text note>Kode Barang</Text>
+              <Item regular>
+                <Input
+                  placeholder="Kode Barang"
+                  value={`${uid}`}
+                  onChangeText={setUid}
+                />
+                <Icon active name="barcode" />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Nama Barnag</Text>
+              <Item regular>
+                <Input
+                  placeholder="Nama Barang"
+                  value={nama}
+                  onChangeText={setNama}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Merek</Text>
+              <Item regular>
+                <Input
+                  placeholder="Merek"
+                  value={merk}
+                  onChangeText={setMerk}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Kategori</Text>
+              <Item regular>
+                <Picker
+                  selectedValue={kategori_id}
+                  onValueChange={setKategori_id}>
+                  {category.data.map((cat) => (
+                    <Picker.Item label={cat.nama} value={cat.id} key={cat.id} />
+                  ))}
+                </Picker>
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Harga Beli</Text>
+              <Item regular>
+                <Input
+                  placeholder="Harga Beli"
+                  value={`${harga_beli}`}
+                  onChangeText={setHarga_beli}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Harga Jual</Text>
+              <Item regular>
+                <Input
+                  placeholder="Harga Jual"
+                  value={`${harga_jual}`}
+                  onChangeText={setHarga_jual}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Harga Stok</Text>
+              <Item regular>
+                <Input
+                  placeholder="Stok"
+                  value={`${stok}`}
+                  onChangeText={setStok}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Diskon</Text>
+              <Item regular>
+                <Input
+                  placeholder="Diskon"
+                  value={`${diskon}`}
+                  onChangeText={setDiskon}
+                />
+              </Item>
+            </View>
             <Button
               rounded
               block
+              style={styles.marginV8}
               disabled={loading}
               onPress={itemId ? onClickUpdate : onClickAdd}>
               {loading && <Spinner color="white" />}
@@ -233,6 +284,7 @@ const ItemScreen = () => {
 
             {itemId && (
               <Button
+                style={styles.marginV8}
                 rounded
                 block
                 danger
@@ -243,10 +295,10 @@ const ItemScreen = () => {
               </Button>
             )}
           </Form>
+          <View style={styles.marginV16} />
         </Content>
       </Modal>
       <Content>
-        <H1>List Barang</H1>
         {item.loading ? (
           <Spinner />
         ) : item.data.length === 0 ? (
@@ -277,7 +329,10 @@ const ItemScreen = () => {
           </List>
         )}
       </Content>
-      <Fab position="bottomRight" onPress={() => setModal(true)}>
+      <Fab
+        position="bottomRight"
+        onPress={() => setModal(true)}
+        style={styles.backgroundPrimary}>
         <Icon name="add" />
       </Fab>
     </Container>

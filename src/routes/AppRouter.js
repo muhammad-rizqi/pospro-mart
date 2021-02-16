@@ -17,6 +17,7 @@ import {
   ResetScreen,
   StaffDashboardScreen,
   SupplierScreen,
+  VerifyScreen,
 } from '../screens';
 import {Container, Content, H1, Spinner} from 'native-base';
 import {styles} from '../styles/MainStyles';
@@ -32,7 +33,6 @@ const AppRouter = () => {
   const [error, setError] = useState('');
 
   const dispatch = useDispatch();
-
   const getStoredToken = async () => {
     try {
       const storedToken = await getToken();
@@ -84,6 +84,9 @@ const AppRouter = () => {
           </>
         ) : user.roles ? (
           <>
+            {user.email_verified_at === null && (
+              <Stack.Screen name="VerifyEmail" component={VerifyScreen} />
+            )}
             {user.roles[0].id === 5 && (
               <>
                 <Stack.Screen

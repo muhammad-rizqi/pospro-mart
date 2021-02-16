@@ -19,6 +19,7 @@ import {loginServices} from '../../services/AuthServices';
 import {storeToken} from '../../services/token/Token';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {styles} from '../../styles/MainStyles';
+import {ToastAndroid} from 'react-native';
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,20 +29,25 @@ const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const onClickLogin = async () => {
-    setLoading(true);
-    try {
-      const {data} = await loginServices(email, password, remember ? 1 : 0);
-      setLoading(false);
-      if (data.code === 200) {
-        if (remember) {
-          storeToken(data.data.token);
+    if (email === '' || password === '') {
+      ToastAndroid.show('Harap isi dengan benar', ToastAndroid.LONG);
+    } else {
+      setLoading(true);
+      try {
+        const {data} = await loginServices(email, password, remember ? 1 : 0);
+        setLoading(false);
+        if (data.code === 200) {
+          if (remember) {
+            storeToken(data.data.token);
+          }
+          dispatch(setUser(data.data.user));
+          dispatch(changeToken(data.data.token));
         }
-        dispatch(setUser(data.data.user));
-        dispatch(changeToken(data.data.token));
+      } catch (error) {
+        setLoading(false);
+        ToastAndroid.show(error.response.data.errorDetails, ToastAndroid.LONG);
+        console.log(error.response);
       }
-    } catch (error) {
-      setLoading(false);
-      console.log(error.response);
     }
   };
 

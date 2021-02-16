@@ -1,6 +1,6 @@
 import {clearToken} from '../redux/action';
 import store from '../redux/store';
-import {apiPublic} from './ApiServices';
+import {apiPrivate, apiPublic} from './ApiServices';
 import {removeToken} from './token/Token';
 
 export const logout = () => {
@@ -50,4 +50,8 @@ export const resetPasswordServices = (
     password,
     password_confirmation,
   });
+};
+
+export const sendVerificationServices = () => {
+  return apiPrivate().get('/email/resend');
 };

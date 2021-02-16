@@ -1,9 +1,10 @@
 import axios from 'axios';
 import store from '../redux/store';
 
+const HOST = 'https://pospondokprogrammer.herokuapp.com';
+
 const apiPublic = axios.create({
-  baseURL: 'https://pospondokprogrammer.herokuapp.com/api/',
-  timeout: 3000,
+  baseURL: HOST + '/api/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -16,8 +17,7 @@ const getReduxToken = () => {
 
 const apiPrivate = () => {
   return axios.create({
-    baseURL: 'https://pospondokprogrammer.herokuapp.com/api/',
-    timeout: 5000,
+    baseURL: HOST + '/api/',
     headers: {
       Authorization: 'Bearer ' + getReduxToken(),
     },

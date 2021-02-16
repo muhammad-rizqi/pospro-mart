@@ -52,3 +52,14 @@ export const updateProfileServices = (
     return apiPrivate().post('/profil', body);
   }
 };
+
+export const changePasswordServices = (password, password_confirmation) => {
+  return apiPrivate().post('/profil/password', {
+    password,
+    password_confirmation,
+  });
+};
+
+export const deleteAccountServices = () => {
+  return apiPrivate().delete('/profil');
+};

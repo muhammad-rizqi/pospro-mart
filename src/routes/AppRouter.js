@@ -15,6 +15,7 @@ import {
   Purchasecreen,
   RegisterScreen,
   ResetScreen,
+  SettingsScreen,
   StaffDashboardScreen,
   SupplierScreen,
   UpdateProfile,
@@ -126,6 +127,7 @@ const AppRouter = () => {
               </>
             )}
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
           </>
         ) : (
           <Stack.Screen name="NoConnection" component={NoConnection} />

@@ -40,6 +40,9 @@ const StaffDashboardScreen = ({navigation}) => {
           <ListItem onPress={() => navigation.navigate('Purchase')}>
             <Text>Pembelian</Text>
           </ListItem>
+          <ListItem onPress={() => navigation.navigate('Settings')}>
+            <Text>Pengaturan</Text>
+          </ListItem>
         </List>
         <Button>
           <Text onPress={onClickLogout}>Logout</Text>

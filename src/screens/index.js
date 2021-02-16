@@ -13,6 +13,7 @@ import ItemScreen from './Staff/ItemScreen';
 import Purchasecreen from './Staff/Purchasecreen';
 import StaffDashboardScreen from './Staff/StaffDashboardScreen';
 import SupplierScreen from './Staff/SupplierScreen';
+import SettingsScreen from './User/SettingsScreen';
 import UpdateProfile from './User/UpdateProfile';
 
 export {
@@ -32,4 +33,5 @@ export {
   ResetScreen,
   VerifyScreen,
   UpdateProfile,
+  SettingsScreen,
 };

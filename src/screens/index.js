@@ -13,6 +13,7 @@ import ItemScreen from './Staff/ItemScreen';
 import Purchasecreen from './Staff/Purchasecreen';
 import StaffDashboardScreen from './Staff/StaffDashboardScreen';
 import SupplierScreen from './Staff/SupplierScreen';
+import UpdateProfile from './User/UpdateProfile';
 
 export {
   LoginScreen,
@@ -30,4 +31,5 @@ export {
   AllicationScreen,
   ResetScreen,
   VerifyScreen,
+  UpdateProfile,
 };

@@ -53,7 +53,6 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <Container>
-      <Header transparent />
       <Content style={styles.padding16}>
         <H1 style={styles.marginV8}>Login</H1>
         <Form>

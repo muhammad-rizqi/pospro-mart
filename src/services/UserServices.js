@@ -1,6 +1,7 @@
+import axios from 'axios';
 import {setUser} from '../redux/action';
 import store from '../redux/store';
-import {apiPrivate} from './ApiServices';
+import {apiPrivate, HOST, getReduxToken} from './ApiServices';
 
 export const getProfileServices = async (onFinished, onError) => {
   try {
@@ -11,5 +12,43 @@ export const getProfileServices = async (onFinished, onError) => {
     onError(error);
   } finally {
     onFinished();
+  }
+};
+
+export const updateProfileServices = (
+  foto = null,
+  nama,
+  email,
+  no_hp,
+  umur,
+  alamat,
+) => {
+  const body = {
+    nama,
+    no_hp,
+    umur,
+    alamat,
+  };
+
+  email ? (body.email = email) : null;
+
+  if (foto) {
+    const data = new FormData();
+    data.append('foto', {
+      name: foto.fileName,
+      type: foto.type,
+      uri: foto.uri,
+    });
+    Object.keys(body).forEach((key) => {
+      data.append(key, body[key]);
+    });
+    return axios.post(HOST + '/api/profil', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'Bearer ' + getReduxToken(),
+      },
+    });
+  } else {
+    return apiPrivate().post('/profil', body);
   }
 };

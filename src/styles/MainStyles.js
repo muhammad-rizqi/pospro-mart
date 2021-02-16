@@ -16,4 +16,5 @@ export const styles = StyleSheet.create({
   marginH8: {marginHorizontal: 8},
   flexRow: {flexDirection: 'row'},
   padding16: {padding: 16},
+  avatarCenterLarge: {width: 250, height: 250, alignSelf: 'center'},
 });

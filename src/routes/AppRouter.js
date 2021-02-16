@@ -17,6 +17,7 @@ import {
   ResetScreen,
   StaffDashboardScreen,
   SupplierScreen,
+  UpdateProfile,
   VerifyScreen,
 } from '../screens';
 import {Container, Content, H1, Spinner} from 'native-base';
@@ -124,6 +125,7 @@ const AppRouter = () => {
                 <Stack.Screen name="Allocation" component={AllicationScreen} />
               </>
             )}
+            <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
           </>
         ) : (
           <Stack.Screen name="NoConnection" component={NoConnection} />

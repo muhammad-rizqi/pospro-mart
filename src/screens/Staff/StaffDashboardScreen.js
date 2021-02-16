@@ -7,10 +7,15 @@ import {
   List,
   ListItem,
   Text,
+  Thumbnail,
 } from 'native-base';
 import {logout} from '../../services/AuthServices';
+import {useSelector} from 'react-redux';
+import {TouchableOpacity} from 'react-native';
 
 const StaffDashboardScreen = ({navigation}) => {
+  const {user} = useSelector((state) => state);
+
   const onClickLogout = () => {
     logout();
   };
@@ -18,7 +23,10 @@ const StaffDashboardScreen = ({navigation}) => {
   return (
     <Container>
       <Content>
-        <H1>Halo Staff</H1>
+        <H1>Halo {user.nama}</H1>
+        <TouchableOpacity onPress={() => navigation.navigate('UpdateProfile')}>
+          <Thumbnail source={{uri: user.foto}} />
+        </TouchableOpacity>
         <List>
           <ListItem onPress={() => navigation.navigate('Category')}>
             <Text>Category</Text>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
@@ -34,19 +35,19 @@ const CartScreen = ({navigation}) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
   const [dataCart, setDataCart] = useState([]);
-
   const [modal, setModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState('');
   const [selectedId, setSelectedId] = useState(null);
   const [quantity, setQuantity] = useState(1);
-
   const [searchDisplay, setSearchDisplay] = useState(false);
+
+  const [totalQty, setTotalQty] = useState(0);
+  const [totalBill, setTotalBill] = useState(0);
 
   const search = (v) => {
     setSearchLoading(true);
     searchItemServices(v)
       .then((result) => {
-        console.log(result);
         setDataSearch(result.data.data);
       })
       .catch((err) => {
@@ -80,6 +81,10 @@ const CartScreen = ({navigation}) => {
       .then((result) => {
         console.log(result);
         setDataCart(result.data.data);
+        const totalPrice = _.sumBy(result.data.data, 'total_harga');
+        const totalPcs = _.sumBy(result.data.data, 'jumlah_barang');
+        setTotalQty(totalPcs);
+        setTotalBill(totalPrice);
       })
       .catch((err) => {
         console.log(err.response);
@@ -138,7 +143,7 @@ const CartScreen = ({navigation}) => {
   useEffect(() => {
     getCart();
   }, []);
-  console.log(searchDisplay);
+
   return (
     <Container>
       <Modal transparent visible={modal}>
@@ -199,6 +204,7 @@ const CartScreen = ({navigation}) => {
                   setSearchDisplay(false);
                 }
               }}
+              onBlur={() => setSearchDisplay(false)}
             />
           </Item>
         </View>
@@ -239,20 +245,36 @@ const CartScreen = ({navigation}) => {
           {cartLoading ? (
             <Spinner />
           ) : (
-            dataCart.length > 0 &&
-            dataCart.map((cart) => (
-              <ListItem key={cart.id} onPress={() => setUpdate(cart)}>
-                <Left style={{flex: 2}}>
-                  <Text>{cart.nama}</Text>
-                </Left>
-                <View style={styles.flex1}>
-                  <Text style={styles.tetxCenter}>{cart.jumlah_barang}</Text>
-                </View>
-                <Right style={styles.flex1}>
-                  <Text>{cart.total_harga}</Text>
-                </Right>
-              </ListItem>
-            ))
+            dataCart.length > 0 && (
+              <>
+                {dataCart.map((cart) => (
+                  <ListItem key={cart.id} onPress={() => setUpdate(cart)}>
+                    <Left style={{flex: 2}}>
+                      <Text>{cart.nama}</Text>
+                    </Left>
+                    <View style={styles.flex1}>
+                      <Text style={styles.tetxCenter}>
+                        {cart.jumlah_barang}
+                      </Text>
+                    </View>
+                    <Right style={styles.flex1}>
+                      <Text>{cart.total_harga}</Text>
+                    </Right>
+                  </ListItem>
+                ))}
+                <ListItem>
+                  <Left style={{flex: 2}}>
+                    <Text>Total</Text>
+                  </Left>
+                  <View style={styles.flex1}>
+                    <Text style={styles.tetxCenter}>{totalQty}</Text>
+                  </View>
+                  <Right style={styles.flex1}>
+                    <Text>{totalBill}</Text>
+                  </Right>
+                </ListItem>
+              </>
+            )
           )}
         </List>
         <View style={styles.marginV16} />

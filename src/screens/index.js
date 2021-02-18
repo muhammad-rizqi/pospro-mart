@@ -3,6 +3,7 @@ import LoginScreen from './Auth/LoginScreen';
 import RegisterScreen from './Auth/RegisterScreen';
 import ResetScreen from './Auth/ResetScreen';
 import VerifyScreen from './Auth/VerifyScreen';
+import CartScreen from './Cashier/CartScreen';
 import CashierDashboardScreen from './Cashier/CashierDashboardScreen';
 import AllicationScreen from './Manager/AllicationScreen';
 import ManagerDashboardScreen from './Manager/ManagerDashboardScreen';
@@ -34,4 +35,5 @@ export {
   VerifyScreen,
   UpdateProfile,
   SettingsScreen,
+  CartScreen,
 };

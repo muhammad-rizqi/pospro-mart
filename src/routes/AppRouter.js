@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   AllicationScreen,
+  CartScreen,
   CashierDashboardScreen,
   CategoryScreen,
   ForgotScreen,
@@ -103,6 +104,7 @@ const AppRouter = () => {
                   name="CashierDashboard"
                   component={CashierDashboardScreen}
                 />
+                <Stack.Screen name="Cart" component={CartScreen} />
               </>
             )}
             {user.roles[0].id === 4 && (

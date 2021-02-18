@@ -9,6 +9,7 @@ export const getProfileServices = async (onFinished, onError) => {
     store.dispatch(setUser(data.data));
   } catch (error) {
     console.log('error get profile');
+    console.log(error.response);
     onError(error);
   } finally {
     onFinished();

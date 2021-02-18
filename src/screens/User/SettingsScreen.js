@@ -68,7 +68,7 @@ const SettingsScreen = ({navigation}) => {
     );
 
   const onClickDelete = () => {
-    setLoading(true);
+    setDeleteLoading(true);
     deleteAccountServices()
       .then(() => {
         ToastAndroid.show('Akun Berhasil dihapus', ToastAndroid.LONG);
@@ -77,7 +77,7 @@ const SettingsScreen = ({navigation}) => {
       .catch((err) => {
         ToastAndroid.show('gagal menghapus akun', ToastAndroid.LONG);
         console.log(err.response);
-        setLoading(false);
+        setDeleteLoading(false);
       });
   };
 

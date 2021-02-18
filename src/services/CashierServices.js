@@ -21,10 +21,16 @@ export const getSellingServices = () => {
   return apiPrivate().get('/detailpenjualan/request');
 };
 
-export const deleteSellingServices = () => {
-  return apiPrivate().delete('/penjualan');
+export const confirmSellingServices = (dibayar, member_id = null) => {
+  const data = {dibayar};
+  member_id ? (data.member_id = member_id) : null;
+  return apiPrivate().post('/detailpenjualan/confirm', data);
 };
 
 export const deleteCartServices = (id) => {
   return apiPrivate().delete('/penjualan/' + id);
+};
+
+export const getSelingHistory = () => {
+  return apiPrivate().get('/penjualan/dibayar');
 };

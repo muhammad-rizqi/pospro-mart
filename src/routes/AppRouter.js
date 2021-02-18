@@ -8,6 +8,7 @@ import {
   CashierDashboardScreen,
   CategoryScreen,
   ForgotScreen,
+  HistorySellingScreen,
   ItemScreen,
   LoginScreen,
   ManagerDashboardScreen,
@@ -105,6 +106,10 @@ const AppRouter = () => {
                   component={CashierDashboardScreen}
                 />
                 <Stack.Screen name="Cart" component={CartScreen} />
+                <Stack.Screen
+                  name="HistorySelling"
+                  component={HistorySellingScreen}
+                />
               </>
             )}
             {user.roles[0].id === 4 && (

@@ -1,12 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
+  Body,
   Button,
   Container,
   Content,
-  H1,
   H3,
+  Header,
+  Icon,
   Input,
   Item,
   Left,
@@ -15,11 +16,13 @@ import {
   Right,
   Spinner,
   Text,
+  Title,
   View,
 } from 'native-base';
 import {styles} from '../../styles/MainStyles';
 import {
   addSellingServices,
+  confirmSellingServices,
   deleteCartServices,
   getSellingServices,
   searchItemServices,
@@ -43,6 +46,10 @@ const CartScreen = ({navigation}) => {
 
   const [totalQty, setTotalQty] = useState(0);
   const [totalBill, setTotalBill] = useState(0);
+
+  const [memberId, setMemberId] = useState(0);
+  const [pay, setPay] = useState(1);
+  const [confirmLoading, setConfirmLoading] = useState(false);
 
   const search = (v) => {
     setSearchLoading(true);
@@ -140,12 +147,41 @@ const CartScreen = ({navigation}) => {
     setModal(false);
   };
 
+  const onClickConfirm = () => {
+    if (totalBill <= pay) {
+      setConfirmLoading(true);
+      confirmSellingServices(pay, memberId !== 0 && memberId)
+        .then((result) => {
+          console.log(result);
+          ToastAndroid.show('Berhasil dibayar', ToastAndroid.LONG);
+        })
+        .catch((err) => {
+          ToastAndroid.show('Gagal dibayar', ToastAndroid.LONG);
+          console.log(err);
+          console.log(err.response);
+        });
+    } else {
+      ToastAndroid.show('Harap isi dengan benar', ToastAndroid.LONG);
+    }
+  };
+
   useEffect(() => {
     getCart();
   }, []);
 
   return (
     <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Keranjang</Title>
+        </Body>
+        <Right />
+      </Header>
       <Modal transparent visible={modal}>
         <View style={[styles.flex1, styles.backgroundOpacity]}>
           <TouchableOpacity style={styles.flex1} onPress={closeUpdate} />
@@ -188,7 +224,7 @@ const CartScreen = ({navigation}) => {
         </View>
       </Modal>
       <Content style={styles.padding16}>
-        <H1>Tambah Penjualan</H1>
+        <H3>Tambah Keranjang</H3>
         <View style={styles.marginV8}>
           <Text note>Cari barang</Text>
           <Item regular>
@@ -277,6 +313,35 @@ const CartScreen = ({navigation}) => {
             )
           )}
         </List>
+        <View style={styles.marginV16}>
+          <H3>Konfirmasi Pembayaran</H3>
+          <View style={styles.marginV8}>
+            <Text note>ID Member</Text>
+            <Item regular>
+              <Input
+                keyboardType="number-pad"
+                placeholder="Masukan ID Member"
+                value={`${memberId}`}
+                onChangeText={setMemberId}
+              />
+            </Item>
+          </View>
+          <View style={styles.marginV8}>
+            <Text note>Jumlah Dibayar</Text>
+            <Item regular>
+              <Input
+                keyboardType="number-pad"
+                placeholder="Masukan Jumlah Uang"
+                value={`${pay}`}
+                onChangeText={setPay}
+              />
+            </Item>
+          </View>
+          <Button disabled={confirmLoading} block onPress={onClickConfirm}>
+            {confirmLoading && <Spinner color="white" />}
+            <Text>Konfirmasi Pembayaran</Text>
+          </Button>
+        </View>
         <View style={styles.marginV16} />
       </Content>
     </Container>

@@ -5,6 +5,7 @@ import ResetScreen from './Auth/ResetScreen';
 import VerifyScreen from './Auth/VerifyScreen';
 import CartScreen from './Cashier/CartScreen';
 import CashierDashboardScreen from './Cashier/CashierDashboardScreen';
+import HistorySellingScreen from './Cashier/HistorySellingScreen';
 import AllicationScreen from './Manager/AllicationScreen';
 import ManagerDashboardScreen from './Manager/ManagerDashboardScreen';
 import MemberDashboardScreen from './Member/MemberDashboardScreen';
@@ -36,4 +37,5 @@ export {
   UpdateProfile,
   SettingsScreen,
   CartScreen,
+  HistorySellingScreen,
 };

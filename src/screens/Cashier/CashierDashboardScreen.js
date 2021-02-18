@@ -32,6 +32,11 @@ const CashierDashboardScreen = ({navigation}) => {
             <Text>Tambah Penjualan</Text>
           </ListItem>
         </List>
+        <List>
+          <ListItem onPress={() => navigation.navigate('HistorySelling')}>
+            <Text>Riwayat Penjualan</Text>
+          </ListItem>
+        </List>
         <Button>
           <Text onPress={onClickLogout}>Logout</Text>
         </Button>

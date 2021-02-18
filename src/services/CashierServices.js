@@ -34,3 +34,7 @@ export const deleteCartServices = (id) => {
 export const getSelingHistory = () => {
   return apiPrivate().get('/penjualan/dibayar');
 };
+
+export const getMemberListServices = () => {
+  return apiPrivate().get('/member');
+};

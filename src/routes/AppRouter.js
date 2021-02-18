@@ -13,6 +13,7 @@ import {
   LoginScreen,
   ManagerDashboardScreen,
   MemberDashboardScreen,
+  MemberListScreen,
   NoConnection,
   Purchasecreen,
   RegisterScreen,
@@ -110,6 +111,7 @@ const AppRouter = () => {
                   name="HistorySelling"
                   component={HistorySellingScreen}
                 />
+                <Stack.Screen name="MemberList" component={MemberListScreen} />
               </>
             )}
             {user.roles[0].id === 4 && (

@@ -202,9 +202,12 @@ const CartScreen = ({navigation}) => {
             />
           </Item>
         </View>
-        <View style={{position: 'relative'}}>
-          <List
-            style={[styles.listSearch, !searchDisplay && styles.displayNone]}>
+        <View
+          style={{
+            position: 'relative',
+            display: searchDisplay ? 'flex' : 'none',
+          }}>
+          <List style={styles.listSearch}>
             {searchLoading ? (
               <Spinner />
             ) : dataSearch.length > 0 ? (

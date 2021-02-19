@@ -7,6 +7,7 @@ import {
   CartScreen,
   CashierDashboardScreen,
   CategoryScreen,
+  DailyReportScreen,
   ForgotScreen,
   HistorySellingScreen,
   InvoiceScreen,
@@ -15,6 +16,7 @@ import {
   ManagerDashboardScreen,
   MemberDashboardScreen,
   MemberListScreen,
+  MonthlyReportScreen,
   NoConnection,
   Purchasecreen,
   RegisterScreen,
@@ -137,6 +139,14 @@ const AppRouter = () => {
                   component={ManagerDashboardScreen}
                 />
                 <Stack.Screen name="Allocation" component={AllicationScreen} />
+                <Stack.Screen
+                  name="DailyReport"
+                  component={DailyReportScreen}
+                />
+                <Stack.Screen
+                  name="MonthlyReport"
+                  component={MonthlyReportScreen}
+                />
               </>
             )}
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />

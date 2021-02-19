@@ -23,6 +23,12 @@ const ManagerDashboardScreen = ({navigation}) => {
           <ListItem onPress={() => navigation.navigate('Allocation')}>
             <Text>Pengeluaran</Text>
           </ListItem>
+          <ListItem onPress={() => navigation.navigate('DailyReport')}>
+            <Text>Laporan Harian</Text>
+          </ListItem>
+          <ListItem onPress={() => navigation.navigate('MonthlyReport')}>
+            <Text>Laporan Bulanan</Text>
+          </ListItem>
         </List>
         <Button>
           <Text onPress={onClickLogout}>Logout</Text>

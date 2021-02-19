@@ -100,7 +100,7 @@ const CartScreen = ({navigation}) => {
       })
       .catch((err) => {
         console.log(err.response);
-        ToastAndroid.show('Barang tidak ditemukan', ToastAndroid.LONG);
+        ToastAndroid.show('Barang masih kosong', ToastAndroid.LONG);
       })
       .finally(() => setCartLoading(false));
   };

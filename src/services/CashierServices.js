@@ -47,3 +47,19 @@ export const getMemberByCode = (code) => {
 export const topUpServices = (memberId, saldo) => {
   return apiPrivate().post(`/member/${memberId}/topup`, {saldo});
 };
+
+export const addMemberServices = (
+  nama,
+  email,
+  no_hp,
+  password,
+  password_confirmation,
+) => {
+  return apiPrivate().post('/member', {
+    nama,
+    email,
+    no_hp,
+    password,
+    password_confirmation,
+  });
+};

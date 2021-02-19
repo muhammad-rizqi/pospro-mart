@@ -29,4 +29,5 @@ export const styles = StyleSheet.create({
     zIndex: 1,
     width: '100%',
   },
+  textRight: {textAlign: 'right'},
 });

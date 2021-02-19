@@ -6,7 +6,9 @@ import VerifyScreen from './Auth/VerifyScreen';
 import CartScreen from './Cashier/CartScreen';
 import CashierDashboardScreen from './Cashier/CashierDashboardScreen';
 import HistorySellingScreen from './Cashier/HistorySellingScreen';
+import InvoiceScreen from './Cashier/InvoiceScreen';
 import MemberListScreen from './Cashier/MemberListScreen';
+import TopUpScreen from './Cashier/TopUpScreen';
 import AllicationScreen from './Manager/AllicationScreen';
 import ManagerDashboardScreen from './Manager/ManagerDashboardScreen';
 import MemberDashboardScreen from './Member/MemberDashboardScreen';
@@ -40,4 +42,6 @@ export {
   CartScreen,
   HistorySellingScreen,
   MemberListScreen,
+  TopUpScreen,
+  InvoiceScreen,
 };

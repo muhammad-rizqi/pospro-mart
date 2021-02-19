@@ -42,6 +42,11 @@ const CashierDashboardScreen = ({navigation}) => {
             <Text>Member</Text>
           </ListItem>
         </List>
+        <List>
+          <ListItem onPress={() => navigation.navigate('TopUp')}>
+            <Text>Topup Member</Text>
+          </ListItem>
+        </List>
         <Button>
           <Text onPress={onClickLogout}>Logout</Text>
         </Button>

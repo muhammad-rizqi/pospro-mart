@@ -38,3 +38,11 @@ export const getSelingHistory = () => {
 export const getMemberListServices = () => {
   return apiPrivate().get('/member');
 };
+
+export const getMemberByCode = (code) => {
+  return apiPrivate().get('/member/kode_member/' + code);
+};
+
+export const topUpServices = (memberId, saldo) => {
+  return apiPrivate().post(`/member/${memberId}/topup`, {saldo});
+};

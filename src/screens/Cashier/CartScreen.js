@@ -152,12 +152,13 @@ const CartScreen = ({navigation}) => {
       setConfirmLoading(true);
       confirmSellingServices(pay, memberId !== 0 && memberId)
         .then((result) => {
-          console.log(result);
+          navigation.navigate('Invoice', {data: result.data.data});
           ToastAndroid.show('Berhasil dibayar', ToastAndroid.LONG);
         })
         .catch((err) => {
           ToastAndroid.show('Gagal dibayar', ToastAndroid.LONG);
           console.log(err);
+          setConfirmLoading(false);
           console.log(err.response);
         });
     } else {

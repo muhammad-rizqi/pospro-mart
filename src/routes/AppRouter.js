@@ -9,6 +9,7 @@ import {
   CategoryScreen,
   ForgotScreen,
   HistorySellingScreen,
+  InvoiceScreen,
   ItemScreen,
   LoginScreen,
   ManagerDashboardScreen,
@@ -21,6 +22,7 @@ import {
   SettingsScreen,
   StaffDashboardScreen,
   SupplierScreen,
+  TopUpScreen,
   UpdateProfile,
   VerifyScreen,
 } from '../screens';
@@ -112,6 +114,8 @@ const AppRouter = () => {
                   component={HistorySellingScreen}
                 />
                 <Stack.Screen name="MemberList" component={MemberListScreen} />
+                <Stack.Screen name="TopUp" component={TopUpScreen} />
+                <Stack.Screen name="Invoice" component={InvoiceScreen} />
               </>
             )}
             {user.roles[0].id === 4 && (

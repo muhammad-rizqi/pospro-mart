@@ -38,3 +38,11 @@ export const updateAllocationServices = (id, tipe, biaya) => {
 export const deleteAllocationServices = (id) => {
   return apiPrivate().delete('/pengeluaran/' + id);
 };
+
+export const getDailyReportServices = () => {
+  return apiPrivate().get('/laporan/harian');
+};
+
+export const getMonthlyReportServices = () => {
+  return apiPrivate().get('/laporan/bulanan');
+};

@@ -21,8 +21,9 @@ export const getSellingServices = () => {
   return apiPrivate().get('/detailpenjualan/request');
 };
 
-export const confirmSellingServices = (dibayar, member_id = null) => {
-  const data = {dibayar};
+export const confirmSellingServices = (dibayar = null, member_id = null) => {
+  const data = {};
+  dibayar ? (data.dibayar = dibayar) : null;
   member_id ? (data.member_id = member_id) : null;
   return apiPrivate().post('/detailpenjualan/confirm', data);
 };

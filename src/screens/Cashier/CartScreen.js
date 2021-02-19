@@ -16,6 +16,7 @@ import {
   Right,
   Spinner,
   Text,
+  Thumbnail,
   Title,
   View,
 } from 'native-base';
@@ -24,6 +25,7 @@ import {
   addSellingServices,
   confirmSellingServices,
   deleteCartServices,
+  getMemberByCode,
   getSellingServices,
   searchItemServices,
   updateSellingServices,
@@ -44,11 +46,14 @@ const CartScreen = ({navigation}) => {
   const [quantity, setQuantity] = useState(1);
   const [searchDisplay, setSearchDisplay] = useState(false);
 
+  const [member, setMember] = useState(null);
+  const [memberLoading, setMemberLoading] = useState(false);
+
   const [totalQty, setTotalQty] = useState(0);
   const [totalBill, setTotalBill] = useState(0);
 
-  const [memberId, setMemberId] = useState(0);
-  const [pay, setPay] = useState(1);
+  const [memberId, setMemberId] = useState('');
+  const [pay, setPay] = useState('');
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const search = (v) => {
@@ -133,6 +138,24 @@ const CartScreen = ({navigation}) => {
       });
   };
 
+  const onSubmitCode = () => {
+    if (memberId === '' || memberId === `${0}`) {
+      ToastAndroid.show('Isi dengan benar', ToastAndroid.LONG);
+    } else {
+      setMemberLoading(true);
+      getMemberByCode(memberId)
+        .then((result) => {
+          setMember(result.data.data);
+        })
+        .catch((err) => {
+          ToastAndroid.show('Gagal mengambil data member', ToastAndroid.LONG);
+          console.log(err);
+          console.log(err.response);
+        })
+        .finally(() => setMemberLoading(false));
+    }
+  };
+
   const setUpdate = (cartData) => {
     setSelectedId(cartData.id);
     setQuantity(cartData.jumlah_barang);
@@ -148,22 +171,22 @@ const CartScreen = ({navigation}) => {
   };
 
   const onClickConfirm = () => {
-    if (totalBill <= pay) {
-      setConfirmLoading(true);
-      confirmSellingServices(pay, memberId !== 0 && memberId)
-        .then((result) => {
-          navigation.navigate('Invoice', {data: result.data.data});
-          ToastAndroid.show('Berhasil dibayar', ToastAndroid.LONG);
-        })
-        .catch((err) => {
-          ToastAndroid.show('Gagal dibayar', ToastAndroid.LONG);
-          console.log(err);
-          setConfirmLoading(false);
-          console.log(err.response);
-        });
-    } else {
-      ToastAndroid.show('Harap isi dengan benar', ToastAndroid.LONG);
-    }
+    setConfirmLoading(true);
+    console.log(member);
+    confirmSellingServices(
+      (memberId !== 0 || memberId !== '') && pay,
+      memberId !== 0 && member !== null ? member[0].id : null,
+    )
+      .then((result) => {
+        navigation.navigate('Invoice', {data: result.data.data});
+        ToastAndroid.show('Berhasil dibayar', ToastAndroid.LONG);
+      })
+      .catch((err) => {
+        ToastAndroid.show('Gagal dibayar', ToastAndroid.LONG);
+        console.log(err);
+        setConfirmLoading(false);
+        console.log(err.response);
+      });
   };
 
   useEffect(() => {
@@ -317,27 +340,61 @@ const CartScreen = ({navigation}) => {
         <View style={styles.marginV16}>
           <H3>Konfirmasi Pembayaran</H3>
           <View style={styles.marginV8}>
-            <Text note>ID Member</Text>
-            <Item regular>
-              <Input
-                keyboardType="number-pad"
-                placeholder="Masukan ID Member"
-                value={`${memberId}`}
-                onChangeText={setMemberId}
-              />
-            </Item>
+            {memberLoading ? (
+              <Spinner />
+            ) : (
+              member && (
+                <>
+                  <Text note>Data Member</Text>
+                  <ListItem thumbnail>
+                    <Left>
+                      <Thumbnail source={{uri: member[0].foto}} />
+                    </Left>
+                    <Body>
+                      <Text>{member[0].nama}</Text>
+                      <Text note>{member[0].no_hp}</Text>
+                      <Text note numberOfLines={2}>
+                        {member[0].alamat}
+                      </Text>
+                    </Body>
+                    <Right>
+                      <Button transparent onPress={() => setMember(null)}>
+                        <Text>Hapus</Text>
+                      </Button>
+                    </Right>
+                  </ListItem>
+                </>
+              )
+            )}
+            {pay === '' && (
+              <>
+                <Text note>ID Member</Text>
+                <Item regular>
+                  <Input
+                    keyboardType="number-pad"
+                    placeholder="Masukan ID Member"
+                    value={`${memberId}`}
+                    onChangeText={setMemberId}
+                    onSubmitEditing={onSubmitCode}
+                    onBlur={onSubmitCode}
+                  />
+                </Item>
+              </>
+            )}
           </View>
-          <View style={styles.marginV8}>
-            <Text note>Jumlah Dibayar</Text>
-            <Item regular>
-              <Input
-                keyboardType="number-pad"
-                placeholder="Masukan Jumlah Uang"
-                value={`${pay}`}
-                onChangeText={setPay}
-              />
-            </Item>
-          </View>
+          {(memberId === null || memberId === '') && (
+            <View style={styles.marginV8}>
+              <Text note>Jumlah Dibayar</Text>
+              <Item regular>
+                <Input
+                  keyboardType="number-pad"
+                  placeholder="Masukan Jumlah Uang"
+                  value={`${pay}`}
+                  onChangeText={setPay}
+                />
+              </Item>
+            </View>
+          )}
           <Button disabled={confirmLoading} block onPress={onClickConfirm}>
             {confirmLoading && <Spinner color="white" />}
             <Text>Konfirmasi Pembayaran</Text>

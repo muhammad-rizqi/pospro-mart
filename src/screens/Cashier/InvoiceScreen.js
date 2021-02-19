@@ -102,16 +102,18 @@ const InvoiceScreen = ({navigation, route}) => {
             <Text style={styles.flex1}>Kembalian</Text>
             <Text>{data.kembalian}</Text>
           </View>
-          <View style={styles.flexRow}>
-            <Text style={styles.flex1}>Kasir</Text>
-            <Text>{data.kasir}</Text>
-          </View>
-          {data.member && (
+          <View style={styles.marginV16}>
             <View style={styles.flexRow}>
-              <Text style={styles.flex1}>Kasir</Text>
-              <Text>{JSON.stringify(data.member)}</Text>
+              <Text style={styles.flex1}>Nama Kasir</Text>
+              <Text>{data.kasir}</Text>
             </View>
-          )}
+            {data.member && (
+              <View style={styles.flexRow}>
+                <Text style={styles.flex1}>Nama Member</Text>
+                <Text>{data.member}</Text>
+              </View>
+            )}
+          </View>
         </View>
       </Content>
     </Container>

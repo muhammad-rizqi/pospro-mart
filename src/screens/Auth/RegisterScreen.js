@@ -14,6 +14,7 @@ import {
   Body,
   View,
   Spinner,
+  H3,
 } from 'native-base';
 import {styles} from '../../styles/MainStyles';
 import {registerServices} from '../../services/AuthServices';
@@ -59,81 +60,82 @@ const RegisterScreen = ({navigation}) => {
 
   return (
     <Container>
-      <Header transparent>
-        <Left>
-          <Button dark transparent onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" />
+      <Content contentContainerStyle={styles.contentContainer}>
+        <View style={styles.contentCard}>
+          <View style={styles.flexRow}>
+            <Icon onPress={() => navigation.goBack()} name="arrow-back" />
+            <View style={styles.flex1}>
+              <H1 style={styles.tetxCenter}>POSpro Mart</H1>
+            </View>
+          </View>
+          <View style={styles.marginV8} />
+          <H3>Mendaftar</H3>
+          <Form>
+            <View style={styles.marginV8}>
+              <Text note>Nama Lengkap</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  placeholder="Nama Lengkap"
+                  value={name}
+                  onChangeText={setName}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Email</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  placeholder="user@email.com"
+                  keyboardType="email-address"
+                  value={email}
+                  onChangeText={setEmail}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Nomor HP</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  placeholder="62812345678"
+                  keyboardType="phone-pad"
+                  value={`${phone}`}
+                  onChangeText={setPhone}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Kata Sandi</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  placeholder="password"
+                  secureTextEntry
+                  value={password}
+                  onChangeText={setPassword}
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Konfirmasi Kata Sandi</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  placeholder="password"
+                  secureTextEntry
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                />
+              </Item>
+            </View>
+          </Form>
+          <Button
+            style={styles.marginV8}
+            block
+            onPress={onClickRegister}
+            disabled={loading}>
+            {loading && <Spinner color="white" />}
+            <Text>Mendaftar</Text>
           </Button>
-        </Left>
-        <Body />
-      </Header>
-      <Content style={styles.padding16}>
-        <H1>Mendaftar</H1>
-        <Form>
-          <View style={styles.marginV8}>
-            <Text note>Nama Lengkap</Text>
-            <Item regular>
-              <Input
-                placeholder="Nama Lengkap"
-                value={name}
-                onChangeText={setName}
-              />
-            </Item>
-          </View>
-          <View style={styles.marginV8}>
-            <Text note>Email</Text>
-            <Item regular>
-              <Input
-                placeholder="user@email.com"
-                keyboardType="email-address"
-                value={email}
-                onChangeText={setEmail}
-              />
-            </Item>
-          </View>
-          <View style={styles.marginV8}>
-            <Text note>Nomor HP</Text>
-            <Item regular>
-              <Input
-                placeholder="62812345678"
-                keyboardType="phone-pad"
-                value={`${phone}`}
-                onChangeText={setPhone}
-              />
-            </Item>
-          </View>
-          <View style={styles.marginV8}>
-            <Text note>Kata Sandi</Text>
-            <Item regular>
-              <Input
-                placeholder="password"
-                secureTextEntry
-                value={password}
-                onChangeText={setPassword}
-              />
-            </Item>
-          </View>
-          <View style={styles.marginV8}>
-            <Text note>Konfirmasi Kata Sandi</Text>
-            <Item regular>
-              <Input
-                placeholder="password"
-                secureTextEntry
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-              />
-            </Item>
-          </View>
-        </Form>
-        <Button
-          style={styles.marginV8}
-          block
-          onPress={onClickRegister}
-          disabled={loading}>
-          {loading && <Spinner color="white" />}
-          <Text>Mendaftar</Text>
-        </Button>
-        <View style={styles.marginV8} />
+          <View style={styles.marginV8} />
+        </View>
       </Content>
     </Container>
   );

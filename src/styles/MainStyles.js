@@ -47,5 +47,6 @@ export const styles = StyleSheet.create({
     maxWidth: 480,
   },
   input: {marginVertical: 8, borderRadius: 5},
+  radius5: {borderRadius: 5},
   alignCenter: {alignItems: 'center'},
 });

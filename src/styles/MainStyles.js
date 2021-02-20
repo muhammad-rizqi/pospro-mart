@@ -25,9 +25,9 @@ export const styles = StyleSheet.create({
   padding16: {padding: 16},
   avatarCenterLarge: {width: 250, height: 250, alignSelf: 'center'},
   listSearch: {
+    marginTop: 120,
     backgroundColor: '#f8f8f8',
     position: 'absolute',
-    zIndex: 1,
     width: '100%',
   },
   textRight: {textAlign: 'right'},
@@ -49,4 +49,5 @@ export const styles = StyleSheet.create({
   input: {marginVertical: 8, borderRadius: 5},
   radius5: {borderRadius: 5},
   alignCenter: {alignItems: 'center'},
+  cartMenu: {backgroundColor: 'white', padding: 16, marginBottom: 16},
 });

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {
@@ -55,6 +56,7 @@ const CartScreen = ({navigation}) => {
   const [memberId, setMemberId] = useState('');
   const [pay, setPay] = useState('');
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [discounted, setDiscounted] = useState(0);
 
   const search = (v) => {
     setSearchLoading(true);
@@ -71,19 +73,21 @@ const CartScreen = ({navigation}) => {
 
   const addToCart = (itemData) => {
     const condition = _.find(dataCart, {uid: itemData.uid});
-    if (condition) {
-      updateCart(condition.id, condition.jumlah_barang + 1);
-    } else {
-      setCartLoading(true);
-      addSellingServices(itemData.id, 1)
-        .then(() => {
-          ToastAndroid.show('Berhasil menambah barang', ToastAndroid.LONG);
-        })
-        .catch((err) => {
-          ToastAndroid.show('Gagal menambah barang', ToastAndroid.LONG);
-          console.log(err.response);
-        })
-        .finally(() => getCart());
+    if (!cartLoading) {
+      if (condition) {
+        updateCart(condition.id, condition.jumlah_barang + 1);
+      } else {
+        setCartLoading(true);
+        addSellingServices(itemData.id, 1)
+          .then(() => {
+            ToastAndroid.show('Berhasil menambah barang', ToastAndroid.LONG);
+          })
+          .catch((err) => {
+            ToastAndroid.show('Gagal menambah barang', ToastAndroid.LONG);
+            console.log(err.response);
+          })
+          .finally(() => getCart());
+      }
     }
   };
 
@@ -91,7 +95,6 @@ const CartScreen = ({navigation}) => {
     setCartLoading(true);
     getSellingServices()
       .then((result) => {
-        console.log(result);
         setDataCart(result.data.data);
         const totalPrice = _.sumBy(result.data.data, 'total_harga');
         const totalPcs = _.sumBy(result.data.data, 'jumlah_barang');
@@ -100,6 +103,7 @@ const CartScreen = ({navigation}) => {
       })
       .catch((err) => {
         console.log(err.response);
+        setDataCart([]);
         ToastAndroid.show('Barang masih kosong', ToastAndroid.LONG);
       })
       .finally(() => setCartLoading(false));
@@ -172,7 +176,6 @@ const CartScreen = ({navigation}) => {
 
   const onClickConfirm = () => {
     setConfirmLoading(true);
-    console.log(member);
     confirmSellingServices(
       (memberId !== 0 || memberId !== '') && pay,
       memberId !== 0 && member !== null ? member[0].id : null,
@@ -193,6 +196,23 @@ const CartScreen = ({navigation}) => {
     getCart();
   }, []);
 
+  const updateDiscount = () => {
+    const total =
+      member &&
+      dataCart.length > 0 &&
+      dataCart
+        .map(
+          (itemData) =>
+            itemData.total_harga - itemData.jumlah_barang * itemData.diskon,
+        )
+        .reduce((acc, cvv) => acc + cvv);
+    setDiscounted(total);
+  };
+
+  useEffect(() => {
+    updateDiscount();
+  }, [dataCart]);
+
   return (
     <Container>
       <Header>
@@ -207,18 +227,18 @@ const CartScreen = ({navigation}) => {
         <Right />
       </Header>
       <Modal transparent visible={modal}>
-        <View style={[styles.flex1, styles.backgroundOpacity]}>
+        <View
+          style={[styles.flex1, styles.backgroundOpacity, styles.padding16]}>
           <TouchableOpacity style={styles.flex1} onPress={closeUpdate} />
-          <View
-            style={[styles.backgroundLight, styles.margin16, styles.padding16]}>
+          <View style={styles.contentCard}>
             <H3 style={styles.marginV8}>Edit Keranjang</H3>
             <View style={styles.marginV8}>
               <Text note>Nama Barang</Text>
-              <Text>{selectedItem}</Text>
+              <Text style={styles.textBold}>{selectedItem}</Text>
             </View>
             <View style={styles.marginV8}>
               <Text note>Jumlah Barang</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Jumlah barang"
                   value={`${quantity}`}
@@ -247,32 +267,183 @@ const CartScreen = ({navigation}) => {
           <TouchableOpacity style={styles.flex1} onPress={closeUpdate} />
         </View>
       </Modal>
-      <Content style={styles.padding16}>
-        <H3>Tambah Keranjang</H3>
-        <View style={styles.marginV8}>
-          <Text note>Cari barang</Text>
-          <Item regular>
-            <Input
-              placeholder="Masukan Nama / Barcode"
-              value={item}
-              onChangeText={(v) => {
-                setItem(v);
-                if (v.length >= 3 && isNaN(v)) {
-                  setSearchDisplay(true);
-                  search(v);
-                } else {
-                  setSearchDisplay(false);
-                }
-              }}
-              onBlur={() => setSearchDisplay(false)}
-            />
-          </Item>
+      <Content style={[styles.backgroundLight]}>
+        <View style={styles.cartMenu}>
+          <H3>Tambah Keranjang</H3>
+          <View style={styles.marginV8}>
+            <Text note>Cari barang</Text>
+            <Item regular style={styles.radius5}>
+              <Input
+                placeholder="Masukan Nama / Barcode"
+                value={item}
+                onChangeText={(v) => {
+                  setItem(v);
+                  if (v.length >= 3 && isNaN(v)) {
+                    setSearchDisplay(true);
+                    search(v);
+                  } else {
+                    setSearchDisplay(false);
+                  }
+                }}
+                onBlur={() => setSearchDisplay(false)}
+              />
+            </Item>
+          </View>
         </View>
-        <View
-          style={{
-            position: 'relative',
-            display: searchDisplay ? 'flex' : 'none',
-          }}>
+        <View style={[styles.cartMenu, {zIndex: -1}]}>
+          <H3>List Keranjang</H3>
+          <List style={styles.marginV16}>
+            <ListItem noIndent>
+              <Left style={{flex: 2}}>
+                <Text note>Nama Barang</Text>
+              </Left>
+              <View style={styles.flex1}>
+                <Text note>Jumlah</Text>
+              </View>
+              <Right style={styles.flex1}>
+                <Text note>Total Harga</Text>
+              </Right>
+            </ListItem>
+            {cartLoading ? (
+              <Spinner />
+            ) : (
+              dataCart.length > 0 && (
+                <>
+                  {dataCart.map((cart) => (
+                    <ListItem
+                      noIndent
+                      key={cart.id}
+                      onPress={() => setUpdate(cart)}>
+                      <Left style={{flex: 2}}>
+                        <Text>{cart.nama}</Text>
+                      </Left>
+                      <View style={styles.flex1}>
+                        <Text style={styles.tetxCenter}>
+                          {cart.jumlah_barang}
+                        </Text>
+                      </View>
+                      <Right style={styles.flex1}>
+                        {member ? (
+                          <>
+                            <Text
+                              note
+                              style={{textDecorationLine: 'line-through'}}>
+                              {cart.total_harga}
+                            </Text>
+                            <Text>
+                              {cart.total_harga -
+                                cart.jumlah_barang * cart.diskon}
+                            </Text>
+                          </>
+                        ) : (
+                          <Text>{cart.total_harga}</Text>
+                        )}
+                      </Right>
+                    </ListItem>
+                  ))}
+                  <ListItem noIndent>
+                    <Left style={{flex: 2}}>
+                      <Text style={styles.textBold}>Total</Text>
+                    </Left>
+                    <View style={styles.flex1}>
+                      <Text style={[styles.tetxCenter, styles.textBold]}>
+                        {totalQty}
+                      </Text>
+                    </View>
+                    <Right style={styles.flex1}>
+                      {member ? (
+                        <>
+                          <Text
+                            note
+                            style={{textDecorationLine: 'line-through'}}>
+                            {totalBill}
+                          </Text>
+                          <Text style={styles.textBold}>{discounted}</Text>
+                        </>
+                      ) : (
+                        <Text style={styles.textBold}>{totalBill}</Text>
+                      )}
+                    </Right>
+                  </ListItem>
+                </>
+              )
+            )}
+          </List>
+        </View>
+        {dataCart.length > 0 && (
+          <View style={styles.cartMenu}>
+            <H3>Konfirmasi Pembayaran</H3>
+            <View style={styles.marginV8}>
+              {memberLoading ? (
+                <Spinner />
+              ) : (
+                member && (
+                  <>
+                    <Text note>Data Member</Text>
+                    <ListItem thumbnail>
+                      <Left>
+                        <Thumbnail source={{uri: member[0].foto}} />
+                      </Left>
+                      <Body>
+                        <Text>{member[0].nama}</Text>
+                        <Text note>{member[0].no_hp}</Text>
+                        <Text note numberOfLines={2}>
+                          {member[0].alamat}
+                        </Text>
+                      </Body>
+                      <Right>
+                        <Button
+                          danger
+                          transparent
+                          onPress={() => {
+                            setMemberId('');
+                            setMember(null);
+                          }}>
+                          <Icon name="trash" />
+                        </Button>
+                      </Right>
+                    </ListItem>
+                  </>
+                )
+              )}
+              {pay === '' && (
+                <>
+                  <Text note>ID Member</Text>
+                  <Item regular style={styles.radius5}>
+                    <Input
+                      returnKeyType="search"
+                      keyboardType="number-pad"
+                      placeholder="Masukan ID Member"
+                      value={`${memberId}`}
+                      onChangeText={setMemberId}
+                      onSubmitEditing={onSubmitCode}
+                      onBlur={onSubmitCode}
+                    />
+                  </Item>
+                </>
+              )}
+            </View>
+            {(memberId === null || memberId === '') && (
+              <View style={styles.marginV8}>
+                <Text note>Jumlah Dibayar</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    keyboardType="number-pad"
+                    placeholder="Masukan Jumlah Uang"
+                    value={`${pay}`}
+                    onChangeText={setPay}
+                  />
+                </Item>
+              </View>
+            )}
+            <Button disabled={confirmLoading} block onPress={onClickConfirm}>
+              {confirmLoading && <Spinner color="white" />}
+              <Text>Konfirmasi Pembayaran</Text>
+            </Button>
+          </View>
+        )}
+        <View style={styles.marginV16} />
+        {searchDisplay && (
           <List style={styles.listSearch}>
             {searchLoading ? (
               <Spinner />
@@ -288,119 +459,7 @@ const CartScreen = ({navigation}) => {
               </ListItem>
             )}
           </List>
-        </View>
-        <H3 style={styles.marginV16}>List Keranjang</H3>
-        <List>
-          <ListItem>
-            <Left style={{flex: 2}}>
-              <Text note>Nama Barang</Text>
-            </Left>
-            <View style={styles.flex1}>
-              <Text note>Jumlah</Text>
-            </View>
-            <Right style={styles.flex1}>
-              <Text note>Total Harga</Text>
-            </Right>
-          </ListItem>
-          {cartLoading ? (
-            <Spinner />
-          ) : (
-            dataCart.length > 0 && (
-              <>
-                {dataCart.map((cart) => (
-                  <ListItem key={cart.id} onPress={() => setUpdate(cart)}>
-                    <Left style={{flex: 2}}>
-                      <Text>{cart.nama}</Text>
-                    </Left>
-                    <View style={styles.flex1}>
-                      <Text style={styles.tetxCenter}>
-                        {cart.jumlah_barang}
-                      </Text>
-                    </View>
-                    <Right style={styles.flex1}>
-                      <Text>{cart.total_harga}</Text>
-                    </Right>
-                  </ListItem>
-                ))}
-                <ListItem>
-                  <Left style={{flex: 2}}>
-                    <Text>Total</Text>
-                  </Left>
-                  <View style={styles.flex1}>
-                    <Text style={styles.tetxCenter}>{totalQty}</Text>
-                  </View>
-                  <Right style={styles.flex1}>
-                    <Text>{totalBill}</Text>
-                  </Right>
-                </ListItem>
-              </>
-            )
-          )}
-        </List>
-        <View style={styles.marginV16}>
-          <H3>Konfirmasi Pembayaran</H3>
-          <View style={styles.marginV8}>
-            {memberLoading ? (
-              <Spinner />
-            ) : (
-              member && (
-                <>
-                  <Text note>Data Member</Text>
-                  <ListItem thumbnail>
-                    <Left>
-                      <Thumbnail source={{uri: member[0].foto}} />
-                    </Left>
-                    <Body>
-                      <Text>{member[0].nama}</Text>
-                      <Text note>{member[0].no_hp}</Text>
-                      <Text note numberOfLines={2}>
-                        {member[0].alamat}
-                      </Text>
-                    </Body>
-                    <Right>
-                      <Button transparent onPress={() => setMember(null)}>
-                        <Text>Hapus</Text>
-                      </Button>
-                    </Right>
-                  </ListItem>
-                </>
-              )
-            )}
-            {pay === '' && (
-              <>
-                <Text note>ID Member</Text>
-                <Item regular>
-                  <Input
-                    keyboardType="number-pad"
-                    placeholder="Masukan ID Member"
-                    value={`${memberId}`}
-                    onChangeText={setMemberId}
-                    onSubmitEditing={onSubmitCode}
-                    onBlur={onSubmitCode}
-                  />
-                </Item>
-              </>
-            )}
-          </View>
-          {(memberId === null || memberId === '') && (
-            <View style={styles.marginV8}>
-              <Text note>Jumlah Dibayar</Text>
-              <Item regular>
-                <Input
-                  keyboardType="number-pad"
-                  placeholder="Masukan Jumlah Uang"
-                  value={`${pay}`}
-                  onChangeText={setPay}
-                />
-              </Item>
-            </View>
-          )}
-          <Button disabled={confirmLoading} block onPress={onClickConfirm}>
-            {confirmLoading && <Spinner color="white" />}
-            <Text>Konfirmasi Pembayaran</Text>
-          </Button>
-        </View>
-        <View style={styles.marginV16} />
+        )}
       </Content>
     </Container>
   );

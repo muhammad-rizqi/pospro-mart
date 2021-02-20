@@ -50,9 +50,9 @@ const InvoiceScreen = ({navigation, route}) => {
         <Right />
       </Header>
       <Content style={styles.padding16}>
-        <H3 style={styles.margin16}>Bukti Pembayaran</H3>
+        <H3 style={styles.margin8}>Bukti Pembayaran</H3>
         <List>
-          <ListItem>
+          <ListItem noIndent>
             <Left style={{flex: 2}}>
               <Text note>Nama Barang</Text>
             </Left>
@@ -64,7 +64,7 @@ const InvoiceScreen = ({navigation, route}) => {
             </Right>
           </ListItem>
           {data.data.map((cart) => (
-            <ListItem key={cart.id}>
+            <ListItem noIndent key={cart.id}>
               <Left style={{flex: 2}}>
                 <Text>{cart.nama}</Text>
               </Left>
@@ -77,7 +77,7 @@ const InvoiceScreen = ({navigation, route}) => {
             </ListItem>
           ))}
         </List>
-        <View style={styles.margin16}>
+        <View style={styles.marginV16}>
           <View style={styles.flexRow}>
             <Text style={styles.flex1}>Total Barang</Text>
             <Text style={styles.textRight}>{data.total_barang}</Text>

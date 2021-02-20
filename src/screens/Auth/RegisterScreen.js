@@ -14,7 +14,7 @@ import {
 } from 'native-base';
 import {styles} from '../../styles/MainStyles';
 import {registerServices} from '../../services/AuthServices';
-import {ToastAndroid} from 'react-native';
+import {StatusBar, ToastAndroid} from 'react-native';
 
 const RegisterScreen = ({navigation}) => {
   const [name, setName] = useState('');
@@ -56,6 +56,7 @@ const RegisterScreen = ({navigation}) => {
 
   return (
     <Container>
+      <StatusBar barStyle="dark-content" backgroundColor="#f8f8f8" />
       <Content contentContainerStyle={styles.contentContainer}>
         <View style={styles.contentCard}>
           <View style={styles.flexRow}>
@@ -125,7 +126,7 @@ const RegisterScreen = ({navigation}) => {
             onPress={onClickRegister}
             disabled={loading}>
             {loading && <Spinner color="white" />}
-            <Text>Mendaftar</Text>
+            <Text>Buat Akun</Text>
           </Button>
           <View style={styles.marginV8} />
         </View>

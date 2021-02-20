@@ -19,7 +19,7 @@ import {loginServices} from '../../services/AuthServices';
 import {storeToken} from '../../services/token/Token';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {styles} from '../../styles/MainStyles';
-import {ToastAndroid} from 'react-native';
+import {StatusBar, ToastAndroid} from 'react-native';
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -53,6 +53,7 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <Container>
+      <StatusBar barStyle="dark-content" backgroundColor="#f8f8f8" />
       <Content contentContainerStyle={styles.contentContainer}>
         <View style={styles.contentCard}>
           <H1 style={[styles.tetxCenter, styles.marginV16]}>POSpro Mart</H1>

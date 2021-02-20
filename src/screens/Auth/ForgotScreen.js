@@ -13,7 +13,7 @@ import {
   H3,
 } from 'native-base';
 import {styles} from '../../styles/MainStyles';
-import {ToastAndroid} from 'react-native';
+import {StatusBar, ToastAndroid} from 'react-native';
 import {forgorPasswordServices} from '../../services/AuthServices';
 
 const ForgotScreen = ({navigation}) => {
@@ -40,6 +40,7 @@ const ForgotScreen = ({navigation}) => {
 
   return (
     <Container>
+      <StatusBar barStyle="dark-content" backgroundColor="#f8f8f8" />
       <Content contentContainerStyle={styles.contentContainer}>
         <View style={styles.contentCard}>
           <View style={styles.flexRow}>

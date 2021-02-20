@@ -1,16 +1,13 @@
 import React, {useState} from 'react';
 import {
-  Body,
   Button,
   Container,
   Content,
   Form,
-  H1,
-  Header,
+  H3,
   Icon,
   Input,
   Item,
-  Left,
   Spinner,
   Text,
   View,
@@ -51,75 +48,73 @@ const ResetScreen = ({navigation, route}) => {
 
   return (
     <Container>
-      <Header transparent>
-        <Left>
-          <Button dark transparent onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" />
+      <Content contentContainerStyle={styles.contentContainer}>
+        <View style={styles.contentCard}>
+          <View style={styles.flexRow}>
+            <Icon onPress={() => navigation.goBack()} name="arrow-back" />
+          </View>
+          <View style={styles.marginV8} />
+          <H3>Reset Kata Sandi</H3>
+          <Form>
+            <View style={styles.marginV8}>
+              <Text note>Email</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="user@email.com"
+                  keyboardType="email-address"
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Token</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  value={token}
+                  onChangeText={setToken}
+                  placeholder="Masukkan Token"
+                  multiline
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Kata Sandi Baru</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder="password"
+                  secureTextEntry
+                />
+              </Item>
+            </View>
+            <View style={styles.marginV8}>
+              <Text note>Konfirmasi Kata Sandi Baru</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  value={confirm}
+                  onChangeText={setConfirm}
+                  placeholder="password"
+                  secureTextEntry
+                />
+              </Item>
+            </View>
+          </Form>
+          <Button
+            style={styles.marginV8}
+            block
+            disabled={loading}
+            onPress={onClickSend}>
+            {loading && <Spinner color="white" />}
+            <Text>Ubah Kata Sandi</Text>
           </Button>
-        </Left>
-        <Body />
-      </Header>
-      <Content style={styles.padding16}>
-        <H1>Ini Halaman Reset</H1>
-        <Form>
-          <View style={styles.marginV8}>
-            <Text note>Email</Text>
-            <Item regular>
-              <Input
-                value={email}
-                onChangeText={setEmail}
-                placeholder="user@email.com"
-                keyboardType="email-address"
-              />
-            </Item>
-          </View>
-          <View style={styles.marginV8}>
-            <Text note>Token</Text>
-            <Item regular>
-              <Input
-                value={token}
-                onChangeText={setToken}
-                placeholder="Masukkan Token"
-                multiline
-              />
-            </Item>
-          </View>
-          <View style={styles.marginV8}>
-            <Text note>Kata Sandi Baru</Text>
-            <Item regular>
-              <Input
-                value={password}
-                onChangeText={setPassword}
-                placeholder="password"
-                secureTextEntry
-              />
-            </Item>
-          </View>
-          <View style={styles.marginV8}>
-            <Text note>Konfirmasi Kata Sandi Baru</Text>
-            <Item regular>
-              <Input
-                value={confirm}
-                onChangeText={setConfirm}
-                placeholder="password"
-                secureTextEntry
-              />
-            </Item>
-          </View>
-        </Form>
-        <Button
-          style={styles.marginV8}
-          block
-          disabled={loading}
-          onPress={onClickSend}>
-          {loading && <Spinner color="white" />}
-          <Text>Ubah Kata Sandi</Text>
-        </Button>
-        <Text
-          style={[styles.tetxCenter, styles.marginV8]}
-          onPress={() => navigation.goBack()}>
-          Belum menerima token?
-        </Text>
+          <Text
+            style={[styles.tetxCenter, styles.marginV8]}
+            onPress={() => navigation.goBack()}>
+            Belum menerima token?
+          </Text>
+        </View>
       </Content>
     </Container>
   );

@@ -5,13 +5,9 @@ import {
   Form,
   Item,
   Input,
-  H1,
   Button,
   Text,
   Icon,
-  Header,
-  Left,
-  Body,
   View,
   Spinner,
   H3,
@@ -64,9 +60,6 @@ const RegisterScreen = ({navigation}) => {
         <View style={styles.contentCard}>
           <View style={styles.flexRow}>
             <Icon onPress={() => navigation.goBack()} name="arrow-back" />
-            <View style={styles.flex1}>
-              <H1 style={styles.tetxCenter}>POSpro Mart</H1>
-            </View>
           </View>
           <View style={styles.marginV8} />
           <H3>Mendaftar</H3>

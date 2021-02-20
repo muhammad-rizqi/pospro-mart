@@ -11,7 +11,6 @@ import {
   View,
   Spinner,
   H3,
-  Thumbnail,
   H1,
 } from 'native-base';
 import {useDispatch} from 'react-redux';

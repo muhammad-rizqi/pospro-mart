@@ -5,15 +5,12 @@ import {
   Form,
   Item,
   Input,
-  H1,
   Button,
   Text,
   Icon,
-  Header,
-  Left,
-  Body,
   View,
   Spinner,
+  H3,
 } from 'native-base';
 import {styles} from '../../styles/MainStyles';
 import {ToastAndroid} from 'react-native';
@@ -43,42 +40,40 @@ const ForgotScreen = ({navigation}) => {
 
   return (
     <Container>
-      <Header transparent>
-        <Left>
-          <Button dark transparent onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" />
-          </Button>
-        </Left>
-        <Body />
-      </Header>
-      <Content style={styles.padding16}>
-        <H1>Lupa Kata Sandi</H1>
-        <Form>
-          <View style={styles.marginV8}>
-            <Text note>Email</Text>
-            <Item regular>
-              <Input
-                value={email}
-                onChangeText={setEmail}
-                placeholder="user@email.com"
-                keyboardType="email-address"
-              />
-            </Item>
+      <Content contentContainerStyle={styles.contentContainer}>
+        <View style={styles.contentCard}>
+          <View style={styles.flexRow}>
+            <Icon onPress={() => navigation.goBack()} name="arrow-back" />
           </View>
-        </Form>
-        <Button
-          style={styles.marginV8}
-          block
-          disabled={loading}
-          onPress={onClickSend}>
-          {loading && <Spinner color="white" />}
-          <Text>Kirim Token</Text>
-        </Button>
-        <Text
-          style={[styles.tetxCenter, styles.marginV8]}
-          onPress={() => navigation.navigate('Reset')}>
-          Sudah menerima token?
-        </Text>
+          <View style={styles.marginV8} />
+          <H3>Lupa Kata Sandi</H3>
+          <Form>
+            <View style={styles.marginV8}>
+              <Text note>Email</Text>
+              <Item regular style={styles.radius5}>
+                <Input
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="user@email.com"
+                  keyboardType="email-address"
+                />
+              </Item>
+            </View>
+          </Form>
+          <Button
+            style={styles.marginV8}
+            block
+            disabled={loading}
+            onPress={onClickSend}>
+            {loading && <Spinner color="white" />}
+            <Text>Kirim Token</Text>
+          </Button>
+          <Text
+            style={[styles.tetxCenter, styles.marginV8]}
+            onPress={() => navigation.navigate('Reset')}>
+            Sudah menerima token?
+          </Text>
+        </View>
       </Content>
     </Container>
   );

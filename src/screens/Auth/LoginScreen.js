@@ -5,13 +5,14 @@ import {
   Form,
   Item,
   Input,
-  H1,
   Button,
   Text,
-  Header,
   CheckBox,
   View,
   Spinner,
+  H3,
+  Thumbnail,
+  H1,
 } from 'native-base';
 import {useDispatch} from 'react-redux';
 import {changeToken, setUser} from '../../redux/action';
@@ -53,59 +54,62 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <Container>
-      <Content style={styles.padding16}>
-        <H1 style={styles.marginV8}>Login</H1>
-        <Form>
-          <Item regular style={styles.marginV8}>
-            <Icon name="at" size={20} style={styles.marginH8} />
-            <Input
-              placeholder="Email"
-              onChangeText={(e) => setEmail(e)}
-              keyboardType="email-address"
-            />
-          </Item>
-          <Item regular style={styles.marginV8}>
-            <Icon name="lock" size={20} style={styles.marginH8} />
-            <Input
-              placeholder="Password"
-              onChangeText={(p) => setPassword(p)}
-              secureTextEntry
-            />
-          </Item>
-          <View style={[styles.flexRow, styles.marginV8]}>
-            <CheckBox
-              checked={remember}
-              onPress={() => setRemember(!remember)}
-              style={styles.marginR16}
-            />
+      <Content contentContainerStyle={styles.contentContainer}>
+        <View style={styles.contentCard}>
+          <H1 style={[styles.tetxCenter, styles.marginV16]}>POSpro Mart</H1>
+          <H3 style={styles.marginV8}>Masuk</H3>
+          <Form>
+            <Item regular style={styles.input}>
+              <Icon name="at" size={20} style={styles.marginH8} />
+              <Input
+                placeholder="Email"
+                onChangeText={(e) => setEmail(e)}
+                keyboardType="email-address"
+              />
+            </Item>
+            <Item regular style={styles.input}>
+              <Icon name="lock" size={20} style={styles.marginH8} />
+              <Input
+                placeholder="Kata Sandi"
+                onChangeText={(p) => setPassword(p)}
+                secureTextEntry
+              />
+            </Item>
+            <View style={[styles.flexRow, styles.marginV8]}>
+              <CheckBox
+                checked={remember}
+                onPress={() => setRemember(!remember)}
+                style={styles.marginR16}
+              />
+              <Text
+                style={styles.centerFlex1}
+                onPress={() => setRemember(!remember)}>
+                Ingat saya?
+              </Text>
+              <Text
+                style={styles.tetxCenter}
+                onPress={() => navigation.navigate('Forgot')}>
+                Lupa Kata Sandi?
+              </Text>
+            </View>
+          </Form>
+          <Button
+            block
+            disabled={loading}
+            onPress={onClickLogin}
+            style={styles.marginV8}>
+            {loading && <Spinner color="white" />}
+            <Text>Masuk</Text>
+          </Button>
+          <View style={styles.marginV16}>
+            <Text style={styles.tetxCenter}>Belum punya akun?</Text>
             <Text
-              style={styles.centerFlex1}
-              onPress={() => setRemember(!remember)}>
-              Ingat saya?
+              style={[styles.tetxCenter, styles.textBold]}
+              onPress={() => navigation.navigate('Register')}>
+              Daftar Sekarang !
             </Text>
           </View>
-        </Form>
-        <Button
-          block
-          disabled={loading}
-          onPress={onClickLogin}
-          style={styles.marginV8}>
-          {loading && <Spinner color="white" />}
-          <Text>Login</Text>
-        </Button>
-        <Text style={styles.tetxCenter}>or</Text>
-        <Button
-          block
-          success
-          onPress={() => navigation.navigate('Register')}
-          style={styles.marginV8}>
-          <Text>Register</Text>
-        </Button>
-        <Text
-          style={styles.tetxCenter}
-          onPress={() => navigation.navigate('Forgot')}>
-          Lupa Kata Sandi?
-        </Text>
+        </View>
       </Content>
     </Container>
   );

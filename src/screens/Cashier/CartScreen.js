@@ -6,6 +6,7 @@ import {
   Button,
   Container,
   Content,
+  Fab,
   H3,
   Header,
   Icon,
@@ -33,6 +34,7 @@ import {
 } from '../../services/CashierServices';
 import {Modal, ToastAndroid, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 
 const CartScreen = ({navigation}) => {
   const [item, setItem] = useState('');
@@ -46,7 +48,8 @@ const CartScreen = ({navigation}) => {
   const [selectedId, setSelectedId] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [searchDisplay, setSearchDisplay] = useState(false);
-
+  const [scan, setScan] = useState(false);
+  const [scanType, setScanType] = useState('item');
   const [member, setMember] = useState(null);
   const [memberLoading, setMemberLoading] = useState(false);
 
@@ -209,6 +212,15 @@ const CartScreen = ({navigation}) => {
     setDiscounted(total);
   };
 
+  const onReadSuccess = ({data}) => {
+    if (scanType === 'item') {
+      setItem(data);
+    } else {
+      setMemberId(data);
+      setScan(false);
+    }
+  };
+
   useEffect(() => {
     updateDiscount();
   }, [dataCart]);
@@ -226,6 +238,27 @@ const CartScreen = ({navigation}) => {
         </Body>
         <Right />
       </Header>
+      <Modal visible={scan}>
+        <QRCodeScanner
+          vibrate
+          showMarker
+          onRead={onReadSuccess}
+          reactivate
+          reactivateTimeout={5000}
+        />
+        <Fab
+          style={styles.backgroundPrimary}
+          position="bottomLeft"
+          onPress={() => {
+            setScan(false);
+          }}>
+          <Icon name="arrow-back" />
+        </Fab>
+        {(cartLoading || memberLoading) && <Spinner />}
+        <H3 style={{color: 'white', textAlign: 'center', margin: 24}}>
+          Scan {scanType === 'item' ? 'Barang' : 'Member'}
+        </H3>
+      </Modal>
       <Modal transparent visible={modal}>
         <View
           style={[styles.flex1, styles.backgroundOpacity, styles.padding16]}>
@@ -267,7 +300,7 @@ const CartScreen = ({navigation}) => {
           <TouchableOpacity style={styles.flex1} onPress={closeUpdate} />
         </View>
       </Modal>
-      <Content style={[styles.backgroundLight]}>
+      <Content contentContainerStyle={[{flexGrow: 2}, styles.backgroundLight]}>
         <View style={styles.cartMenu}>
           <H3>Tambah Keranjang</H3>
           <View style={styles.marginV8}>
@@ -286,6 +319,13 @@ const CartScreen = ({navigation}) => {
                   }
                 }}
                 onBlur={() => setSearchDisplay(false)}
+              />
+              <Icon
+                name="barcode-outline"
+                onPress={() => {
+                  setScanType('item');
+                  setScan(true);
+                }}
               />
             </Item>
           </View>
@@ -418,6 +458,13 @@ const CartScreen = ({navigation}) => {
                       onChangeText={setMemberId}
                       onSubmitEditing={onSubmitCode}
                       onBlur={onSubmitCode}
+                    />
+                    <Icon
+                      name="qr-code-outline"
+                      onPress={() => {
+                        setScanType('member');
+                        setScan(true);
+                      }}
                     />
                   </Item>
                 </>

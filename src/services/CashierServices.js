@@ -17,6 +17,10 @@ export const searchItemServices = (name) => {
   return apiPrivate().get('/barang/search/' + name);
 };
 
+export const getItemByBarcode = (barcode) => {
+  return apiPrivate().get('/barang/uid/' + barcode);
+};
+
 export const getSellingServices = () => {
   return apiPrivate().get('/detailpenjualan/request');
 };

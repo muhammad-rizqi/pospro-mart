@@ -27,6 +27,7 @@ import {
   addSellingServices,
   confirmSellingServices,
   deleteCartServices,
+  getItemByBarcode,
   getMemberByCode,
   getSellingServices,
   searchItemServices,
@@ -215,11 +216,38 @@ const CartScreen = ({navigation}) => {
   const onReadSuccess = ({data}) => {
     if (scanType === 'item') {
       setItem(data);
+      !(cartLoading || searchLoading) && addByBarcode(data);
     } else {
       setMemberId(data);
       onSubmitCode(data);
       setScan(false);
     }
+  };
+
+  const getByBarcode = (barcode) => {
+    setSearchLoading(true);
+    getItemByBarcode(barcode)
+      .then((result) => {
+        setDataSearch(result.data.data);
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(err.response);
+      })
+      .finally(() => setSearchLoading(false));
+  };
+
+  const addByBarcode = (barcode) => {
+    setCartLoading(true);
+    getItemByBarcode(barcode)
+      .then((result) => {
+        addToCart(result.data.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(err.response);
+      });
   };
 
   useEffect(() => {
@@ -312,9 +340,9 @@ const CartScreen = ({navigation}) => {
                 value={item}
                 onChangeText={(v) => {
                   setItem(v);
-                  if (v.length >= 3 && isNaN(v)) {
+                  if (v.length >= 3) {
                     setSearchDisplay(true);
-                    search(v);
+                    isNaN(v) ? search(v) : getByBarcode(v);
                   } else {
                     setSearchDisplay(false);
                   }

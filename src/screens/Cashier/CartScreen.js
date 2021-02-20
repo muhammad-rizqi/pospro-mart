@@ -145,12 +145,12 @@ const CartScreen = ({navigation}) => {
       });
   };
 
-  const onSubmitCode = () => {
-    if (memberId === '' || memberId === `${0}`) {
+  const onSubmitCode = (id) => {
+    if (id === '' || id === `${0}`) {
       ToastAndroid.show('Isi dengan benar', ToastAndroid.LONG);
     } else {
       setMemberLoading(true);
-      getMemberByCode(memberId)
+      getMemberByCode(id)
         .then((result) => {
           setMember(result.data.data);
         })
@@ -217,6 +217,7 @@ const CartScreen = ({navigation}) => {
       setItem(data);
     } else {
       setMemberId(data);
+      onSubmitCode(data);
       setScan(false);
     }
   };
@@ -456,8 +457,7 @@ const CartScreen = ({navigation}) => {
                       placeholder="Masukan ID Member"
                       value={`${memberId}`}
                       onChangeText={setMemberId}
-                      onSubmitEditing={onSubmitCode}
-                      onBlur={onSubmitCode}
+                      onBlur={() => onSubmitCode(memberId)}
                     />
                     <Icon
                       name="qr-code-outline"

@@ -99,7 +99,7 @@ const SettingsScreen = ({navigation}) => {
         <Form>
           <View style={styles.marginV8}>
             <Text note>Kata Sandi Baru</Text>
-            <Item regular>
+            <Item regular style={styles.radius5}>
               <Input
                 value={password}
                 onChangeText={setPassword}
@@ -110,7 +110,7 @@ const SettingsScreen = ({navigation}) => {
           </View>
           <View style={styles.marginV8}>
             <Text note>Konfirmasi Kata Sandi Baru</Text>
-            <Item regular>
+            <Item regular style={styles.radius5}>
               <Input
                 value={confirm}
                 onChangeText={setConfirm}

@@ -142,7 +142,7 @@ const SupplierScreen = ({navigation}) => {
           <Form>
             <View style={styles.marginV8}>
               <Text note>Nama Supplier</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Nama Supplier"
                   value={nama}
@@ -152,7 +152,7 @@ const SupplierScreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Nomor Telepon</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="No Telepon"
                   value={`${noHp}`}
@@ -162,7 +162,7 @@ const SupplierScreen = ({navigation}) => {
             </View>
             <View>
               <Text note>Alamat</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   multiline
                   placeholder="Alamat"
@@ -173,7 +173,6 @@ const SupplierScreen = ({navigation}) => {
             </View>
             <Button
               style={styles.marginV8}
-              rounded
               block
               disabled={loading}
               onPress={supplierId ? onClickUpdate : onClickAdd}>
@@ -182,7 +181,6 @@ const SupplierScreen = ({navigation}) => {
             </Button>
             {supplierId && (
               <Button
-                rounded
                 block
                 danger
                 style={styles.marginV8}

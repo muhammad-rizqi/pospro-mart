@@ -50,4 +50,5 @@ export const styles = StyleSheet.create({
   radius5: {borderRadius: 5},
   alignCenter: {alignItems: 'center'},
   cartMenu: {backgroundColor: 'white', padding: 16, marginBottom: 16},
+  textOnScan: {color: 'white', textAlign: 'center', margin: 24},
 });

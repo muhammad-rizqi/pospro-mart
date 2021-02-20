@@ -7,6 +7,7 @@ import {
   Fab,
   Form,
   H1,
+  H3,
   Header,
   Icon,
   Input,
@@ -24,12 +25,14 @@ import {
 import {useSelector} from 'react-redux';
 import {
   deleteItemServices,
+  getCategoryServices,
   getItemServices,
   updateItemServices,
 } from '../../services/StaffServices';
 import {Modal, ToastAndroid} from 'react-native';
 import {addItemServices} from '../../services/StaffServices';
 import {styles} from '../../styles/MainStyles';
+import QRCodeScanner from 'react-native-qrcode-scanner';
 
 const ItemScreen = ({navigation}) => {
   const {item, category} = useSelector((state) => state.staff);
@@ -46,6 +49,7 @@ const ItemScreen = ({navigation}) => {
 
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [scan, setScan] = useState(false);
 
   const resetField = () => {
     setItemId(null);
@@ -159,8 +163,14 @@ const ItemScreen = ({navigation}) => {
       });
   };
 
+  const onReadSuccess = ({data}) => {
+    setUid(data);
+    setScan(false);
+  };
+
   useEffect(() => {
     getItemServices();
+    getCategoryServices();
   }, []);
 
   return (
@@ -176,6 +186,24 @@ const ItemScreen = ({navigation}) => {
         </Body>
         <Right />
       </Header>
+      <Modal visible={scan}>
+        <QRCodeScanner
+          vibrate
+          showMarker
+          onRead={onReadSuccess}
+          reactivate
+          reactivateTimeout={5000}
+        />
+        <Fab
+          style={styles.backgroundPrimary}
+          position="bottomLeft"
+          onPress={() => {
+            setScan(false);
+          }}>
+          <Icon name="arrow-back" />
+        </Fab>
+        <H3 style={styles.textOnScan}>Scan Item</H3>
+      </Modal>
       <Modal visible={modal}>
         <Content style={styles.padding16}>
           <View style={styles.alignFlexEnd}>
@@ -191,18 +219,22 @@ const ItemScreen = ({navigation}) => {
           <Form>
             <View style={styles.marginV8}>
               <Text note>Kode Barang</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Kode Barang"
                   value={`${uid}`}
                   onChangeText={setUid}
                 />
-                <Icon active name="barcode" />
+                <Icon
+                  active
+                  name="barcode-outline"
+                  onPress={() => setScan(true)}
+                />
               </Item>
             </View>
             <View style={styles.marginV8}>
-              <Text note>Nama Barnag</Text>
-              <Item regular>
+              <Text note>Nama Barang</Text>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Nama Barang"
                   value={nama}
@@ -212,7 +244,7 @@ const ItemScreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Merek</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Merek"
                   value={merk}
@@ -222,7 +254,7 @@ const ItemScreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Kategori</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Picker
                   selectedValue={kategori_id}
                   onValueChange={setKategori_id}>
@@ -234,7 +266,7 @@ const ItemScreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Harga Beli</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Harga Beli"
                   value={`${harga_beli}`}
@@ -244,7 +276,7 @@ const ItemScreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Harga Jual</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Harga Jual"
                   value={`${harga_jual}`}
@@ -254,7 +286,7 @@ const ItemScreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Harga Stok</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Stok"
                   value={`${stok}`}
@@ -264,7 +296,7 @@ const ItemScreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Diskon</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Diskon"
                   value={`${diskon}`}
@@ -273,7 +305,6 @@ const ItemScreen = ({navigation}) => {
               </Item>
             </View>
             <Button
-              rounded
               block
               style={styles.marginV8}
               disabled={loading}
@@ -285,7 +316,6 @@ const ItemScreen = ({navigation}) => {
             {itemId && (
               <Button
                 style={styles.marginV8}
-                rounded
                 block
                 danger
                 disabled={deleteLoading}

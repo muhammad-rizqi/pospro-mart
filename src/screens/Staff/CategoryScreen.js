@@ -142,7 +142,7 @@ const CategoryScreen = ({navigation}) => {
           <Form>
             <View style={styles.marginV8}>
               <Text note>Nama Ketegori</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Kategori"
                   value={name}
@@ -151,7 +151,6 @@ const CategoryScreen = ({navigation}) => {
               </Item>
             </View>
             <Button
-              rounded
               block
               style={styles.marginV8}
               disabled={loading}
@@ -161,7 +160,6 @@ const CategoryScreen = ({navigation}) => {
             </Button>
             {catId && (
               <Button
-                rounded
                 block
                 danger
                 style={styles.marginV8}

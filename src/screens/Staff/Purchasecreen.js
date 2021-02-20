@@ -26,6 +26,7 @@ import {
   addPurchaseServices,
   deletePurchaseServices,
   getPurchaseServices,
+  getSupplierServices,
   updatePurchaseServices,
 } from '../../services/StaffServices';
 import {Modal, ToastAndroid} from 'react-native';
@@ -134,7 +135,9 @@ const Purchasecreen = ({navigation}) => {
 
   useEffect(() => {
     getPurchaseServices();
+    getSupplierServices();
   }, []);
+
   console.log(purchase.data);
   return (
     <Container>
@@ -166,7 +169,7 @@ const Purchasecreen = ({navigation}) => {
           <Form>
             <View style={styles.marginV8}>
               <Text note>Supplier</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Picker
                   selectedValue={supplierId}
                   onValueChange={(val) =>
@@ -185,7 +188,7 @@ const Purchasecreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Barang</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Picker
                   selectedValue={itemId}
                   onValueChange={(val) =>
@@ -207,7 +210,7 @@ const Purchasecreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Jumlah Barang</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Jumlah Barang"
                   value={`${quantity}`}
@@ -217,7 +220,7 @@ const Purchasecreen = ({navigation}) => {
             </View>
             <View style={styles.marginV8}>
               <Text note>Total Harga Barang</Text>
-              <Item regular>
+              <Item regular style={styles.radius5}>
                 <Input
                   placeholder="Total Harga"
                   value={`${price}`}
@@ -226,7 +229,6 @@ const Purchasecreen = ({navigation}) => {
               </Item>
             </View>
             <Button
-              rounded
               block
               style={styles.marginV8}
               disabled={loading}
@@ -236,7 +238,6 @@ const Purchasecreen = ({navigation}) => {
             </Button>
             {purchaseId && (
               <Button
-                rounded
                 block
                 style={styles.marginV8}
                 danger

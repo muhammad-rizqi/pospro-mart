@@ -100,7 +100,7 @@ const UpdateProfile = ({navigation}) => {
           </TouchableOpacity>
           <View style={styles.marginV8}>
             <Text note>Nama Lengkap</Text>
-            <Item regular>
+            <Item regular style={styles.radius5}>
               <Input
                 placeholder="Nama Lengkap"
                 value={nama}
@@ -110,7 +110,7 @@ const UpdateProfile = ({navigation}) => {
           </View>
           <View style={styles.marginV8}>
             <Text note>Email</Text>
-            <Item regular>
+            <Item regular style={styles.radius5}>
               <Input
                 placeholder="Email"
                 value={email}
@@ -120,7 +120,7 @@ const UpdateProfile = ({navigation}) => {
           </View>
           <View style={styles.marginV8}>
             <Text note>No Telepon</Text>
-            <Item regular>
+            <Item regular style={styles.radius5}>
               <Input
                 placeholder="No Telepon"
                 value={`${noHp}`}
@@ -129,8 +129,8 @@ const UpdateProfile = ({navigation}) => {
             </Item>
           </View>
           <View style={styles.marginV8}>
-            <Text note>Umur0</Text>
-            <Item regular>
+            <Text note>Umur</Text>
+            <Item regular style={styles.radius5}>
               <Input
                 placeholder="Umur"
                 value={`${umur}`}
@@ -140,7 +140,7 @@ const UpdateProfile = ({navigation}) => {
           </View>
           <View style={styles.marginV8}>
             <Text note>Alamat</Text>
-            <Item regular>
+            <Item regular style={styles.radius5}>
               <Input
                 multiline
                 placeholder="Alamat"
@@ -150,7 +150,6 @@ const UpdateProfile = ({navigation}) => {
             </Item>
           </View>
           <Button
-            rounded
             block
             style={styles.marginV8}
             disabled={loading}

@@ -292,7 +292,7 @@ const ItemScreen = ({navigation}) => {
                 </Item>
               </View>
               <View style={styles.marginV8}>
-                <Text note>Harga Stok</Text>
+                <Text note>Stok</Text>
                 <Item regular style={styles.radius5}>
                   <Input
                     placeholder="Stok"

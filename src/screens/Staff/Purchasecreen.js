@@ -281,6 +281,10 @@ const Purchasecreen = ({navigation}) => {
                   <Text>{data.barang.nama}</Text>
                   <Text note>{data.supplier.nama}</Text>
                 </Body>
+                <View style={styles.alignFlexEnd}>
+                  <Text>x{data.jumlah}</Text>
+                  <Text>Rp. {data.total_biaya},-</Text>
+                </View>
               </ListItem>
             ))}
           </List>

@@ -131,63 +131,63 @@ const AllicationScreen = ({navigation}) => {
         </Body>
         <Right />
       </Header>
-      <Modal visible={modal}>
-        <Content style={styles.padding16}>
-          <View style={styles.alignFlexEnd}>
-            <Icon
-              name="close"
-              onPress={() => {
-                setModal(!modal);
-                resetField();
-              }}
-            />
-          </View>
-          <H1 style={styles.marginV8}>
-            {allocationId ? 'Update' : 'Tambah'} Pengeluaran
-          </H1>
-          <Form>
-            <View style={styles.marginV8}>
-              <Text note>Nama Pengeluaran</Text>
-              <Item regular>
-                <Input
-                  placeholder="Tipe Pengeluaran"
-                  value={tipe}
-                  onChangeText={setTipe}
-                />
-              </Item>
+      <Modal visible={modal} transparent>
+        <Content contentContainerStyle={styles.contentContainer}>
+          <View style={styles.contentCard}>
+            <View style={styles.alignFlexEnd}>
+              <Icon
+                name="close"
+                onPress={() => {
+                  setModal(!modal);
+                  resetField();
+                }}
+              />
             </View>
-            <View style={styles.marginV8}>
-              <Text note>Total Pengeluaran</Text>
-              <Item regular>
-                <Input
-                  placeholder="Total Pengeluaran"
-                  value={`${biaya}`}
-                  onChangeText={setBiaya}
-                />
-              </Item>
-            </View>
-            <Button
-              style={styles.marginV8}
-              rounded
-              block
-              disabled={loading}
-              onPress={allocationId ? onClickUpdate : onClickAdd}>
-              {loading && <Spinner color="white" />}
-              <Text>{allocationId ? 'Update' : 'Tambah'} Pengeluaran</Text>
-            </Button>
-            {allocationId && (
+            <H1 style={styles.marginV8}>
+              {allocationId ? 'Update' : 'Tambah'} Pengeluaran
+            </H1>
+            <Form>
+              <View style={styles.marginV8}>
+                <Text note>Nama Pengeluaran</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Tipe Pengeluaran"
+                    value={tipe}
+                    onChangeText={setTipe}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Total Pengeluaran</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Total Pengeluaran"
+                    value={`${biaya}`}
+                    onChangeText={setBiaya}
+                  />
+                </Item>
+              </View>
               <Button
                 style={styles.marginV8}
-                rounded
                 block
-                danger
-                disabled={deleteLoading}
-                onPress={onClickDelete}>
-                {deleteLoading && <Spinner color="white" />}
-                <Text>Hapus Pengeluaran</Text>
+                disabled={loading}
+                onPress={allocationId ? onClickUpdate : onClickAdd}>
+                {loading && <Spinner color="white" />}
+                <Text>{allocationId ? 'Update' : 'Tambah'} Pengeluaran</Text>
               </Button>
-            )}
-          </Form>
+              {allocationId && (
+                <Button
+                  style={styles.marginV8}
+                  block
+                  danger
+                  disabled={deleteLoading}
+                  onPress={onClickDelete}>
+                  {deleteLoading && <Spinner color="white" />}
+                  <Text>Hapus Pengeluaran</Text>
+                </Button>
+              )}
+            </Form>
+          </View>
         </Content>
       </Modal>
       <Content>

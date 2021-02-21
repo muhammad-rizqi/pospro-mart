@@ -40,9 +40,9 @@ export const deleteAllocationServices = (id) => {
 };
 
 export const getDailyReportServices = () => {
-  return apiPrivate().get('/laporan/harian');
+  return apiPrivate().get('/laporan');
 };
 
 export const getMonthlyReportServices = () => {
-  return apiPrivate().get('/laporan/bulanan');
+  return apiPrivate().get('/absent');
 };

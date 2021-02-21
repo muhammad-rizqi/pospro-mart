@@ -4,22 +4,27 @@ import {
   Container,
   Content,
   H1,
+  H3,
+  List,
+  ListItem,
   Text,
   Thumbnail,
   View,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
+import {StatusBar, ToastAndroid, TouchableOpacity} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearToken} from '../../redux/action';
 import {getBalanceServices} from '../../services/MemberServices';
 import {styles} from '../../styles/MainStyles';
 
-const MemberDashboardScreen = () => {
+const MemberDashboardScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [balance, setBalance] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [balance, setBalance] = useState(null);
   const {user} = useSelector((state) => state);
+  const [menu, setMenu] = useState(false);
 
   const onClickLogout = () => {
     dispatch(clearToken());
@@ -28,78 +33,93 @@ const MemberDashboardScreen = () => {
   const getBalance = () => {
     getBalanceServices(user.id)
       .then((result) => {
-        setBalance(result.data.data[0].saldo);
+        if (result.data.data.length > 0) {
+          setBalance(result.data.data[0].saldo);
+        } else {
+          setBalance(0);
+        }
       })
       .catch((err) => {
+        ToastAndroid.show('Gagal Mengambil info saldo', ToastAndroid.LONG);
         console.log(err);
         console.log(err.response);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
     getBalance();
   }, []);
+
   return (
     <Container>
-      <Content>
-        <H1>Halo {user.nama}</H1>
-        <View
-          style={{
-            backgroundColor: '#1565C0',
-            width: 300,
-            height: 180,
-            borderRadius: 25,
-            padding: 16,
-            alignSelf: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <Text
-            style={{
-              textAlign: 'right',
-              fontSize: 18,
-              fontWeight: 'bold',
-              color: 'white',
-            }}>
-            POSPro Mart
-          </Text>
-          <View style={styles.flexRow}>
-            <View style={styles.flex1}>
-              <Text style={{color: 'white', fontSize: 12}}>Member Card</Text>
-              <Text
-                style={{color: 'white', fontSize: 24, fontFamily: 'monospace'}}>
-                {user.kode_member}
-              </Text>
-              <Text style={{color: 'white'}} numberOfLines={1}>
-                {user.nama}
-              </Text>
-            </View>
-            <View style={{justifyContent: 'center'}}>
-              <QRCode
-                backgroundColor="#ffffff00"
-                color="white"
-                size={50}
-                value={`${user.kode_member}`}
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <Content contentContainerStyle={styles.padding16}>
+        <View style={styles.flexRow}>
+          <View style={styles.flex1}>
+            <TouchableOpacity onPress={() => setMenu(!menu)}>
+              <Thumbnail
+                source={{uri: user.foto}}
+                style={styles.backgroundPrimary}
               />
+            </TouchableOpacity>
+            <View style={styles.relative}>
+              {menu && (
+                <List style={styles.listMenu}>
+                  <ListItem
+                    onPress={() => {
+                      setMenu(false);
+                      navigation.navigate('UpdateProfile');
+                    }}>
+                    <Text>Profile</Text>
+                  </ListItem>
+                  <ListItem
+                    onPress={() => {
+                      setMenu(false);
+                      navigation.navigate('Settings');
+                    }}>
+                    <Text>Settings</Text>
+                  </ListItem>
+                  <ListItem onPress={onClickLogout}>
+                    <Text>Logout</Text>
+                  </ListItem>
+                </List>
+              )}
             </View>
           </View>
-          <Text
-            style={{
-              textAlign: 'right',
-              fontSize: 24,
-              fontWeight: 'bold',
-              fontFamily: 'monospace',
-              color: 'white',
-            }}>
-            Rp. {balance},-
-          </Text>
+          <View style={styles.justifyCenter}>
+            <H1 style={styles.textBold}>POSPro Mart</H1>
+          </View>
         </View>
-        <Thumbnail source={{uri: user.foto}} />
-        <Text>{user.email}</Text>
-        <Text>Saldo Anda :</Text>
-        <Text>Rp. {balance},-</Text>
-        <Button onPress={onClickLogout}>
-          <Text>Logout</Text>
-        </Button>
+        <View style={styles.marginV16}>
+          <Text>Selamat Datang</Text>
+          <H3>{user.nama}</H3>
+        </View>
+        {!loading && (
+          <View style={styles.membeCardContainer}>
+            <Text style={styles.memberCardLogo}>POSPro Mart</Text>
+            <View style={styles.flexRow}>
+              <View style={styles.flex1}>
+                <Text note style={styles.textWhite}>
+                  Member Card
+                </Text>
+                <Text style={styles.memberCardNumber}>{user.kode_member}</Text>
+                <Text style={styles.textWhite} numberOfLines={1}>
+                  {user.nama}
+                </Text>
+              </View>
+              <View style={styles.justifyCenter}>
+                <QRCode
+                  backgroundColor="#ffffff00"
+                  color="white"
+                  size={50}
+                  value={`${user.kode_member}`}
+                />
+              </View>
+            </View>
+            <Text style={styles.memberCardBalance}>Rp. {balance},-</Text>
+          </View>
+        )}
       </Content>
     </Container>
   );

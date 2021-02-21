@@ -125,72 +125,74 @@ const SupplierScreen = ({navigation}) => {
         </Body>
         <Right />
       </Header>
-      <Modal visible={modal}>
-        <Content style={styles.padding16}>
-          <View style={styles.alignFlexEnd}>
-            <Icon
-              name="close"
-              onPress={() => {
-                setModal(!modal);
-                resetField();
-              }}
-            />
-          </View>
-          <H1 style={styles.marginV8}>
-            {supplierId ? 'Update' : 'Tambah'} Supplier
-          </H1>
-          <Form>
-            <View style={styles.marginV8}>
-              <Text note>Nama Supplier</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Nama Supplier"
-                  value={nama}
-                  onChangeText={setNama}
-                />
-              </Item>
+      <Modal visible={modal} transparent>
+        <Content contentContainerStyle={styles.contentContainer}>
+          <View style={styles.contentCard}>
+            <View style={styles.alignFlexEnd}>
+              <Icon
+                name="close"
+                onPress={() => {
+                  setModal(!modal);
+                  resetField();
+                }}
+              />
             </View>
-            <View style={styles.marginV8}>
-              <Text note>Nomor Telepon</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="No Telepon"
-                  value={`${noHp}`}
-                  onChangeText={setNoHp}
-                />
-              </Item>
-            </View>
-            <View>
-              <Text note>Alamat</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  multiline
-                  placeholder="Alamat"
-                  value={alamat}
-                  onChangeText={setAlamat}
-                />
-              </Item>
-            </View>
-            <Button
-              style={styles.marginV8}
-              block
-              disabled={loading}
-              onPress={supplierId ? onClickUpdate : onClickAdd}>
-              {loading && <Spinner color="white" />}
-              <Text>{supplierId ? 'Update' : 'Tambah'} Supplier</Text>
-            </Button>
-            {supplierId && (
+            <H1 style={styles.marginV8}>
+              {supplierId ? 'Update' : 'Tambah'} Supplier
+            </H1>
+            <Form>
+              <View style={styles.marginV8}>
+                <Text note>Nama Supplier</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Nama Supplier"
+                    value={nama}
+                    onChangeText={setNama}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Nomor Telepon</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="No Telepon"
+                    value={`${noHp}`}
+                    onChangeText={setNoHp}
+                  />
+                </Item>
+              </View>
+              <View>
+                <Text note>Alamat</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    multiline
+                    placeholder="Alamat"
+                    value={alamat}
+                    onChangeText={setAlamat}
+                  />
+                </Item>
+              </View>
               <Button
-                block
-                danger
                 style={styles.marginV8}
-                disabled={deleteLoading}
-                onPress={onClickDelete}>
-                {deleteLoading && <Spinner color="white" />}
-                <Text>Hapus Supplier</Text>
+                block
+                disabled={loading}
+                onPress={supplierId ? onClickUpdate : onClickAdd}>
+                {loading && <Spinner color="white" />}
+                <Text>{supplierId ? 'Update' : 'Tambah'} Supplier</Text>
               </Button>
-            )}
-          </Form>
+              {supplierId && (
+                <Button
+                  block
+                  danger
+                  style={styles.marginV8}
+                  disabled={deleteLoading}
+                  onPress={onClickDelete}>
+                  {deleteLoading && <Spinner color="white" />}
+                  <Text>Hapus Supplier</Text>
+                </Button>
+              )}
+            </Form>
+          </View>
         </Content>
       </Modal>
       <Content>

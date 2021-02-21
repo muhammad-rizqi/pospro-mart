@@ -204,128 +204,136 @@ const ItemScreen = ({navigation}) => {
         </Fab>
         <H3 style={styles.textOnScan}>Scan Item</H3>
       </Modal>
-      <Modal visible={modal}>
-        <Content style={styles.padding16}>
-          <View style={styles.alignFlexEnd}>
-            <Icon
-              name="close"
-              onPress={() => {
-                setModal(!modal);
-                resetField();
-              }}
-            />
-          </View>
-          <H1 style={styles.marginV8}>{itemId ? 'Update' : 'Tambah'} Barang</H1>
-          <Form>
-            <View style={styles.marginV8}>
-              <Text note>Kode Barang</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Kode Barang"
-                  value={`${uid}`}
-                  onChangeText={setUid}
-                />
-                <Icon
-                  active
-                  name="barcode-outline"
-                  onPress={() => setScan(true)}
-                />
-              </Item>
+      <Modal visible={modal} transparent>
+        <Content contentContainerStyle={styles.contentContainer}>
+          <View style={styles.contentCard}>
+            <View style={styles.alignFlexEnd}>
+              <Icon
+                name="close"
+                onPress={() => {
+                  setModal(!modal);
+                  resetField();
+                }}
+              />
             </View>
-            <View style={styles.marginV8}>
-              <Text note>Nama Barang</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Nama Barang"
-                  value={nama}
-                  onChangeText={setNama}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Merek</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Merek"
-                  value={merk}
-                  onChangeText={setMerk}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Kategori</Text>
-              <Item regular style={styles.radius5}>
-                <Picker
-                  selectedValue={kategori_id}
-                  onValueChange={setKategori_id}>
-                  {category.data.map((cat) => (
-                    <Picker.Item label={cat.nama} value={cat.id} key={cat.id} />
-                  ))}
-                </Picker>
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Harga Beli</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Harga Beli"
-                  value={`${harga_beli}`}
-                  onChangeText={setHarga_beli}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Harga Jual</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Harga Jual"
-                  value={`${harga_jual}`}
-                  onChangeText={setHarga_jual}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Harga Stok</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Stok"
-                  value={`${stok}`}
-                  onChangeText={setStok}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Diskon</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Diskon"
-                  value={`${diskon}`}
-                  onChangeText={setDiskon}
-                />
-              </Item>
-            </View>
-            <Button
-              block
-              style={styles.marginV8}
-              disabled={loading}
-              onPress={itemId ? onClickUpdate : onClickAdd}>
-              {loading && <Spinner color="white" />}
-              <Text>{itemId ? 'Update' : 'Tambah'} Barang</Text>
-            </Button>
-
-            {itemId && (
+            <H1 style={styles.marginV8}>
+              {itemId ? 'Update' : 'Tambah'} Barang
+            </H1>
+            <Form>
+              <View style={styles.marginV8}>
+                <Text note>Kode Barang</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Kode Barang"
+                    value={`${uid}`}
+                    onChangeText={setUid}
+                  />
+                  <Icon
+                    active
+                    name="barcode-outline"
+                    onPress={() => setScan(true)}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Nama Barang</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Nama Barang"
+                    value={nama}
+                    onChangeText={setNama}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Merek</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Merek"
+                    value={merk}
+                    onChangeText={setMerk}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Kategori</Text>
+                <Item regular style={styles.radius5}>
+                  <Picker
+                    selectedValue={kategori_id}
+                    onValueChange={setKategori_id}>
+                    {category.data.map((cat) => (
+                      <Picker.Item
+                        label={cat.nama}
+                        value={cat.id}
+                        key={cat.id}
+                      />
+                    ))}
+                  </Picker>
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Harga Beli</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Harga Beli"
+                    value={`${harga_beli}`}
+                    onChangeText={setHarga_beli}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Harga Jual</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Harga Jual"
+                    value={`${harga_jual}`}
+                    onChangeText={setHarga_jual}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Harga Stok</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Stok"
+                    value={`${stok}`}
+                    onChangeText={setStok}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Diskon</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Diskon"
+                    value={`${diskon}`}
+                    onChangeText={setDiskon}
+                  />
+                </Item>
+              </View>
               <Button
-                style={styles.marginV8}
                 block
-                danger
-                disabled={deleteLoading}
-                onPress={onClickDelete}>
-                {deleteLoading && <Spinner color="white" />}
-                <Text>Hapus Barang</Text>
+                style={styles.marginV8}
+                disabled={loading}
+                onPress={itemId ? onClickUpdate : onClickAdd}>
+                {loading && <Spinner color="white" />}
+                <Text>{itemId ? 'Update' : 'Tambah'} Barang</Text>
               </Button>
-            )}
-          </Form>
-          <View style={styles.marginV16} />
+
+              {itemId && (
+                <Button
+                  style={styles.marginV8}
+                  block
+                  danger
+                  disabled={deleteLoading}
+                  onPress={onClickDelete}>
+                  {deleteLoading && <Spinner color="white" />}
+                  <Text>Hapus Barang</Text>
+                </Button>
+              )}
+            </Form>
+            <View style={styles.marginV16} />
+          </View>
         </Content>
       </Modal>
       <Content>

@@ -125,51 +125,53 @@ const CategoryScreen = ({navigation}) => {
         </Body>
         <Right />
       </Header>
-      <Modal visible={modal}>
-        <Content style={styles.padding16}>
-          <View style={styles.alignFlexEnd}>
-            <Icon
-              name="close"
-              onPress={() => {
-                setModal(!modal);
-                resetField();
-              }}
-            />
-          </View>
-          <H1 style={styles.marginV8}>
-            {catId ? 'Update' : 'Tambah'} Kategori
-          </H1>
-          <Form>
-            <View style={styles.marginV8}>
-              <Text note>Nama Ketegori</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Kategori"
-                  value={name}
-                  onChangeText={setName}
-                />
-              </Item>
+      <Modal visible={modal} transparent>
+        <Content contentContainerStyle={styles.contentContainer}>
+          <View style={styles.contentCard}>
+            <View style={styles.alignFlexEnd}>
+              <Icon
+                name="close"
+                onPress={() => {
+                  setModal(!modal);
+                  resetField();
+                }}
+              />
             </View>
-            <Button
-              block
-              style={styles.marginV8}
-              disabled={loading}
-              onPress={catId ? onClickUpdate : onClickAdd}>
-              {loading && <Spinner color="white" />}
-              <Text>{catId ? 'Update' : 'Tambah'} Kategori</Text>
-            </Button>
-            {catId && (
+            <H1 style={styles.marginV8}>
+              {catId ? 'Update' : 'Tambah'} Kategori
+            </H1>
+            <Form>
+              <View style={styles.marginV8}>
+                <Text note>Nama Ketegori</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Kategori"
+                    value={name}
+                    onChangeText={setName}
+                  />
+                </Item>
+              </View>
               <Button
                 block
-                danger
                 style={styles.marginV8}
-                disabled={deleteLoading}
-                onPress={onClickDelete}>
-                {deleteLoading && <Spinner color="white" />}
-                <Text>Hapus Kategori</Text>
+                disabled={loading}
+                onPress={catId ? onClickUpdate : onClickAdd}>
+                {loading && <Spinner color="white" />}
+                <Text>{catId ? 'Update' : 'Tambah'} Kategori</Text>
               </Button>
-            )}
-          </Form>
+              {catId && (
+                <Button
+                  block
+                  danger
+                  style={styles.marginV8}
+                  disabled={deleteLoading}
+                  onPress={onClickDelete}>
+                  {deleteLoading && <Spinner color="white" />}
+                  <Text>Hapus Kategori</Text>
+                </Button>
+              )}
+            </Form>
+          </View>
         </Content>
       </Modal>
       <Content>

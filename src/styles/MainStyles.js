@@ -35,7 +35,7 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 16,
     justifyContent: 'center',
-    backgroundColor: '#fafafa',
+    backgroundColor: '#88888822',
     alignItems: 'center',
   },
   contentCard: {

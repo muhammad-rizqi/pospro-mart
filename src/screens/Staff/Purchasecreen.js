@@ -25,6 +25,7 @@ import {useSelector} from 'react-redux';
 import {
   addPurchaseServices,
   deletePurchaseServices,
+  getItemServices,
   getPurchaseServices,
   getSupplierServices,
   updatePurchaseServices,
@@ -135,6 +136,7 @@ const Purchasecreen = ({navigation}) => {
 
   useEffect(() => {
     getPurchaseServices();
+    getItemServices();
     getSupplierServices();
   }, []);
 
@@ -152,103 +154,108 @@ const Purchasecreen = ({navigation}) => {
         </Body>
         <Right />
       </Header>
-      <Modal visible={modal}>
-        <Content style={styles.padding16}>
-          <View style={styles.alignFlexEnd}>
-            <Icon
-              name="close"
-              onPress={() => {
-                setModal(!modal);
-                resetField();
-              }}
-            />
-          </View>
-          <H1 style={styles.marginV8}>
-            {purchaseId ? 'Update' : 'Tambah'} Pembelian
-          </H1>
-          <Form>
-            <View style={styles.marginV8}>
-              <Text note>Supplier</Text>
-              <Item regular style={styles.radius5}>
-                <Picker
-                  selectedValue={supplierId}
-                  onValueChange={(val) =>
-                    val !== 'selectSupplier' && setSupplierId(val)
-                  }>
-                  <Picker.Item label="Pilih supplier" value="selectSupplier" />
-                  {supplier.data.map((supplierData) => (
-                    <Picker.Item
-                      label={supplierData.nama}
-                      value={supplierData.id}
-                      key={supplierData.id}
-                    />
-                  ))}
-                </Picker>
-              </Item>
+      <Modal visible={modal} transparent>
+        <Content contentContainerStyle={styles.contentContainer}>
+          <View style={styles.contentCard}>
+            <View style={styles.alignFlexEnd}>
+              <Icon
+                name="close"
+                onPress={() => {
+                  setModal(!modal);
+                  resetField();
+                }}
+              />
             </View>
-            <View style={styles.marginV8}>
-              <Text note>Barang</Text>
-              <Item regular style={styles.radius5}>
-                <Picker
-                  selectedValue={itemId}
-                  onValueChange={(val) =>
-                    val !== 'selectItem' && setitemId(val)
-                  }>
-                  <Picker.Item
-                    label="Pilih Pembelian barang"
-                    value="selectItem"
+            <H1 style={styles.marginV8}>
+              {purchaseId ? 'Update' : 'Tambah'} Pembelian
+            </H1>
+            <Form>
+              <View style={styles.marginV8}>
+                <Text note>Supplier</Text>
+                <Item regular style={styles.radius5}>
+                  <Picker
+                    selectedValue={supplierId}
+                    onValueChange={(val) =>
+                      val !== 'selectSupplier' && setSupplierId(val)
+                    }>
+                    <Picker.Item
+                      label="Pilih supplier"
+                      value="selectSupplier"
+                    />
+                    {supplier.data.map((supplierData) => (
+                      <Picker.Item
+                        label={supplierData.nama}
+                        value={supplierData.id}
+                        key={supplierData.id}
+                      />
+                    ))}
+                  </Picker>
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Barang</Text>
+                <Item regular style={styles.radius5}>
+                  <Picker
+                    selectedValue={itemId}
+                    onValueChange={(val) =>
+                      val !== 'selectItem' && setitemId(val)
+                    }>
+                    <Picker.Item
+                      label="Pilih Pembelian barang"
+                      value="selectItem"
+                    />
+                    {item.data.map((itemData) => (
+                      <Picker.Item
+                        label={itemData.nama}
+                        value={itemData.id}
+                        key={itemData.id}
+                      />
+                    ))}
+                  </Picker>
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Jumlah Barang</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Jumlah Barang"
+                    value={`${quantity}`}
+                    onChangeText={setQuantity}
                   />
-                  {item.data.map((itemData) => (
-                    <Picker.Item
-                      label={itemData.nama}
-                      value={itemData.id}
-                      key={itemData.id}
-                    />
-                  ))}
-                </Picker>
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Jumlah Barang</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Jumlah Barang"
-                  value={`${quantity}`}
-                  onChangeText={setQuantity}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Total Harga Barang</Text>
-              <Item regular style={styles.radius5}>
-                <Input
-                  placeholder="Total Harga"
-                  value={`${price}`}
-                  onChangeText={setPrice}
-                />
-              </Item>
-            </View>
-            <Button
-              block
-              style={styles.marginV8}
-              disabled={loading}
-              onPress={purchaseId ? onClickUpdate : onClickAdd}>
-              {loading && <Spinner color="white" />}
-              <Text>{purchaseId ? 'Update' : 'Tambah'} Pembelian</Text>
-            </Button>
-            {purchaseId && (
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Total Harga Barang</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Total Harga"
+                    value={`${price}`}
+                    onChangeText={setPrice}
+                  />
+                </Item>
+              </View>
               <Button
                 block
                 style={styles.marginV8}
-                danger
-                disabled={deleteLoading}
-                onPress={onClickDelete}>
-                {deleteLoading && <Spinner color="white" />}
-                <Text>Hapus Pembelian</Text>
+                disabled={loading}
+                onPress={purchaseId ? onClickUpdate : onClickAdd}>
+                {loading && <Spinner color="white" />}
+                <Text>{purchaseId ? 'Update' : 'Tambah'} Pembelian</Text>
               </Button>
-            )}
-          </Form>
-          <View style={styles.marginV16} />
+              {purchaseId && (
+                <Button
+                  block
+                  style={styles.marginV8}
+                  danger
+                  disabled={deleteLoading}
+                  onPress={onClickDelete}>
+                  {deleteLoading && <Spinner color="white" />}
+                  <Text>Hapus Pembelian</Text>
+                </Button>
+              )}
+            </Form>
+            <View style={styles.marginV16} />
+          </View>
         </Content>
       </Modal>
 

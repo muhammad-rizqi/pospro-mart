@@ -92,76 +92,78 @@ const MemberListScreen = ({navigation}) => {
 
   return (
     <Container>
-      <Modal visible={modal}>
-        <Content style={styles.padding16}>
-          <View style={styles.flexRow}>
-            <H3 style={styles.flex1}>Tambah Member</H3>
-            <Icon name="close" onPress={() => setModal(false)} />
+      <Modal visible={modal} transparent>
+        <Content contentContainerStyle={styles.contentContainer}>
+          <View style={styles.contentCard}>
+            <View style={styles.flexRow}>
+              <H3 style={styles.flex1}>Tambah Member</H3>
+              <Icon name="close" onPress={() => setModal(false)} />
+            </View>
+            <Form>
+              <View style={styles.marginV8}>
+                <Text note>Nama Lengkap</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="Nama Lengkap"
+                    value={name}
+                    onChangeText={setName}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Email</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="user@email.com"
+                    keyboardType="email-address"
+                    value={email}
+                    onChangeText={setEmail}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Nomor HP</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="62812345678"
+                    keyboardType="phone-pad"
+                    value={`${phone}`}
+                    onChangeText={setPhone}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Kata Sandi</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="password"
+                    secureTextEntry
+                    value={password}
+                    onChangeText={setPassword}
+                  />
+                </Item>
+              </View>
+              <View style={styles.marginV8}>
+                <Text note>Konfirmasi Kata Sandi</Text>
+                <Item regular style={styles.radius5}>
+                  <Input
+                    placeholder="password"
+                    secureTextEntry
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                  />
+                </Item>
+              </View>
+              <Button
+                block
+                style={styles.marginV8}
+                disabled={loading}
+                onPress={onClickAdd}>
+                {loading && <Spinner color="white" />}
+                <Text>Tambah Member</Text>
+              </Button>
+            </Form>
           </View>
-          <Form>
-            <View style={styles.marginV8}>
-              <Text note>Nama Lengkap</Text>
-              <Item regular>
-                <Input
-                  placeholder="Nama Lengkap"
-                  value={name}
-                  onChangeText={setName}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Email</Text>
-              <Item regular>
-                <Input
-                  placeholder="user@email.com"
-                  keyboardType="email-address"
-                  value={email}
-                  onChangeText={setEmail}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Nomor HP</Text>
-              <Item regular>
-                <Input
-                  placeholder="62812345678"
-                  keyboardType="phone-pad"
-                  value={`${phone}`}
-                  onChangeText={setPhone}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Kata Sandi</Text>
-              <Item regular>
-                <Input
-                  placeholder="password"
-                  secureTextEntry
-                  value={password}
-                  onChangeText={setPassword}
-                />
-              </Item>
-            </View>
-            <View style={styles.marginV8}>
-              <Text note>Konfirmasi Kata Sandi</Text>
-              <Item regular>
-                <Input
-                  placeholder="password"
-                  secureTextEntry
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                />
-              </Item>
-            </View>
-            <Button
-              block
-              style={styles.marginV8}
-              disabled={loading}
-              onPress={onClickAdd}>
-              {loading && <Spinner color="white" />}
-              <Text>Tambah Member</Text>
-            </Button>
-          </Form>
         </Content>
       </Modal>
       <Header>
@@ -190,9 +192,11 @@ const MemberListScreen = ({navigation}) => {
                 <Body>
                   <Text>{member.nama}</Text>
                   <Text note>{member.kode_member}</Text>
+                  <Text note>{member.email}</Text>
                   <Text note numberOfLines={2}>
                     {member.alamat}
                   </Text>
+                  <Text note>Telp. {member.no_hp}</Text>
                 </Body>
               </ListItem>
             ))

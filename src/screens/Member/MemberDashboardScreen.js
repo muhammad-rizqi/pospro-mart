@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  Button,
   Container,
   Content,
   H1,
@@ -50,6 +49,10 @@ const MemberDashboardScreen = ({navigation}) => {
   useEffect(() => {
     getBalance();
   }, []);
+
+  useEffect(() => {
+    setMenu(false);
+  }, [navigation]);
 
   return (
     <Container>

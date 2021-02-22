@@ -93,4 +93,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backgroundWhite: {backgroundColor: 'white'},
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
 });

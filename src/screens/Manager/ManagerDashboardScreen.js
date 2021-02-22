@@ -5,34 +5,23 @@ import {
   CardItem,
   Container,
   Content,
-  H1,
   H3,
-  Icon,
-  Left,
-  List,
-  ListItem,
   Spinner,
   Text,
-  Thumbnail,
   View,
 } from 'native-base';
-import {logout} from '../../services/AuthServices';
-import {ScrollView, StatusBar, TouchableOpacity} from 'react-native';
+import {ScrollView, StatusBar} from 'react-native';
 import {styles} from '../../styles/MainStyles';
-import {useSelector} from 'react-redux';
 import {getDailyReportServices} from '../../services/ManagerServices';
 import LineComponent from '../../components/LineComponent';
 import {toPrice} from '../../services/helper/helper';
+import GridItem from '../../components/GridItem';
+import DashboardHeader from '../../components/DashboardHeader';
 
 const ManagerDashboardScreen = ({navigation}) => {
-  const {user} = useSelector((state) => state);
-  const [menu, setMenu] = useState(false);
+  const [] = useState(false);
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState([]);
-
-  const onClickLogout = () => {
-    logout();
-  };
 
   const getReport = () => {
     setLoading(true);
@@ -54,51 +43,7 @@ const ManagerDashboardScreen = ({navigation}) => {
     <Container>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <Content contentContainerStyle={styles.padding16}>
-        <View style={styles.flexRow}>
-          <View style={styles.flex1}>
-            <Icon
-              style={styles.marginV8}
-              name="menu-outline"
-              onPress={() => setMenu(!menu)}
-            />
-            <View style={styles.relative}>
-              {menu && (
-                <List style={styles.listMenu}>
-                  <ListItem
-                    onPress={() => {
-                      setMenu(false);
-                      navigation.navigate('UpdateProfile');
-                    }}>
-                    <Text>Profile</Text>
-                  </ListItem>
-                  <ListItem
-                    onPress={() => {
-                      setMenu(false);
-                      navigation.navigate('Settings');
-                    }}>
-                    <Text>Pengaturan</Text>
-                  </ListItem>
-                  <ListItem onPress={onClickLogout}>
-                    <Text>Logout</Text>
-                  </ListItem>
-                </List>
-              )}
-            </View>
-          </View>
-          <View style={styles.justifyCenter}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('UpdateProfile')}>
-              <Thumbnail
-                source={{uri: user.foto}}
-                style={styles.backgroundPrimary}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.marginV16}>
-          <Text>Selamat Datang</Text>
-          <H1 style={styles.textBold}>{user.nama}</H1>
-        </View>
+        <DashboardHeader navigation={navigation} />
         {loading ? (
           <Spinner />
         ) : (
@@ -166,57 +111,28 @@ const ManagerDashboardScreen = ({navigation}) => {
             </View>
           )
         )}
-        <List style={styles.marginV16}>
-          <H3>Fitur Pimpinan</H3>
-          <ListItem
-            icon
-            noIndent
-            iconRight
-            onPress={() => navigation.navigate('Allocation')}>
-            <Left>
-              <Icon name="receipt-outline" />
-            </Left>
-            <Body>
-              <Text>Pengeluaran</Text>
-            </Body>
-          </ListItem>
-          <ListItem
-            icon
-            noIndent
-            iconRight
-            onPress={() => navigation.navigate('ItemReport')}>
-            <Left>
-              <Icon name="reader-outline" />
-            </Left>
-            <Body>
-              <Text>Rekap Barang</Text>
-            </Body>
-          </ListItem>
-          <ListItem
-            icon
-            noIndent
-            iconRight
-            onPress={() => navigation.navigate('DailyReport')}>
-            <Left>
-              <Icon name="stats-chart-outline" />
-            </Left>
-            <Body>
-              <Text>Laporan Keuangan</Text>
-            </Body>
-          </ListItem>
-          <ListItem
-            icon
-            noIndent
-            iconRight
-            onPress={() => navigation.navigate('AbsentReport')}>
-            <Left>
-              <Icon name="calendar-outline" />
-            </Left>
-            <Body>
-              <Text>Laporan Absen</Text>
-            </Body>
-          </ListItem>
-        </List>
+        <View style={styles.gridContainer}>
+          <GridItem
+            onPress={() => navigation.navigate('Allocation')}
+            iconName="receipt-outline"
+            text="Pengeluaran"
+          />
+          <GridItem
+            onPress={() => navigation.navigate('ItemReport')}
+            iconName="reader-outline"
+            text="Rekap Barang"
+          />
+          <GridItem
+            onPress={() => navigation.navigate('DailyReport')}
+            iconName="stats-chart-outline"
+            text="Laporan Keuangan"
+          />
+          <GridItem
+            onPress={() => navigation.navigate('DailyAbsentReport')}
+            iconName="calendar-outline"
+            text="Laporan Absen"
+          />
+        </View>
       </Content>
     </Container>
   );

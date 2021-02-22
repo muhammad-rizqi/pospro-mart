@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Body,
   Container,
   Content,
   H1,
-  H3,
   Icon,
-  Left,
   List,
   ListItem,
   Text,
@@ -17,6 +14,7 @@ import {logout} from '../../services/AuthServices';
 import {StatusBar, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import {styles} from '../../styles/MainStyles';
+import GridItem from '../../components/GridItem';
 
 const CashierDashboardScreen = ({navigation}) => {
   const {user} = useSelector((state) => state);
@@ -78,57 +76,28 @@ const CashierDashboardScreen = ({navigation}) => {
           <Text>Selamat Datang</Text>
           <H1 style={styles.textBold}>{user.nama}</H1>
         </View>
-        <List style={styles.marginV16}>
-          <H3>Fitur Manajemen Kasir</H3>
-          <ListItem
-            noIndent
-            iconLeft
-            icon
-            onPress={() => navigation.navigate('Cart')}>
-            <Left>
-              <Icon name="calculator-outline" />
-            </Left>
-            <Body>
-              <Text>Tambah Penjualan</Text>
-            </Body>
-          </ListItem>
-          <ListItem
-            noIndent
-            iconLeft
-            icon
-            onPress={() => navigation.navigate('HistorySelling')}>
-            <Left>
-              <Icon name="basket-outline" />
-            </Left>
-            <Body>
-              <Text>Riwayat Penjualan</Text>
-            </Body>
-          </ListItem>
-          <ListItem
-            noIndent
-            iconLeft
-            icon
-            onPress={() => navigation.navigate('MemberList')}>
-            <Left>
-              <Icon name="people-outline" />
-            </Left>
-            <Body>
-              <Text>Member</Text>
-            </Body>
-          </ListItem>
-          <ListItem
-            noIndent
-            iconLeft
-            icon
-            onPress={() => navigation.navigate('TopUp')}>
-            <Left>
-              <Icon name="card-outline" />
-            </Left>
-            <Body>
-              <Text>Topup Member</Text>
-            </Body>
-          </ListItem>
-        </List>
+        <View style={styles.gridContainer}>
+          <GridItem
+            onPress={() => navigation.navigate('Cart')}
+            iconName="calculator-outline"
+            text="Tambah Penjualan"
+          />
+          <GridItem
+            onPress={() => navigation.navigate('HistorySelling')}
+            iconName="basket-outline"
+            text="Riwayat Penjualan"
+          />
+          <GridItem
+            onPress={() => navigation.navigate('MemberList')}
+            iconName="people-outline"
+            text="Member"
+          />
+          <GridItem
+            onPress={() => navigation.navigate('TopUp')}
+            iconName="card-outline"
+            text="Topup Member"
+          />
+        </View>
       </Content>
     </Container>
   );

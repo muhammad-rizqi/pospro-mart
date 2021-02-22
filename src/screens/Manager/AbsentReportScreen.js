@@ -6,23 +6,25 @@ import {
   Header,
   Icon,
   Left,
+  List,
+  ListItem,
   Right,
   Spinner,
   Text,
   Title,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {getMonthlyReportServices} from '../../services/ManagerServices';
+import {getAbsentServices} from '../../services/ManagerServices';
 
 const AbsentReportScreen = ({navigation}) => {
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const getReport = () => {
+  const getAbsent = () => {
     setLoading(true);
-    getMonthlyReportServices()
+    getAbsentServices()
       .then((result) => {
-        setReport(result.data);
+        setReport(result.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -31,9 +33,9 @@ const AbsentReportScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    getReport();
+    getAbsent();
   }, []);
-
+  console.log(report);
   return (
     <Container>
       <Header>
@@ -48,13 +50,23 @@ const AbsentReportScreen = ({navigation}) => {
         <Right />
       </Header>
       <Content>
-        {loading ? (
-          <Spinner />
-        ) : report ? (
-          <Text>{JSON.stringify(report)}</Text>
-        ) : (
-          <Text>Data Kosong</Text>
-        )}
+        <List>
+          {loading ? (
+            <Spinner />
+          ) : report ? (
+            report.length > 0 &&
+            report.map((absent, index) => (
+              <ListItem key={index}>
+                <Body>
+                  <Text>{absent.nama}</Text>
+                </Body>
+                <Text note>{absent.hadir}</Text>
+              </ListItem>
+            ))
+          ) : (
+            <Text>Data Kosong</Text>
+          )}
+        </List>
       </Content>
     </Container>
   );

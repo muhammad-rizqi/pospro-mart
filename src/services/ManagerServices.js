@@ -44,6 +44,6 @@ export const getDailyReportServices = (from = null, to = null) => {
   return apiPrivate().get('/laporan' + slug);
 };
 
-export const getMonthlyReportServices = () => {
+export const getAbsentServices = () => {
   return apiPrivate().get('/absent');
 };

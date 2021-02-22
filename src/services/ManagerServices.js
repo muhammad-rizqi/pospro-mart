@@ -39,8 +39,10 @@ export const deleteAllocationServices = (id) => {
   return apiPrivate().delete('/pengeluaran/' + id);
 };
 
-export const getDailyReportServices = () => {
-  return apiPrivate().get('/laporan');
+export const getDailyReportServices = (from = null, to = null) => {
+  const slug = `?awal=${from}&akhir=${to}`;
+  console.log(slug);
+  return apiPrivate().get('/laporan' + slug);
 };
 
 export const getMonthlyReportServices = () => {

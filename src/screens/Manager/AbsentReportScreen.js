@@ -14,7 +14,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {getMonthlyReportServices} from '../../services/ManagerServices';
 
-const MonthlyReportScreen = ({navigation}) => {
+const AbsentReportScreen = ({navigation}) => {
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +43,7 @@ const MonthlyReportScreen = ({navigation}) => {
           </Button>
         </Left>
         <Body>
-          <Title>Laporan Bulanan</Title>
+          <Title>Laporan Absen</Title>
         </Body>
         <Right />
       </Header>
@@ -60,4 +60,4 @@ const MonthlyReportScreen = ({navigation}) => {
   );
 };
 
-export default MonthlyReportScreen;
+export default AbsentReportScreen;

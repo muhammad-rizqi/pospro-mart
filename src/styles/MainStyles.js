@@ -85,4 +85,10 @@ export const styles = StyleSheet.create({
     backgroundColor: '#f1f1f1',
     width: 200,
   },
+  dateRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  backgroundWhite: {backgroundColor: 'white'},
 });

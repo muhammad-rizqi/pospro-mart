@@ -32,7 +32,7 @@ import {
 } from '../../services/StaffServices';
 import {Modal, ToastAndroid} from 'react-native';
 import {styles} from '../../styles/MainStyles';
-import { toPrice } from '../../services/helper/helper';
+import {toPrice} from '../../services/helper/helper';
 
 const Purchasecreen = ({navigation}) => {
   const {purchase, item, supplier} = useSelector((state) => state.staff);

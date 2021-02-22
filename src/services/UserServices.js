@@ -3,7 +3,7 @@ import {setUser} from '../redux/action';
 import store from '../redux/store';
 import {apiPrivate, HOST, getReduxToken} from './ApiServices';
 
-export const getProfileServices = async (onFinished, onError) => {
+export const getProfileServices = async (onFinished = null, onError) => {
   try {
     const {data} = await apiPrivate().get('/profil');
     store.dispatch(setUser(data.data));
@@ -12,7 +12,7 @@ export const getProfileServices = async (onFinished, onError) => {
     console.log(error.response);
     onError(error);
   } finally {
-    onFinished();
+    onFinished ? onFinished() : null;
   }
 };
 

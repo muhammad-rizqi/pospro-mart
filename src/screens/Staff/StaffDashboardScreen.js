@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import {
+  Body,
   Container,
   Content,
   H1,
+  H3,
   Icon,
+  Left,
   List,
   ListItem,
   Text,
@@ -71,18 +74,55 @@ const StaffDashboardScreen = ({navigation}) => {
           <Text>Selamat Datang</Text>
           <H1 style={styles.textBold}>{user.nama}</H1>
         </View>
-        <List>
-          <ListItem onPress={() => navigation.navigate('Category')}>
-            <Text>Kategori</Text>
+        <List style={styles.marginV16}>
+          <H3>Fitur Manajemen Staff</H3>
+          <ListItem
+            noIndent
+            icon
+            iconRight
+            onPress={() => navigation.navigate('Category')}>
+            <Left>
+              <Icon name="albums-outline" />
+            </Left>
+            <Body>
+              <Text>Kategori Barang</Text>
+            </Body>
           </ListItem>
-          <ListItem onPress={() => navigation.navigate('Supplier')}>
-            <Text>Supplier</Text>
+          <ListItem
+            noIndent
+            icon
+            iconRight
+            onPress={() => navigation.navigate('Supplier')}>
+            <Left>
+              <Icon name="business-outline" />
+            </Left>
+            <Body>
+              <Text>Data Supplier</Text>
+            </Body>
           </ListItem>
-          <ListItem onPress={() => navigation.navigate('Item')}>
-            <Text>Barang</Text>
+          <ListItem
+            noIndent
+            icon
+            iconRight
+            onPress={() => navigation.navigate('Item')}>
+            <Left>
+              <Icon name="pricetags-outline" />
+            </Left>
+            <Body>
+              <Text>Data Barang</Text>
+            </Body>
           </ListItem>
-          <ListItem onPress={() => navigation.navigate('Purchase')}>
-            <Text>Pembelian</Text>
+          <ListItem
+            noIndent
+            icon
+            iconRight
+            onPress={() => navigation.navigate('Purchase')}>
+            <Left>
+              <Icon name="clipboard-outline" />
+            </Left>
+            <Body>
+              <Text>Data Pembelian</Text>
+            </Body>
           </ListItem>
         </List>
       </Content>

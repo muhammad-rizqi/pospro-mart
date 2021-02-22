@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Body,
   Container,
   Content,
   H1,
+  H3,
   Icon,
+  Left,
   List,
   ListItem,
   Text,
@@ -75,24 +78,55 @@ const CashierDashboardScreen = ({navigation}) => {
           <Text>Selamat Datang</Text>
           <H1 style={styles.textBold}>{user.nama}</H1>
         </View>
-        <List>
-          <ListItem onPress={() => navigation.navigate('Cart')}>
-            <Text>Tambah Penjualan</Text>
+        <List style={styles.marginV16}>
+          <H3>Fitur Manajemen Kasir</H3>
+          <ListItem
+            noIndent
+            iconLeft
+            icon
+            onPress={() => navigation.navigate('Cart')}>
+            <Left>
+              <Icon name="calculator-outline" />
+            </Left>
+            <Body>
+              <Text>Tambah Penjualan</Text>
+            </Body>
           </ListItem>
-        </List>
-        <List>
-          <ListItem onPress={() => navigation.navigate('HistorySelling')}>
-            <Text>Riwayat Penjualan</Text>
+          <ListItem
+            noIndent
+            iconLeft
+            icon
+            onPress={() => navigation.navigate('HistorySelling')}>
+            <Left>
+              <Icon name="basket-outline" />
+            </Left>
+            <Body>
+              <Text>Riwayat Penjualan</Text>
+            </Body>
           </ListItem>
-        </List>
-        <List>
-          <ListItem onPress={() => navigation.navigate('MemberList')}>
-            <Text>Member</Text>
+          <ListItem
+            noIndent
+            iconLeft
+            icon
+            onPress={() => navigation.navigate('MemberList')}>
+            <Left>
+              <Icon name="people-outline" />
+            </Left>
+            <Body>
+              <Text>Member</Text>
+            </Body>
           </ListItem>
-        </List>
-        <List>
-          <ListItem onPress={() => navigation.navigate('TopUp')}>
-            <Text>Topup Member</Text>
+          <ListItem
+            noIndent
+            iconLeft
+            icon
+            onPress={() => navigation.navigate('TopUp')}>
+            <Left>
+              <Icon name="card-outline" />
+            </Left>
+            <Body>
+              <Text>Topup Member</Text>
+            </Body>
           </ListItem>
         </List>
       </Content>

@@ -9,7 +9,6 @@ import {
   Left,
   List,
   ListItem,
-  Right,
   Text,
   Thumbnail,
   View,

@@ -8,6 +8,7 @@ import {
   H1,
   H3,
   Icon,
+  Left,
   List,
   ListItem,
   Spinner,
@@ -102,9 +103,9 @@ const ManagerDashboardScreen = ({navigation}) => {
           <Spinner />
         ) : (
           report.data && (
-            <>
+            <View style={styles.marginV8}>
               <H3>Laporan Perbulan</H3>
-              <ScrollView horizontal>
+              <ScrollView horizontal style={styles.marginV16}>
                 <View style={styles.marginR16}>
                   <Text style={styles.tetxCenter}>Pendapatan Perhari</Text>
                   <LineComponent
@@ -162,21 +163,58 @@ const ManagerDashboardScreen = ({navigation}) => {
                   </CardItem>
                 </Card>
               </View>
-            </>
+            </View>
           )
         )}
-        <List>
-          <ListItem onPress={() => navigation.navigate('Allocation')}>
-            <Text>Pengeluaran</Text>
+        <List style={styles.marginV16}>
+          <H3>Fitur Pimpinan</H3>
+          <ListItem
+            icon
+            noIndent
+            iconRight
+            onPress={() => navigation.navigate('Allocation')}>
+            <Left>
+              <Icon name="receipt-outline" />
+            </Left>
+            <Body>
+              <Text>Pengeluaran</Text>
+            </Body>
           </ListItem>
-          <ListItem onPress={() => navigation.navigate('ItemReport')}>
-            <Text>Rekap Barang</Text>
+          <ListItem
+            icon
+            noIndent
+            iconRight
+            onPress={() => navigation.navigate('ItemReport')}>
+            <Left>
+              <Icon name="reader-outline" />
+            </Left>
+            <Body>
+              <Text>Rekap Barang</Text>
+            </Body>
           </ListItem>
-          <ListItem onPress={() => navigation.navigate('DailyReport')}>
-            <Text>Laporan Keuangan</Text>
+          <ListItem
+            icon
+            noIndent
+            iconRight
+            onPress={() => navigation.navigate('DailyReport')}>
+            <Left>
+              <Icon name="stats-chart-outline" />
+            </Left>
+            <Body>
+              <Text>Laporan Keuangan</Text>
+            </Body>
           </ListItem>
-          <ListItem onPress={() => navigation.navigate('AbsentReport')}>
-            <Text>Laporan Absen</Text>
+          <ListItem
+            icon
+            noIndent
+            iconRight
+            onPress={() => navigation.navigate('AbsentReport')}>
+            <Left>
+              <Icon name="calendar-outline" />
+            </Left>
+            <Body>
+              <Text>Laporan Absen</Text>
+            </Body>
           </ListItem>
         </List>
       </Content>

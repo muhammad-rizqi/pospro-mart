@@ -22,6 +22,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {Modal, ToastAndroid} from 'react-native';
 import {useSelector} from 'react-redux';
+import {toPrice} from '../../services/helper/helper';
 import {
   addAllocationServices,
   getAllocationServices,
@@ -210,8 +211,8 @@ const AllicationScreen = ({navigation}) => {
                 }}>
                 <Body>
                   <Text>{data.tipe}</Text>
-                  <Text note>{data.biaya}</Text>
                 </Body>
+                <Text>Rp. {toPrice(data.biaya)}</Text>
               </ListItem>
             ))}
           </List>

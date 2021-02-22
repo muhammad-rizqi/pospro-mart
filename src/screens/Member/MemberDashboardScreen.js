@@ -15,6 +15,7 @@ import {StatusBar, ToastAndroid, TouchableOpacity} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearToken} from '../../redux/action';
+import {toPrice} from '../../services/helper/helper';
 import {getBalanceServices} from '../../services/MemberServices';
 import {styles} from '../../styles/MainStyles';
 
@@ -120,7 +121,9 @@ const MemberDashboardScreen = ({navigation}) => {
                 />
               </View>
             </View>
-            <Text style={styles.memberCardBalance}>Rp. {balance},-</Text>
+            <Text style={styles.memberCardBalance}>
+              Rp. {toPrice(balance)},-
+            </Text>
           </View>
         )}
       </Content>

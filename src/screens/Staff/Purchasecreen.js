@@ -32,6 +32,7 @@ import {
 } from '../../services/StaffServices';
 import {Modal, ToastAndroid} from 'react-native';
 import {styles} from '../../styles/MainStyles';
+import { toPrice } from '../../services/helper/helper';
 
 const Purchasecreen = ({navigation}) => {
   const {purchase, item, supplier} = useSelector((state) => state.staff);
@@ -283,7 +284,7 @@ const Purchasecreen = ({navigation}) => {
                 </Body>
                 <View style={styles.alignFlexEnd}>
                   <Text>x{data.jumlah}</Text>
-                  <Text>Rp. {data.total_biaya},-</Text>
+                  <Text>Rp. {toPrice(data.total_biaya)},-</Text>
                 </View>
               </ListItem>
             ))}

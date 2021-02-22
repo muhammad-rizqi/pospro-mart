@@ -64,6 +64,7 @@ const UpdateProfile = ({navigation}) => {
         })
         .catch((err) => {
           setLoading(false);
+          ToastAndroid.show('Gagal merubah profile', ToastAndroid.LONG);
           console.log(err.response);
         });
     }
@@ -133,7 +134,7 @@ const UpdateProfile = ({navigation}) => {
             <Item regular style={styles.radius5}>
               <Input
                 placeholder="Umur"
-                value={`${umur}`}
+                value={`${umur ? umur : ''}`}
                 onChangeText={setUmur}
               />
             </Item>

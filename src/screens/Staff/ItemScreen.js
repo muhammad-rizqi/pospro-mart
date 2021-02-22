@@ -33,6 +33,7 @@ import {Modal, ToastAndroid} from 'react-native';
 import {addItemServices} from '../../services/StaffServices';
 import {styles} from '../../styles/MainStyles';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import {toPrice} from '../../services/helper/helper';
 
 const ItemScreen = ({navigation}) => {
   const {item, category} = useSelector((state) => state.staff);
@@ -359,9 +360,7 @@ const ItemScreen = ({navigation}) => {
                     {itemData.merk}
                   </Text>
                 </Body>
-                <Right>
-                  <Text>{itemData.harga_jual}</Text>
-                </Right>
+                <Text>Rp. {toPrice(itemData.harga_jual)}</Text>
               </ListItem>
             ))}
           </List>

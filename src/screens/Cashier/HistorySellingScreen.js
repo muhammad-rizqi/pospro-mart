@@ -8,13 +8,13 @@ import {
   Left,
   List,
   ListItem,
-  Right,
   Spinner,
   Text,
   Title,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {getSelingHistory} from '../../services/CashierServices';
+import {toPrice} from '../../services/helper/helper';
 
 const HistorySellingScreen = ({navigation}) => {
   const [history, setHistory] = useState([]);
@@ -65,9 +65,7 @@ const HistorySellingScreen = ({navigation}) => {
                   </Text>
                   <Text note>{data.user.nama}</Text>
                 </Body>
-                <Right>
-                  <Text>{data.total_harga}</Text>
-                </Right>
+                <Text>Rp. {toPrice(data.total_harga)}</Text>
               </ListItem>
             ))
           )}

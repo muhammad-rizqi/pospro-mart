@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
   },
   memberCardBalance: {
     textAlign: 'right',
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     fontFamily: 'monospace',
     color: 'white',

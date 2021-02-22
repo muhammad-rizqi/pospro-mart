@@ -36,6 +36,7 @@ import {
 import {Modal, ToastAndroid, TouchableOpacity} from 'react-native';
 import _ from 'lodash';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import {toPrice} from '../../services/helper/helper';
 
 const CartScreen = ({navigation}) => {
   const [item, setItem] = useState('');
@@ -397,15 +398,18 @@ const CartScreen = ({navigation}) => {
                             <Text
                               note
                               style={{textDecorationLine: 'line-through'}}>
-                              {cart.total_harga}
+                              Rp. {toPrice(cart.total_harga)}
                             </Text>
                             <Text>
-                              {cart.total_harga -
-                                cart.jumlah_barang * cart.diskon}
+                              Rp.
+                              {toPrice(
+                                cart.total_harga -
+                                  cart.jumlah_barang * cart.diskon,
+                              )}
                             </Text>
                           </>
                         ) : (
-                          <Text>{cart.total_harga}</Text>
+                          <Text>Rp. {toPrice(cart.total_harga)}</Text>
                         )}
                       </Right>
                     </ListItem>
@@ -425,12 +429,16 @@ const CartScreen = ({navigation}) => {
                           <Text
                             note
                             style={{textDecorationLine: 'line-through'}}>
-                            {totalBill}
+                            Rp. {toPrice(totalBill)}
                           </Text>
-                          <Text style={styles.textBold}>{discounted}</Text>
+                          <Text style={styles.textBold}>
+                            Rp. {toPrice(discounted)}
+                          </Text>
                         </>
                       ) : (
-                        <Text style={styles.textBold}>{totalBill}</Text>
+                        <Text style={styles.textBold}>
+                          Rp. {toPrice(totalBill)}
+                        </Text>
                       )}
                     </Right>
                   </ListItem>

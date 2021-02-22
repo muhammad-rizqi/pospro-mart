@@ -17,6 +17,7 @@ import {
 } from 'native-base';
 import React, {useEffect} from 'react';
 import {BackHandler} from 'react-native';
+import {toPrice} from '../../services/helper/helper';
 import {styles} from '../../styles/MainStyles';
 
 const InvoiceScreen = ({navigation, route}) => {
@@ -72,7 +73,7 @@ const InvoiceScreen = ({navigation, route}) => {
                 <Text style={styles.tetxCenter}>{cart.jumlah}</Text>
               </View>
               <Right style={styles.flex1}>
-                <Text>{cart.harga}</Text>
+                <Text>Rp. {toPrice(cart.harga)}</Text>
               </Right>
             </ListItem>
           ))}
@@ -88,19 +89,21 @@ const InvoiceScreen = ({navigation, route}) => {
           </View>
           <View style={styles.flexRow}>
             <Text style={styles.flex1}>Total Diskon</Text>
-            <Text>{data.total_diskon}</Text>
+            <Text>Rp. {toPrice(data.total_diskon)}</Text>
           </View>
           <View style={styles.flexRow}>
             <Text style={styles.flex1}>Total Harga</Text>
-            <Text style={styles.textRight}>{data.total_harga}</Text>
+            <Text style={styles.textRight}>
+              Rp. {toPrice(data.total_harga)}
+            </Text>
           </View>
           <View style={styles.flexRow}>
             <Text style={styles.flex1}>Dibayar</Text>
-            <Text>{data.dibayar}</Text>
+            <Text>Rp. {toPrice(data.dibayar)}</Text>
           </View>
           <View style={styles.flexRow}>
             <Text style={styles.flex1}>Kembalian</Text>
-            <Text>{data.kembalian}</Text>
+            <Text>Rp. {toPrice(data.kembalian)}</Text>
           </View>
           <View style={styles.marginV16}>
             <View style={styles.flexRow}>

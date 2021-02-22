@@ -12,7 +12,6 @@ import {
   Left,
   List,
   ListItem,
-  Right,
   Spinner,
   Text,
   Title,
@@ -20,6 +19,7 @@ import {
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import DateView from '../../components/DateView';
+import {toPrice} from '../../services/helper/helper';
 import {getDailyReportServices} from '../../services/ManagerServices';
 import {styles} from '../../styles/MainStyles';
 
@@ -96,15 +96,15 @@ const DailyReportScreen = ({navigation}) => {
                 <CardItem style={styles.flexRow}>
                   <View style={styles.centerFlex1}>
                     <Text note>Pengeluaran</Text>
-                    <Text>Rp. {report.total_pengeluaran},-</Text>
+                    <Text>Rp. {toPrice(report.total_pengeluaran)}</Text>
                   </View>
                   <View style={styles.centerFlex1}>
                     <Text note>Pembelian</Text>
-                    <Text>Rp. {report.total_pembelian},-</Text>
+                    <Text>Rp. {toPrice(report.total_pembelian)}</Text>
                   </View>
                   <View style={styles.centerFlex1}>
                     <Text note>Penjualan</Text>
-                    <Text>Rp. {report.total_penjualan},-</Text>
+                    <Text>Rp. {toPrice(report.total_penjualan)}</Text>
                   </View>
                 </CardItem>
               </Card>
@@ -112,7 +112,9 @@ const DailyReportScreen = ({navigation}) => {
                 <CardItem>
                   <Body>
                     <Text note>Total Pendapatan</Text>
-                    <H3>Rp. {report.total_pendapatan},-</H3>
+                    <H3 style={styles.textBold}>
+                      Rp. {toPrice(report.total_pendapatan)},-
+                    </H3>
                   </Body>
                 </CardItem>
               </Card>
@@ -135,7 +137,7 @@ const DailyReportScreen = ({navigation}) => {
                           <Text>Pengeluaran</Text>
                         </Body>
                         <View>
-                          <Text>Rp. {reportItem.pengeluaran}</Text>
+                          <Text>Rp. {toPrice(reportItem.pengeluaran)}</Text>
                         </View>
                       </ListItem>
                       <ListItem noIndent>
@@ -143,7 +145,7 @@ const DailyReportScreen = ({navigation}) => {
                           <Text>Pembelian</Text>
                         </Body>
                         <View>
-                          <Text>Rp. {reportItem.pembelian}</Text>
+                          <Text>Rp. {toPrice(reportItem.pembelian)}</Text>
                         </View>
                       </ListItem>
                       <ListItem noIndent>
@@ -151,7 +153,7 @@ const DailyReportScreen = ({navigation}) => {
                           <Text>Penjualan</Text>
                         </Body>
                         <View>
-                          <Text>Rp. {reportItem.penjualan}</Text>
+                          <Text>Rp. {toPrice(reportItem.penjualan)}</Text>
                         </View>
                       </ListItem>
                       <ListItem noIndent>
@@ -160,7 +162,7 @@ const DailyReportScreen = ({navigation}) => {
                         </Body>
                         <View>
                           <Text style={styles.textBold}>
-                            Rp. {reportItem.pendapatan}
+                            Rp. {toPrice(reportItem.pendapatan)}
                           </Text>
                         </View>
                       </ListItem>

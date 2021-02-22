@@ -12,6 +12,7 @@ import TopUpScreen from './Cashier/TopUpScreen';
 import AbsentReportScreen from './Manager/AbsentReportScreen';
 import AllicationScreen from './Manager/AllicationScreen';
 import DailyReportScreen from './Manager/DailyReportScreen';
+import ItemListScreen from './Manager/ItemListScreen';
 import ManagerDashboardScreen from './Manager/ManagerDashboardScreen';
 import MemberDashboardScreen from './Member/MemberDashboardScreen';
 import NoConnection from './NoConnection';
@@ -48,4 +49,5 @@ export {
   InvoiceScreen,
   DailyReportScreen,
   AbsentReportScreen,
+  ItemListScreen,
 };

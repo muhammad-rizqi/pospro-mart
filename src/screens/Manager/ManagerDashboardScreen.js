@@ -9,6 +9,7 @@ import {
   H3,
   List,
   ListItem,
+  Spinner,
   Text,
   Thumbnail,
   View,
@@ -91,72 +92,79 @@ const ManagerDashboardScreen = ({navigation}) => {
           <Text>Selamat Datang</Text>
           <H3>{user.nama}</H3>
         </View>
-        {report.data && (
-          <>
-            <H3>Laporan Perbulan</H3>
-            <ScrollView horizontal>
-              <View style={styles.marginR16}>
-                <Text style={styles.tetxCenter}>Pendapatan Perhari</Text>
-                <LineComponent
-                  backgroundGradientTo="#1976D2"
-                  backgroundGradientFrom="#304FFE"
-                  data={report.data.map((data) => data.pendapatan)}
-                />
+        {loading ? (
+          <Spinner />
+        ) : (
+          report.data && (
+            <>
+              <H3>Laporan Perbulan</H3>
+              <ScrollView horizontal>
+                <View style={styles.marginR16}>
+                  <Text style={styles.tetxCenter}>Pendapatan Perhari</Text>
+                  <LineComponent
+                    backgroundGradientTo="#1976D2"
+                    backgroundGradientFrom="#304FFE"
+                    data={report.data.map((data) => data.pendapatan)}
+                  />
+                </View>
+                <View style={styles.marginR16}>
+                  <Text style={styles.tetxCenter}>Penjualan Perhari</Text>
+                  <LineComponent
+                    style={styles.radius5}
+                    backgroundGradientTo="#00ACC1"
+                    backgroundGradientFrom="#0097A7"
+                    data={report.data.map((data) => data.penjualan)}
+                  />
+                </View>
+                <View style={styles.marginR16}>
+                  <Text style={styles.tetxCenter}>Pengeluaran Perhari</Text>
+                  <LineComponent
+                    style={styles.radius5}
+                    backgroundGradientTo="#EF9A9A"
+                    backgroundGradientFrom="#EF5350"
+                    data={report.data.map(
+                      (data) => data.pembelian + data.pengeluaran,
+                    )}
+                  />
+                </View>
+              </ScrollView>
+              <View>
+                <Card>
+                  <CardItem style={styles.flexRow}>
+                    <View style={styles.centerFlex1}>
+                      <Text note>Pengeluaran</Text>
+                      <Text>Rp. {toPrice(report.total_pengeluaran)}</Text>
+                    </View>
+                    <View style={styles.centerFlex1}>
+                      <Text note>Pembelian</Text>
+                      <Text>Rp. {toPrice(report.total_pembelian)}</Text>
+                    </View>
+                    <View style={styles.centerFlex1}>
+                      <Text note>Penjualan</Text>
+                      <Text>Rp. {toPrice(report.total_penjualan)}</Text>
+                    </View>
+                  </CardItem>
+                </Card>
+                <Card>
+                  <CardItem>
+                    <Body>
+                      <Text note>Total Pendapatan</Text>
+                      <H3 style={styles.textBold}>
+                        Rp. {toPrice(report.total_pendapatan)},-
+                      </H3>
+                    </Body>
+                  </CardItem>
+                </Card>
               </View>
-              <View style={styles.marginR16}>
-                <Text style={styles.tetxCenter}>Penjualan Perhari</Text>
-                <LineComponent
-                  style={styles.radius5}
-                  backgroundGradientTo="#00ACC1"
-                  backgroundGradientFrom="#0097A7"
-                  data={report.data.map((data) => data.penjualan)}
-                />
-              </View>
-              <View style={styles.marginR16}>
-                <Text style={styles.tetxCenter}>Pengeluaran Perhari</Text>
-                <LineComponent
-                  style={styles.radius5}
-                  backgroundGradientTo="#EF9A9A"
-                  backgroundGradientFrom="#EF5350"
-                  data={report.data.map(
-                    (data) => data.pembelian + data.pengeluaran,
-                  )}
-                />
-              </View>
-            </ScrollView>
-            <View>
-              <Card>
-                <CardItem style={styles.flexRow}>
-                  <View style={styles.centerFlex1}>
-                    <Text note>Pengeluaran</Text>
-                    <Text>Rp. {toPrice(report.total_pengeluaran)}</Text>
-                  </View>
-                  <View style={styles.centerFlex1}>
-                    <Text note>Pembelian</Text>
-                    <Text>Rp. {toPrice(report.total_pembelian)}</Text>
-                  </View>
-                  <View style={styles.centerFlex1}>
-                    <Text note>Penjualan</Text>
-                    <Text>Rp. {toPrice(report.total_penjualan)}</Text>
-                  </View>
-                </CardItem>
-              </Card>
-              <Card>
-                <CardItem>
-                  <Body>
-                    <Text note>Total Pendapatan</Text>
-                    <H3 style={styles.textBold}>
-                      Rp. {toPrice(report.total_pendapatan)},-
-                    </H3>
-                  </Body>
-                </CardItem>
-              </Card>
-            </View>
-          </>
+            </>
+          )
         )}
         <List>
           <ListItem onPress={() => navigation.navigate('Allocation')}>
             <Text>Pengeluaran</Text>
+          </ListItem>
+          <ListItem onPress={() => navigation.navigate('ItemReport')}>
+            <Text>Rekap Barang</Text>
           </ListItem>
           <ListItem onPress={() => navigation.navigate('DailyReport')}>
             <Text>Laporan Keuangan</Text>

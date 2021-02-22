@@ -12,6 +12,7 @@ import {
   ForgotScreen,
   HistorySellingScreen,
   InvoiceScreen,
+  ItemListScreen,
   ItemScreen,
   LoginScreen,
   ManagerDashboardScreen,
@@ -147,6 +148,7 @@ const AppRouter = () => {
                   name="AbsentReport"
                   component={AbsentReportScreen}
                 />
+                <Stack.Screen name="ItemReport" component={ItemListScreen} />
               </>
             )}
             <Stack.Screen name="UpdateProfile" component={UpdateProfile} />

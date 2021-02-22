@@ -344,7 +344,7 @@ const ItemScreen = ({navigation}) => {
           item.data.error ? (
             <Text>{item.data.error}</Text>
           ) : (
-            <Text>Kategori Kosong</Text>
+            <Text>Barang Kosong</Text>
           )
         ) : (
           <List>

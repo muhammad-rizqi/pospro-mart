@@ -1,15 +1,20 @@
-import {Button, Container, Content, H1, Text} from 'native-base';
+import {Button, Container, Content, H3, Icon, Text} from 'native-base';
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {getProfileServices} from '../services/UserServices';
+import {styles} from '../styles/MainStyles';
 
 const NoConnection = () => {
   return (
     <Container>
-      <Content>
-        <H1>No Connection</H1>
-        <Button onPress={() => getProfileServices()}>
+      <Content contentContainerStyle={styles.contentContainer}>
+        <TouchableOpacity
+          onPress={() => getProfileServices()}
+          style={[styles.contentCard, styles.alignCenter]}>
+          <Icon name="cloud-offline-outline" />
+          <H3>No Connection</H3>
           <Text>Try Again</Text>
-        </Button>
+        </TouchableOpacity>
       </Content>
     </Container>
   );

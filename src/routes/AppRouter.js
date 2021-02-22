@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
+  AbsentReportScreen,
   AllicationScreen,
   CartScreen,
   CashierDashboardScreen,
@@ -16,7 +17,6 @@ import {
   ManagerDashboardScreen,
   MemberDashboardScreen,
   MemberListScreen,
-  MonthlyReportScreen,
   NoConnection,
   Purchasecreen,
   RegisterScreen,
@@ -144,8 +144,8 @@ const AppRouter = () => {
                   component={DailyReportScreen}
                 />
                 <Stack.Screen
-                  name="MonthlyReport"
-                  component={MonthlyReportScreen}
+                  name="AbsentReport"
+                  component={AbsentReportScreen}
                 />
               </>
             )}

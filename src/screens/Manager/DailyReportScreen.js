@@ -122,7 +122,10 @@ const DailyReportScreen = ({navigation}) => {
             <List>
               {report.data.length > 0 &&
                 report.data.map((reportItem) => (
-                  <ListItem noIndent style={styles.cartMenu}>
+                  <ListItem
+                    noIndent
+                    style={styles.cartMenu}
+                    key={reportItem.id}>
                     <Body>
                       <ListItem noIndent>
                         <Body>

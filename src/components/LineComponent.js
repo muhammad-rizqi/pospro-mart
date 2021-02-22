@@ -1,24 +1,27 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {LineChart} from 'react-native-chart-kit';
 
 const LineComponent = ({
   data,
-  style,
   backgroundGradientFrom,
   backgroundGradientTo,
 }) => {
   return (
     <LineChart
-      style={style}
+      style={{borderRadius: 10}}
       data={{
         datasets: [{data}],
       }}
       bezier
-      width={320}
-      height={220}
+      withVerticalLines={false}
+      horizontalLabelRotation={-45}
+      width={300}
+      height={200}
       chartConfig={{
         backgroundGradientFrom,
         backgroundGradientTo,
+        decimalPlaces: 0,
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       }}
     />

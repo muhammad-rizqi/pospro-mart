@@ -40,8 +40,7 @@ export const deleteAllocationServices = (id) => {
 };
 
 export const getDailyReportServices = (from = null, to = null) => {
-  const slug = `?awal=${from}&akhir=${to}`;
-  console.log(slug);
+  const slug = from && to ? `?awal=${from}&akhir=${to}` : '';
   return apiPrivate().get('/laporan' + slug);
 };
 

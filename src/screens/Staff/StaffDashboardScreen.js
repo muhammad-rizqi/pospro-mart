@@ -30,7 +30,7 @@ const StaffDashboardScreen = ({navigation}) => {
           <GridItem
             onPress={() => navigation.navigate('Purchase')}
             iconName="clipboard-outline"
-            text="Data Penjualan"
+            text="Data Pembelian"
           />
         </View>
       </Content>

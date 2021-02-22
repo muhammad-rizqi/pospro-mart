@@ -96,15 +96,21 @@ const DailyReportScreen = ({navigation}) => {
                 <CardItem style={styles.flexRow}>
                   <View style={styles.centerFlex1}>
                     <Text note>Pengeluaran</Text>
-                    <Text>Rp. {toPrice(report.total_pengeluaran)}</Text>
+                    <Text style={styles.tetxCenter}>
+                      Rp. {toPrice(report.total_pengeluaran)}
+                    </Text>
                   </View>
                   <View style={styles.centerFlex1}>
                     <Text note>Pembelian</Text>
-                    <Text>Rp. {toPrice(report.total_pembelian)}</Text>
+                    <Text style={styles.tetxCenter}>
+                      Rp. {toPrice(report.total_pembelian)}
+                    </Text>
                   </View>
                   <View style={styles.centerFlex1}>
                     <Text note>Penjualan</Text>
-                    <Text>Rp. {toPrice(report.total_penjualan)}</Text>
+                    <Text style={styles.tetxCenter}>
+                      Rp. {toPrice(report.total_penjualan)}
+                    </Text>
                   </View>
                 </CardItem>
               </Card>

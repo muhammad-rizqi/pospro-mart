@@ -128,7 +128,7 @@ const AllicationScreen = ({navigation}) => {
           </Button>
         </Left>
         <Body>
-          <Title>Daftar Penjualan</Title>
+          <Title>Pengeluaran</Title>
         </Body>
         <Right />
       </Header>

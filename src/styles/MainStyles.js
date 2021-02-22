@@ -1,4 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
+
+const sw = Dimensions.get('screen').width;
 
 export const styles = StyleSheet.create({
   centerFlex1: {
@@ -57,8 +59,8 @@ export const styles = StyleSheet.create({
   membeCardContainer: {
     marginVertical: 16,
     backgroundColor: '#1565C0',
-    width: 300,
-    height: 180,
+    width: sw < 480 ? sw - 24 : 480,
+    height: sw < 480 ? (sw * 3) / 5 : (480 * 3) / 5,
     borderRadius: 25,
     padding: 16,
     alignSelf: 'center',

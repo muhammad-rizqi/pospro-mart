@@ -1,4 +1,4 @@
-import {Button, Container, Content, H3, Icon, Text} from 'native-base';
+import {Container, Content, H3, Icon, Text} from 'native-base';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {getProfileServices} from '../services/UserServices';

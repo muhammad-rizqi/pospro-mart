@@ -3,7 +3,7 @@ import {
   Container,
   Content,
   H1,
-  H3,
+  Icon,
   List,
   ListItem,
   Text,
@@ -28,12 +28,11 @@ const StaffDashboardScreen = ({navigation}) => {
       <Content contentContainerStyle={styles.padding16}>
         <View style={styles.flexRow}>
           <View style={styles.flex1}>
-            <TouchableOpacity onPress={() => setMenu(!menu)}>
-              <Thumbnail
-                source={{uri: user.foto}}
-                style={styles.backgroundPrimary}
-              />
-            </TouchableOpacity>
+            <Icon
+              style={styles.marginV8}
+              name="menu-outline"
+              onPress={() => setMenu(!menu)}
+            />
             <View style={styles.relative}>
               {menu && (
                 <List style={styles.listMenu}>
@@ -49,7 +48,7 @@ const StaffDashboardScreen = ({navigation}) => {
                       setMenu(false);
                       navigation.navigate('Settings');
                     }}>
-                    <Text>Settings</Text>
+                    <Text>Pengaturan</Text>
                   </ListItem>
                   <ListItem onPress={onClickLogout}>
                     <Text>Logout</Text>
@@ -59,12 +58,18 @@ const StaffDashboardScreen = ({navigation}) => {
             </View>
           </View>
           <View style={styles.justifyCenter}>
-            <H1 style={styles.textBold}>POSPro Mart</H1>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UpdateProfile')}>
+              <Thumbnail
+                source={{uri: user.foto}}
+                style={styles.backgroundPrimary}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.marginV16}>
           <Text>Selamat Datang</Text>
-          <H3>{user.nama}</H3>
+          <H1 style={styles.textBold}>{user.nama}</H1>
         </View>
         <List>
           <ListItem onPress={() => navigation.navigate('Category')}>

@@ -73,7 +73,7 @@ const AppRouter = () => {
     return (
       <Container>
         <Content contentContainerStyle={styles.centerFlex1}>
-          <H1>POSpro Mart</H1>
+          <H1 style={styles.textBold}>POSpro Mart</H1>
           <Spinner color="blue" />
         </Content>
       </Container>

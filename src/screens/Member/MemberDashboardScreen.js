@@ -1,11 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  Body,
   Container,
   Content,
   H1,
   H3,
+  Icon,
+  Left,
   List,
   ListItem,
+  Right,
   Text,
   Thumbnail,
   View,
@@ -61,12 +65,11 @@ const MemberDashboardScreen = ({navigation}) => {
       <Content contentContainerStyle={styles.padding16}>
         <View style={styles.flexRow}>
           <View style={styles.flex1}>
-            <TouchableOpacity onPress={() => setMenu(!menu)}>
-              <Thumbnail
-                source={{uri: user.foto}}
-                style={styles.backgroundPrimary}
-              />
-            </TouchableOpacity>
+            <Icon
+              style={styles.marginV8}
+              name="menu-outline"
+              onPress={() => setMenu(!menu)}
+            />
             <View style={styles.relative}>
               {menu && (
                 <List style={styles.listMenu}>
@@ -82,7 +85,7 @@ const MemberDashboardScreen = ({navigation}) => {
                       setMenu(false);
                       navigation.navigate('Settings');
                     }}>
-                    <Text>Settings</Text>
+                    <Text>Pengaturan</Text>
                   </ListItem>
                   <ListItem onPress={onClickLogout}>
                     <Text>Logout</Text>
@@ -92,12 +95,18 @@ const MemberDashboardScreen = ({navigation}) => {
             </View>
           </View>
           <View style={styles.justifyCenter}>
-            <H1 style={styles.textBold}>POSPro Mart</H1>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UpdateProfile')}>
+              <Thumbnail
+                source={{uri: user.foto}}
+                style={styles.backgroundPrimary}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.marginV16}>
           <Text>Selamat Datang</Text>
-          <H3>{user.nama}</H3>
+          <H1 style={styles.textBold}>{user.nama}</H1>
         </View>
         {!loading && (
           <View style={styles.membeCardContainer}>
@@ -126,6 +135,42 @@ const MemberDashboardScreen = ({navigation}) => {
             </Text>
           </View>
         )}
+        <View style={styles.marginV16}>
+          <H3>Kelebihan menjadi member</H3>
+          <ListItem icon noIndent>
+            <Left>
+              <Icon active name="pricetag-outline" />
+            </Left>
+            <Body>
+              <Text>Belanja mudah dan cepat</Text>
+            </Body>
+          </ListItem>
+          <ListItem icon noIndent>
+            <Left>
+              <Icon active name="cash-outline" />
+            </Left>
+            <Body>
+              <Text>Diskon spesial untuk member</Text>
+            </Body>
+          </ListItem>
+          <ListItem icon noIndent>
+            <Left>
+              <Icon active name="card-outline" />
+            </Left>
+            <Body>
+              <Text>Top Up mudah dan aman</Text>
+            </Body>
+          </ListItem>
+
+          <ListItem icon noIndent>
+            <Left>
+              <Icon active name="lock-closed-outline" />
+            </Left>
+            <Body>
+              <Text>Saldo tidak kami gunakan</Text>
+            </Body>
+          </ListItem>
+        </View>
       </Content>
     </Container>
   );

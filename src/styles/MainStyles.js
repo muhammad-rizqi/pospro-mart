@@ -1,6 +1,6 @@
 import {Dimensions, StyleSheet} from 'react-native';
 
-const sw = Dimensions.get('screen').width;
+const sw = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
   centerFlex1: {

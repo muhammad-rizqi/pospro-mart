@@ -72,9 +72,13 @@ const AppRouter = () => {
   if (splash) {
     return (
       <Container>
-        <Content contentContainerStyle={styles.centerFlex1}>
-          <H1 style={styles.textBold}>POSpro Mart</H1>
-          <Spinner color="blue" />
+        <Content
+          contentContainerStyle={[
+            styles.centerFlex1,
+            styles.backgroundPrimary,
+          ]}>
+          <H1 style={[styles.textBold, styles.textWhite]}>POSpro Mart</H1>
+          <Spinner color="white" />
         </Content>
       </Container>
     );
